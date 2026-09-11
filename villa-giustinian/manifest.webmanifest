@@ -1,0 +1,17 @@
+{
+  "name": "Park Hotel Villa Giustinian — Mirano, Venezia",
+  "short_name": "Villa Giustinian",
+  "description": "Residenza storica con piscina a Mirano, a 15 minuti da Venezia. Prenota diretto: piscina inclusa e miglior tariffa garantita.",
+  "lang": "it",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#16261E",
+  "theme_color": "#21392E",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

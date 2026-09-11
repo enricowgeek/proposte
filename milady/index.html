@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Milady × Enrico Di Franco — L'idea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a1411;--bg-2:#221a15;--bg-3:#2c221b;--card:#241c16;
+    --line:rgba(214,184,131,.18);--line-strong:rgba(214,184,131,.38);
+    --cream:#f5ecdd;--cream-dim:#cbb8a0;--muted:#9a8a76;
+    --gold:#d6b883;--gold-bright:#e8c98f;--rose:#d98b8b;--green:#9bbf7a;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .serif{font-family:'Playfair Display',serif}.script{font-family:'Dancing Script',cursive}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  section{padding:84px 0;position:relative}
+  h1,h2,h3{font-weight:500;letter-spacing:.2px}
+  .eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px}
+  h2.big{font-family:'Playfair Display',serif;font-size:clamp(28px,4.4vw,42px);font-weight:500}
+  h2.big em{font-style:italic;color:var(--gold)}
+  .lead{color:var(--cream-dim);font-size:18px;max-width:56ch;margin-top:16px}
+  a{color:inherit}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);max-width:1040px;margin:0 auto}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;backdrop-filter:blur(10px);background:rgba(26,20,17,.72);border-bottom:1px solid transparent;transition:.3s}
+  nav.scrolled{border-color:var(--line);background:rgba(26,20,17,.92)}
+  nav .brand{font-family:'Playfair Display',serif;font-size:19px}.nav .brand b{color:var(--gold)}
+  nav .brand b{color:var(--gold)}
+  nav .links{display:flex;gap:24px;font-size:14px}
+  nav .links a{color:var(--cream-dim);text-decoration:none;transition:.2s}nav .links a:hover{color:var(--gold)}
+  @media(max-width:720px){nav .links{display:none}}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    background:radial-gradient(900px 500px at 76% 16%,rgba(214,184,131,.10),transparent 60%),radial-gradient(700px 600px at 8% 92%,rgba(217,139,139,.06),transparent 60%),var(--bg)}
+  .hero .kicker{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:24px}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(38px,7vw,74px);line-height:1.06;font-weight:500}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero .sub{margin-top:24px;font-size:19px;color:var(--cream-dim);max-width:50ch}
+  .hero .by{margin-top:38px;font-size:14px;color:var(--muted);letter-spacing:.5px}.hero .by b{color:var(--cream);font-weight:500}
+  .scrollcue{margin-top:50px;display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none}
+  .scrollcue .dot{width:22px;height:36px;border:1.5px solid var(--line-strong);border-radius:14px;position:relative}
+  .scrollcue .dot::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;border-radius:2px;background:var(--gold);transform:translateX(-50%);animation:cue 1.6s infinite}
+  @keyframes cue{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}80%{opacity:0;transform:translate(-50%,12px)}}
+
+  .grid{display:grid;gap:22px}
+  .cards-3{grid-template-columns:repeat(3,1fr)}@media(max-width:820px){.cards-3{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--bg-3),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .card h3{font-family:'Playfair Display',serif;font-size:21px;color:var(--gold-bright)}
+  .card p{margin-top:10px;color:var(--cream-dim);font-size:15px}
+  .note{color:var(--muted);font-size:13px}
+
+  /* BROWSER */
+  .browser{border:1px solid var(--line-strong);border-radius:14px;overflow:hidden;background:var(--bg-2);box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
+  .browser .bar{display:flex;align-items:center;gap:8px;padding:11px 16px;background:#17110d;border-bottom:1px solid var(--line)}
+  .browser .bar .d{width:11px;height:11px;border-radius:50%;background:#3a2e25}
+  .browser .url{flex:1;margin-left:10px;background:#241c15;border:1px solid var(--line);border-radius:30px;padding:5px 14px;font-size:12px;color:var(--muted);text-align:center}
+  .sitenav{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;border-bottom:1px solid var(--line)}
+  .sitenav .lg{font-family:'Dancing Script',cursive;font-size:24px;color:var(--gold-bright)}
+  .sitenav .mn{display:flex;gap:20px;font-size:12px;color:var(--cream-dim);letter-spacing:.5px}
+  @media(max-width:600px){.sitenav .mn{display:none}}
+  .site-hero{padding:50px 40px 44px;text-align:center;background:radial-gradient(560px 280px at 50% -10%,rgba(214,184,131,.14),transparent 60%)}
+  .site-hero .tagmini{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+  .site-hero h3{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,34px);font-weight:500}
+  .site-hero h3 em{font-style:italic;color:var(--gold)}
+  .site-hero p{color:var(--cream-dim);max-width:44ch;margin:14px auto 0;font-size:15px}
+  .site-cta{margin-top:24px;display:inline-block;background:var(--gold);color:#241a10;font-weight:600;padding:12px 28px;border-radius:40px;font-size:14px;text-decoration:none}
+  .site-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+  .site-strip .cell{padding:26px 18px;text-align:center;border-right:1px solid var(--line)}
+  .site-strip .cell:last-child{border-right:none}
+  .ph{height:92px;border-radius:10px;margin-bottom:13px;background:linear-gradient(135deg,#2e251c,#3b2f23);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:30px}
+  .site-strip .t{font-family:'Playfair Display',serif;font-size:17px}.site-strip .s{color:var(--muted);font-size:12.5px;margin-top:3px}
+  @media(max-width:720px){.site-strip{grid-template-columns:1fr}.site-strip .cell{border-right:none;border-bottom:1px solid var(--line)}}
+
+  /* PHONE / APP */
+  .app-layout{display:grid;grid-template-columns:290px 1fr;gap:46px;align-items:center}
+  @media(max-width:820px){.app-layout{grid-template-columns:1fr;gap:34px}}
+  .phone{width:282px;margin:0 auto;background:#0f0b08;border:9px solid #0a0705;border-radius:42px;box-shadow:0 40px 80px -30px rgba(0,0,0,.8);position:relative;overflow:hidden}
+  .phone .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:118px;height:24px;background:#0a0705;border-radius:0 0 16px 16px;z-index:5}
+  .screen{height:548px;background:var(--bg);overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .app-top{padding:34px 18px 12px;text-align:center;background:linear-gradient(180deg,#231a13,transparent)}
+  .app-top .logo{font-family:'Dancing Script',cursive;font-size:26px;color:var(--gold-bright)}
+  .app-body{flex:1;overflow-y:auto;padding:6px 16px 16px}
+  .app-screen{display:none}.app-screen.active{display:block;animation:fade .35s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .app-title{font-family:'Playfair Display',serif;font-size:19px;margin:8px 2px 14px}
+  .prod{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px}
+  .prod .img{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,#3a2d20,#4a3a28);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .prod .info{flex:1;min-width:0}.prod .info .n{font-size:14px;color:var(--cream)}.prod .info .p{font-size:13px;color:var(--gold)}
+  .prod .add{width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);background:transparent;font-size:18px;line-height:1;cursor:pointer;flex-shrink:0;transition:.15s}
+  .prod .add:active{transform:scale(.85);background:var(--gold);color:#241a10}
+  .seg{display:flex;background:var(--bg-3);border:1px solid var(--line);border-radius:30px;padding:4px;margin-bottom:16px}
+  .seg button{flex:1;border:none;background:transparent;color:var(--cream-dim);padding:8px;border-radius:24px;font-size:13px;cursor:pointer;font-family:inherit}
+  .seg button.on{background:var(--gold);color:#241a10;font-weight:600}
+  .line-item{display:flex;justify-content:space-between;font-size:14px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--cream-dim)}.line-item b{color:var(--cream);font-weight:500}
+  .totrow{display:flex;justify-content:space-between;font-family:'Playfair Display',serif;font-size:20px;margin-top:14px;color:var(--gold-bright)}
+  .pickup{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13px;color:var(--cream-dim);margin:16px 0 0}.pickup b{color:var(--cream)}
+  .confirm{text-align:center;padding:30px 6px}
+  .confirm .ok{width:62px;height:62px;border-radius:50%;border:2px solid var(--green);color:var(--green);font-size:32px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+  .app-cta{display:block;width:100%;background:var(--gold);color:#241a10;border:none;font-weight:600;padding:13px;border-radius:30px;font-size:15px;cursor:pointer;font-family:inherit;margin-top:8px}
+  .app-cta.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+  .cartcount{display:inline-block;min-width:18px;height:18px;background:var(--rose);color:#2a0f0f;border-radius:10px;font-size:11px;font-weight:600;text-align:center;line-height:18px;padding:0 5px;margin-left:6px}
+  .feats li{list-style:none;display:flex;gap:12px;align-items:flex-start;margin-bottom:15px;color:var(--cream-dim)}
+  .feats li i{color:var(--gold);font-size:18px;font-style:normal;margin-top:3px}.feats li b{color:var(--cream);font-weight:500;display:block}
+
+  /* INSTAGRAM MOCK */
+  .ig{max-width:380px;margin:0 auto;border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;background:var(--bg-2);box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
+  .ig-head{display:flex;align-items:center;gap:16px;padding:20px}
+  .ig-av{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--rose));display:flex;align-items:center;justify-content:center;font-family:'Dancing Script',cursive;font-size:30px;color:#241a10;flex-shrink:0}
+  .ig-meta .h{font-size:15px;color:var(--cream);font-weight:500}
+  .ig-meta .b{font-size:13px;color:var(--cream-dim);margin-top:2px}
+  .ig-meta .b span{color:var(--gold)}
+  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px 3px}
+  .ig-grid .t{aspect-ratio:1;background:linear-gradient(135deg,#2e251c,#3d3024);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative}
+  .ig-grid .t .e{font-size:30px}
+  .ig-grid .t .l{font-size:9.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--cream-dim)}
+
+  /* TIKTOK FORMATS */
+  .tk{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.tk{grid-template-columns:1fr}}
+  .tkcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);transition:transform .25s,border-color .25s}
+  .tkcard:hover{transform:translateY(-5px);border-color:var(--line-strong)}
+  .tkcard .thumb{aspect-ratio:9/13;background:linear-gradient(160deg,#2e251c,#1c150f);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}
+  .tkcard .thumb .big{font-size:52px}
+  .tkcard .thumb .play{position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--cream-dim);background:rgba(0,0,0,.35);padding:4px 10px;border-radius:20px}
+  .tkcard .cap{padding:16px 18px}
+  .tkcard .cap .t{font-family:'Playfair Display',serif;font-size:17px;color:var(--gold-bright)}
+  .tkcard .cap .s{font-size:13.5px;color:var(--cream-dim);margin-top:5px}
+
+  /* CLOSING */
+  .close{background:radial-gradient(700px 400px at 50% 0%,rgba(214,184,131,.10),transparent 60%);text-align:center}
+  .close h2{font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,44px);font-weight:500;max-width:20ch;margin:0 auto}.close h2 em{font-style:italic;color:var(--gold)}
+  .close .humble{color:var(--cream-dim);max-width:54ch;margin:22px auto 0;font-size:17px}
+  .contact{margin-top:38px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:40px;text-decoration:none;font-size:15px;font-weight:500;transition:.2s}
+  .btn-primary{background:var(--gold);color:#241a10}.btn-primary:hover{background:var(--gold-bright)}
+  .btn-ghost{border:1px solid var(--line-strong);color:var(--cream)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  footer{text-align:center;padding:34px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}footer b{color:var(--cream-dim);font-weight:500}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">Milady <b>×</b> Enrico</div>
+  <div class="links">
+    <a href="#sguardo">Lo sguardo</a><a href="#sito">Il sito</a><a href="#app">L'app</a><a href="#social">I social</a><a href="#contatti">Parliamone</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Da un vostro cliente · per Pasticceria Milady</div>
+    <h1 class="serif">La magia c'è già.<br>Portiamola<br><em>al livello successivo, insieme.</em></h1>
+    <p class="sub">Sono Enrico, faccio l'informatico — e sono uno dei tanti che va matto per il vostro Margherino.
+      Online ci siete già; ho immaginato come potremmo portare quella magia al livello successivo — insieme.</p>
+    <div class="by">Un'idea di <b>Enrico Di Franco</b> · informatico · un vostro affezionato</div>
+    <a href="#sguardo" class="scrollcue"><span class="dot"></span> Scorri</a>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- LO SGUARDO -->
+<section id="sguardo">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Quello che vedo da fuori</div>
+      <h2 class="big">Il vostro nome parla già da solo.<br>Online <em>merita lo stesso.</em></h2>
+      <p class="lead">Una pasticceria storica, di famiglia, che la fama precede: sul territorio siete un'istituzione,
+        non vi serve né pubblicità né presentazioni. E online i numeri ci sono già — avete anche video virali.
+        Quello che manca è solo la <b style="color:var(--cream);font-weight:500">costanza</b> e uno stile dei contenuti più professionale:
+        è lo step definitivo per far conoscere Milady a livello nazionale come un vero brand, senza più esporsi in modo amatoriale.</p>
+    </div>
+    <div class="grid cards-3 reveal" style="margin-top:42px">
+      <div class="card"><h3>La materia prima c'è</h3><p>L'anima, il carisma di Roberto, i dolci: i vostri video lo dimostrano già. Il talento davanti alla camera non si insegna — e voi ce l'avete.</p></div>
+      <div class="card"><h3>Manca solo il “come”</h3><p>A volte una luce storta, riprese mosse, nessuno stile unico, nessun piano editoriale né costanza. Dettagli tecnici, ma sono quelli che separano un bel video da un video professionale.</p></div>
+      <div class="card"><h3>Ogni canale il suo</h3><p>Instagram è un po' lasciato indietro, riempito coi riporti di TikTok. Ma ogni piattaforma ha il suo linguaggio: copiata di peso, la magia si spegne.</p></div>
+    </div>
+    <p class="lead reveal" style="margin-top:30px">L'idea parte da quello che già funziona: <span style="color:var(--cream)">sito, mini-app e social sullo stesso stile</span>, ognuno con i format giusti per la sua piattaforma — per portare online lo stesso stile che si respira in negozio.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SITO -->
+<section id="sito">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">La vetrina</div>
+      <h2 class="big">Un sito che profuma di <em>pasticceria.</em></h2>
+      <p class="lead">La vostra storia, i dolci di tutti i giorni, il distributore, dove trovarvi e un pulsante per ordinare. Ecco come potrebbe essere — mi sono divertito a buttarne giù un'idea.</p>
+    </div>
+    <div class="browser reveal" style="margin-top:38px">
+      <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="url">pasticceriamilady.it</span></div>
+      <div class="sitenav"><span class="lg">Milady</span><span class="mn"><span>Storia</span><span>I dolci</span><span>Il distributore</span><span>Ordina</span></span></div>
+      <div class="site-hero">
+        <div class="tagmini">Pasticceria artigianale di famiglia · Marghera</div>
+        <h3>Dal cappuccino del mattino<br>alla <em>torta della sera.</em></h3>
+        <p>Brioche, paste, torte e il celebre Margherino. La qualità di sempre, ora anche a portata di clic.</p>
+        <a href="#app" class="site-cta">Scopri e ordina →</a>
+      </div>
+      <div class="site-strip">
+        <div class="cell"><div class="ph">🥐</div><div class="t">La bottega</div><div class="s">Brioche, paste e torte, dal mattino alla sera</div></div>
+        <div class="cell"><div class="ph">🌙</div><div class="t">Il distributore</div><div class="s">Aperto fino a sera, ogni giorno</div></div>
+        <div class="cell"><div class="ph">📍</div><div class="t">Dove siamo</div><div class="s">Via Trieste 141, Marghera</div></div>
+      </div>
+    </div>
+    <p class="note reveal" style="text-align:center;margin-top:16px">Mockup dimostrativo — al posto delle icone andrebbero le vostre foto, fatte come si deve.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APP -->
+<section id="app">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">L'idea in più</div>
+      <h2 class="big">Ordina il Margherino <em>dal divano.</em></h2>
+      <p class="lead">Una mini-app collegata al sito: scegli, prenoti, ritiri (o te lo porta la macchinina). Provatela — è cliccabile.</p>
+    </div>
+    <div class="app-layout reveal" style="margin-top:44px">
+      <div class="phone">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="app-top"><div class="logo">Milady</div></div>
+          <div class="app-body">
+            <div class="app-screen active" id="s-menu">
+              <div class="app-title">Il nostro menù</div>
+              <div class="prod"><div class="img">🍰</div><div class="info"><div class="n">Margherino classico</div><div class="p">il nostro brevetto</div></div><button class="add">+</button></div>
+              <div class="prod"><div class="img">🥮</div><div class="info"><div class="n">Margherino fritto · 4 pz</div><div class="p">specialità</div></div><button class="add">+</button></div>
+              <div class="prod"><div class="img">🍫</div><div class="info"><div class="n">Margherino cioccolato · 4 pz</div><div class="p">specialità</div></div><button class="add">+</button></div>
+              <div class="prod"><div class="img">🧁</div><div class="info"><div class="n">Margherini mignon · 10 pz</div><div class="p">per la festa</div></div><button class="add">+</button></div>
+              <div class="prod"><div class="img">🥧</div><div class="info"><div class="n">Crostata di mandorla</div><div class="p">da forno</div></div><button class="add">+</button></div>
+              <button class="app-cta" id="goCart" style="margin-top:14px">Vai all'ordine <span class="cartcount" id="cc">0</span></button>
+            </div>
+            <div class="app-screen" id="s-cart">
+              <div class="app-title">Il tuo ordine</div>
+              <div class="seg"><button class="on" data-mode="ritiro">Ritiro</button><button data-mode="furgone">Macchinina 🛺</button></div>
+              <div id="cartlines"><div class="line-item" style="border:none;color:var(--muted)">Aggiungi qualcosa dal menù.</div></div>
+              <div class="pickup" id="pickup"><b>Ritiro:</b> oggi dalle <b>17:00</b>, Via Trieste 141</div>
+              <button class="app-cta" id="goPay" style="margin-top:14px">Conferma ordine</button>
+              <button class="app-cta ghost" id="backMenu">← Aggiungi altro</button>
+            </div>
+            <div class="app-screen" id="s-done">
+              <div class="confirm"><div class="ok">✓</div><div class="app-title" style="text-align:center">Ordine confermato!</div>
+                <p style="color:var(--cream-dim);font-size:14px">Ti avvisiamo su WhatsApp quando è pronto. A dopo! 🧡</p>
+                <button class="app-cta ghost" id="restart" style="margin-top:20px">Nuovo ordine</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <ul class="feats">
+          <li><i>◆</i><div><b>Vendite anche a negozio chiuso</b>Pomeriggio e sera diventano occasioni d'ordine.</div></li>
+          <li><i>◆</i><div><b>Meno “esaurito”, meno sprechi</b>Sapete in anticipo cosa preparare.</div></li>
+          <li><i>◆</i><div><b>Ritiro o macchinina</b>Click &amp; collect, oppure consegna con la vostra Model T.</div></li>
+          <li><i>◆</i><div><b>I clienti tornano</b>Raccolta punti: ogni Margherino avvicina al prossimo.</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOCIAL -->
+<section id="social">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Le pagine, all'altezza</div>
+      <h2 class="big">Una vetrina anche <em>nel feed.</em></h2>
+      <p class="lead">Stesso stile del sito e della bottega. Su Instagram una vetrina ordinata dei vostri dolci; su TikTok i format che già funzionano, ma con costanza.</p>
+    </div>
+
+    <div class="grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center;margin-top:42px">
+      <div class="ig">
+        <div class="ig-head">
+          <div class="ig-av">M</div>
+          <div class="ig-meta"><div class="h">milady_pasticceria</div><div class="b"><span>Pasticceria artigianale</span> · Marghera 🧡<br>Il Margherino, brevettato.</div></div>
+        </div>
+        <div class="ig-grid">
+          <div class="t"><span class="e">🍰</span><span class="l">Margherino</span></div>
+          <div class="t"><span class="e">🥮</span><span class="l">Fritti</span></div>
+          <div class="t"><span class="e">🍫</span><span class="l">Cioccolato</span></div>
+          <div class="t"><span class="e">🎂</span><span class="l">Torte</span></div>
+          <div class="t"><span class="e">🧁</span><span class="l">Mignon</span></div>
+          <div class="t"><span class="e">🥐</span><span class="l">Brioches</span></div>
+          <div class="t"><span class="e">🍩</span><span class="l">Frittelle</span></div>
+          <div class="t"><span class="e">🍪</span><span class="l">S. Martino</span></div>
+          <div class="t"><span class="e">🛺</span><span class="l">La macchinina</span></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="serif" style="font-size:22px;color:var(--gold-bright)">Instagram — la vetrina “food porn”</h3>
+        <p style="color:var(--cream-dim);margin-top:12px;font-size:16px">Video in HD con l'attrezzatura giusta — luci, microfono per l'ASMR della crema, drone per le riprese dall'alto.
+          Un feed pulito dove ogni dolce è irresistibile anche dallo schermo, e si capisce pure come arrivare da voi.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:54px">
+      <h3 class="serif" style="font-size:22px;color:var(--gold-bright);margin-bottom:6px">TikTok — i format che raccontano l'anima</h3>
+      <p style="color:var(--cream-dim);font-size:16px;max-width:60ch;margin-bottom:26px">Non a caso, ma a rotazione, con costanza. Tre filoni che funzionano già da soli:</p>
+      <div class="tk">
+        <div class="tkcard"><div class="thumb"><span class="big">🌙</span><span class="play">▶ Il distributore h24</span></div>
+          <div class="cap"><div class="t">Dolci che escono di notte</div><div class="s">Il distributore che incuriosisce — format notturno, va fortissimo tra i giovani.</div></div></div>
+        <div class="tkcard"><div class="thumb"><span class="big">🛺</span><span class="play">▶ La macchinina Milady</span></div>
+          <div class="cap"><div class="t">La Model T per le vie</div><div class="s">Il vostro furgoncino è già un'icona. In video diventa riconoscibilità pura.</div></div></div>
+        <div class="tkcard"><div class="thumb"><span class="big">👨‍🍳</span><span class="play">▶ Dentro il laboratorio</span></div>
+          <div class="cap"><div class="t">Le mani di Roberto</div><div class="s">L'impasto, la farcitura, i segreti. L'anima della bottega che crea community.</div></div></div>
+      </div>
+    </div>
+    <p class="lead reveal" style="margin-top:44px">E quando qualcuno da fuori — un turista, uno di un altro paese — cerca online “una pasticceria”,
+      il primo nome che esce dovrebbe essere il vostro. La qualità della vostra bottega se lo merita.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLOSING -->
+<section id="contatti" class="close">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="lead" style="max-width:62ch;margin:0 auto 32px;text-align:center">Quelli che avete visto sono solo abbozzi, per farvi capire cosa intendo. Il sito, l'app e le pagine
+        si costruiscono insieme — partendo da cosa volete raccontare — e poi con un piano editoriale di contenuti veri:
+        riprese in laboratorio, foto del negozio, dronate, Roberto al lavoro in prima persona.</p>
+      <h2 class="serif">Voi pensate ai dolci. <em>All'online posso pensarci io.</em></h2>
+      <p class="humble">Dalla giornata di riprese una volta al mese fino all'esserci tutti i giorni — manutenzione del sito, dell'app,
+        customer care, qualunque cosa serva: mi adatto a voi. Strumenti professionali, lavoro fatto con cura e nessuna fretta.
+        Niente pacchetti preconfezionati, partiamo dal passo che preferite. Anche solo un caffè per conoscerci.</p>
+      <div class="contact">
+        <a class="btn btn-primary" href="https://wa.me/393282604931?text=Ciao%20Enrico%2C%20abbiamo%20visto%20la%20tua%20proposta%20per%20Milady!" target="_blank">💬 Scrivimi su WhatsApp</a>
+        <a class="btn btn-ghost" href="https://enricodifranco.it" target="_blank">enricodifranco.it</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><b>Enrico Di Franco</b> · informatico — siti, app, social<br>Un'idea pensata per Pasticceria Milady · Marghera, Venezia</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  let cart=0,mode='ritiro';
+  const cc=document.getElementById('cc');
+  const items={};
+  function show(id){document.querySelectorAll('.app-screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelector('.app-body').scrollTop=0;}
+  document.querySelectorAll('.add').forEach(b=>b.addEventListener('click',()=>{
+    const n=b.closest('.prod').querySelector('.n').textContent;items[n]=(items[n]||0)+1;cart++;cc.textContent=cart;
+    b.textContent='✓';setTimeout(()=>b.textContent='+',450);
+  }));
+  function renderCart(){
+    const box=document.getElementById('cartlines');const keys=Object.keys(items);
+    box.innerHTML=keys.length?keys.map(n=>`<div class="line-item"><span><b>${items[n]}×</b> ${n}</span></div>`).join(''):'<div class="line-item" style="border:none;color:var(--muted)">Aggiungi qualcosa dal menù.</div>';
+  }
+  document.getElementById('goCart').addEventListener('click',()=>{renderCart();show('s-cart');});
+  document.getElementById('backMenu').addEventListener('click',()=>show('s-menu'));
+  document.getElementById('goPay').addEventListener('click',()=>{if(cart)show('s-done');});
+  document.getElementById('restart').addEventListener('click',()=>{cart=0;cc.textContent=0;for(let k in items)delete items[k];show('s-menu');});
+  document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.seg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');mode=b.dataset.mode;
+    document.getElementById('pickup').innerHTML=mode==='ritiro'?'<b>Ritiro:</b> oggi dalle <b>17:00</b>, Via Trieste 141':'<b>Macchinina:</b> consegna in zona Marghera · ti avvisiamo all\'arrivo 🛺';
+  }));
+</script>
+</body>
+</html>

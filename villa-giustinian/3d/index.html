@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Cache-Control" content="no-store" />
+<title>Villa Giustinian — Esperienza 3D (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Cormorant:ital,wght@0,400;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --park:#21392E; --park-deep:#16261E; --paper:#F4EFE6;
+    --brass:#A87C3D; --brass-lite:#CBA868;
+    --display:"Marcellus",Georgia,serif;
+    --display-it:"Cormorant",Georgia,serif;
+    --sans:"Hanken Grotesk",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);background:var(--park-deep);color:var(--paper);overflow-x:hidden}
+
+  #scene{position:fixed;inset:0;z-index:0}
+  #scene canvas{display:block;width:100%!important;height:100%!important}
+
+  #vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(11,20,15,.55) 100%);}
+
+  /* dissolvenza per il passaggio esterni → interni (si entra nella villa) */
+  #fade{position:fixed;inset:0;z-index:2;background:#0f0b06;opacity:0;pointer-events:none}
+
+  /* spazio di scroll = durata del "film" */
+  #spacer{position:relative;z-index:2;height:950vh;pointer-events:none}
+
+  #ui{position:fixed;inset:0;z-index:3;pointer-events:none}
+
+  .topbar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;
+    padding:22px 5vw;}
+  .brand{display:flex;flex-direction:column;line-height:1;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+  .brand .name{font-family:var(--display);font-size:1.35rem;letter-spacing:.02em}
+  .brand .sub{font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;opacity:.8;margin-top:6px}
+  .tag{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-lite);opacity:.85;
+    border:1px solid rgba(203,168,104,.4);padding:6px 12px;border-radius:30px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+
+  .stage{position:absolute;left:0;right:0;padding:0 5vw;text-align:center;will-change:opacity,transform}
+  .stage.s-mid{top:50%;transform:translateY(-50%)}
+  .stage.s-low{bottom:15vh}
+  .eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--brass-lite);
+    display:inline-block;margin-bottom:1.1rem;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+  .stage h2{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing:.015em;
+    font-size:clamp(2.4rem,7vw,5.2rem);text-shadow:0 3px 26px rgba(0,0,0,.6)}
+  .stage .lead{font-family:var(--display-it);font-style:italic;font-size:clamp(1.15rem,2.4vw,1.7rem);
+    color:rgba(244,239,230,.9);margin-top:1rem;text-shadow:0 2px 16px rgba(0,0,0,.6)}
+  .stage .cta{display:inline-block;margin-top:1.8rem;pointer-events:auto;
+    background:var(--brass);color:#1a2a20;font-family:var(--sans);font-weight:600;font-size:.8rem;
+    letter-spacing:.14em;text-transform:uppercase;padding:15px 30px;border:1px solid var(--brass);
+    text-decoration:none;transition:background .25s,color .25s,transform .25s}
+  .stage .cta:hover{background:transparent;color:var(--brass-lite);transform:translateY(-2px)}
+
+  /* didascalia camera (compare passando davanti a ogni tipologia) */
+  #roomcap{position:absolute;left:50%;bottom:16vh;transform:translateX(-50%);text-align:center;
+    opacity:0;will-change:opacity;pointer-events:none;max-width:90vw}
+  #roomcap .kicker{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--brass-lite);
+    display:block;margin-bottom:.6rem;text-shadow:0 2px 10px rgba(0,0,0,.7)}
+  #roomcap .rn{font-family:var(--display);font-size:clamp(1.9rem,5vw,3.2rem);line-height:1.05;
+    text-shadow:0 3px 22px rgba(0,0,0,.7)}
+  #roomcap .rs{font-family:var(--display-it);font-style:italic;font-size:clamp(1rem,2vw,1.35rem);
+    color:rgba(244,239,230,.9);margin-top:.5rem;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+
+  .cue{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:9px;
+    font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(244,239,230,.78);
+    text-shadow:0 2px 10px rgba(0,0,0,.5);will-change:opacity}
+  .cue .line{width:1px;height:40px;background:rgba(244,239,230,.4);position:relative;overflow:hidden}
+  .cue .line::after{content:"";position:absolute;top:-40px;left:0;width:1px;height:40px;background:var(--brass-lite);animation:cue 2.1s ease-in-out infinite}
+  @keyframes cue{0%{top:-40px}60%,100%{top:40px}}
+
+  .prog{position:absolute;left:5vw;right:5vw;bottom:20px;height:1px;background:rgba(244,239,230,.16)}
+  .prog i{position:absolute;left:0;top:0;height:100%;width:0;background:var(--brass-lite);display:block}
+
+  .watermark{position:absolute;right:5vw;bottom:30px;font-size:.58rem;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(244,239,230,.45)}
+
+  .loader{position:fixed;inset:0;z-index:10;background:var(--park-deep);display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);letter-spacing:.06em;color:var(--paper);transition:opacity .7s ease}
+  .loader.hide{opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+  <div id="scene"></div>
+  <div id="vignette"></div>
+  <div id="spacer"></div>
+
+  <div id="ui">
+    <div class="topbar">
+      <div class="brand"><span class="name">Villa Giustinian</span><span class="sub">Park Hotel · Mirano · Venezia</span></div>
+      <span class="tag">Esperienza 3D</span>
+    </div>
+
+    <!-- ESTERNI -->
+    <div class="stage s-mid" data-a="0.00" data-b="0.08">
+      <span class="eyebrow">Dimora storica dal 1500</span>
+      <h2>Villa Giustinian</h2>
+      <p class="lead">Dove ogni evento diventa memoria.</p>
+    </div>
+    <div class="stage s-mid" data-a="0.20" data-b="0.28">
+      <span class="eyebrow">Il parco &amp; la piscina</span>
+      <h2>Ettari di verde,<br>e il blu dell'acqua</h2>
+    </div>
+    <div class="stage s-mid" data-a="0.34" data-b="0.41">
+      <span class="eyebrow">L'arrivo</span>
+      <h2>Un ingresso<br>che resta impresso</h2>
+    </div>
+
+    <!-- INGRESSO NELLE CAMERE -->
+    <div class="stage s-mid" data-a="0.47" data-b="0.53">
+      <span class="eyebrow">Ospitalità</span>
+      <h2>Le nostre camere</h2>
+      <p class="lead">Una per tipologia — ognuna un mondo.</p>
+    </div>
+
+    <!-- FINALE -->
+    <div class="stage s-low" data-a="0.95" data-b="1.01">
+      <span class="eyebrow">Il tuo soggiorno</span>
+      <h2>Richiedi disponibilità</h2>
+      <a class="cta" href="#" onclick="return false">Prenota una visita</a>
+    </div>
+
+    <!-- didascalia camere (guidata dalla posizione nel corridoio) -->
+    <div id="roomcap"><span class="kicker">Tipologia</span><div class="rn"></div><div class="rs"></div></div>
+
+    <div class="cue" id="cue"><span>Scorri</span><span class="line"></span></div>
+    <div class="prog"><i id="progbar"></i></div>
+    <div class="watermark">Concept 3D · modello segnaposto</div>
+  </div>
+
+  <div id="fade"></div>
+  <div class="loader" id="loader">Villa Giustinian</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+const smooth = t=>{ t=clamp(t,0,1); return t*t*(3-2*t); };
+const easeOut = t=>1-Math.pow(1-t,3);
+const V = (x,y,z)=>new THREE.Vector3(x,y,z);
+
+const COL = {
+  park:0x21392e, parkDeep:0x16261e, paper:0xf4efe6, paper2:0xe7dec9,
+  brass:0xa87c3d, brassLite:0xcba868, water:0x4f8a86,
+  roof:0x7d4f37, window:0x1d2a22, grass:0x35543f, hedge:0x27412f, gravel:0xcbb98f
+};
+
+const sceneEl = document.getElementById('scene');
+
+// ── renderer condiviso ───────────────────────────────
+const renderer = new THREE.WebGLRenderer({ antialias:true, preserveDrawingBuffer:true });
+renderer.setSize(innerWidth, innerHeight, false);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.06;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+sceneEl.appendChild(renderer.domElement);
+
+const ibox = (w,h,d,mat)=>new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+
+// ══════════════════════════════════════════════════════
+//  ATTO 1 — ESTERNI (dronata)
+// ══════════════════════════════════════════════════════
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(COL.parkDeep);
+scene.fog = new THREE.Fog(COL.parkDeep, 46, 120);
+
+const camera = new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.1, 600);
+
+scene.add(new THREE.HemisphereLight(0xf3ead6, 0x1b2b21, 0.6));
+const sun = new THREE.DirectionalLight(0xffe6bd, 2.2);
+sun.position.set(-22, 30, 18); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+const S = 50;
+Object.assign(sun.shadow.camera, { left:-S, right:S, top:S, bottom:-S, near:1, far:120 });
+sun.shadow.bias = -0.0004; scene.add(sun);
+const fill = new THREE.DirectionalLight(0x9fb8c0, 0.4);
+fill.position.set(20, 12, -14); scene.add(fill);
+
+const M = {
+  wall:  new THREE.MeshStandardMaterial({ color:COL.paper,  roughness:.9 }),
+  wall2: new THREE.MeshStandardMaterial({ color:COL.paper2, roughness:.9 }),
+  roof:  new THREE.MeshStandardMaterial({ color:COL.roof,   roughness:.75 }),
+  win:   new THREE.MeshStandardMaterial({ color:COL.window, roughness:.25, metalness:.2 }),
+  brass: new THREE.MeshStandardMaterial({ color:COL.brass,  roughness:.5, metalness:.35 }),
+  grass: new THREE.MeshStandardMaterial({ color:COL.grass,  roughness:1 }),
+  hedge: new THREE.MeshStandardMaterial({ color:COL.hedge,  roughness:1 }),
+  tree:  new THREE.MeshStandardMaterial({ color:0x2b4a37,   roughness:1 }),
+  trunk: new THREE.MeshStandardMaterial({ color:0x4a3826,   roughness:1 }),
+  gravel:new THREE.MeshStandardMaterial({ color:COL.gravel, roughness:1 }),
+  water: new THREE.MeshStandardMaterial({ color:COL.water,  roughness:.08, metalness:.6 }),
+  coping:new THREE.MeshStandardMaterial({ color:0xe7dcc4,   roughness:.9 }),
+  dog:   new THREE.MeshStandardMaterial({ color:0x8a5a34,   roughness:.9 }),
+  dogDk: new THREE.MeshStandardMaterial({ color:0x5a3a22,   roughness:.9 }),
+  tire:  new THREE.MeshStandardMaterial({ color:0x1c1c1e,   roughness:.8 }),
+  frame: new THREE.MeshStandardMaterial({ color:0xb64b3a,   roughness:.5, metalness:.3 }),
+  rider: new THREE.MeshStandardMaterial({ color:0x35506b,   roughness:.8 }),
+  skin:  new THREE.MeshStandardMaterial({ color:0xd8a878,   roughness:.9 }),
+  fabric:new THREE.MeshStandardMaterial({ color:0xdcae5a,   roughness:1 })
+};
+
+const box = (w,h,d,mat,x,y,z)=>{
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+  m.position.set(x,y,z); m.castShadow = true; m.receiveShadow = true; return m;
+};
+
+// terreno
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(700,700), M.grass);
+ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
+
+// viale di ghiaia
+const gravel = new THREE.Mesh(new THREE.PlaneGeometry(7, 62), M.gravel);
+gravel.rotation.x = -Math.PI/2; gravel.position.set(0, 0.02, 34); gravel.receiveShadow = true; scene.add(gravel);
+
+// ── piscina (a lato, sul percorso della dronata) ─────
+const poolG = new THREE.Group(); poolG.position.set(12, 0, 23); scene.add(poolG);
+poolG.add(box(7.4, 0.3, 13.4, M.coping, 0, 0.15, 0));
+const water = box(6.2, 0.2, 12.2, M.water, 0, 0.3, 0); water.castShadow = false; poolG.add(water);
+// lettini + ombrellone
+for (const lz of [-3, 0.5, 4]){
+  poolG.add(box(0.9, 0.35, 2.0, M.wall, 5.2, 0.35, lz));
+}
+const umbPole = box(0.12, 3, 0.12, M.frame, 5.2, 1.5, 6.4); poolG.add(umbPole);
+const canopy = new THREE.Mesh(new THREE.ConeGeometry(1.7, 0.7, 12), M.fabric);
+canopy.position.set(5.2, 3.1, 6.4); canopy.castShadow = true; poolG.add(canopy);
+
+// ── la villa ─────────────────────────────────────────
+const villa = new THREE.Group();
+function hipRoof(w, d, rh, topY, x=0, z=0){
+  const m = new THREE.Mesh(new THREE.ConeGeometry(1, 1, 4), M.roof);
+  m.rotation.y = Math.PI/4; m.scale.set(w/1.414, rh, d/1.414);
+  m.position.set(x, topY + rh/2, z); m.castShadow = true; return m;
+}
+villa.add(box(14, 6, 9, M.wall, 0, 3, 0));
+villa.add(hipRoof(14.6, 9.6, 2.6, 6, 0, 0));
+villa.add(box(6, 4.2, 7, M.wall2, -9.5, 2.1, 0));
+villa.add(box(6, 4.2, 7, M.wall2,  9.5, 2.1, 0));
+villa.add(hipRoof(6.4, 7.4, 1.7, 4.2, -9.5, 0));
+villa.add(hipRoof(6.4, 7.4, 1.7, 4.2,  9.5, 0));
+for (const cx of [-2.4, -0.8, 0.8, 2.4]){
+  const col = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.32, 4.4, 16), M.wall);
+  col.position.set(cx, 2.2, 5.1); col.castShadow = true; villa.add(col);
+}
+villa.add(box(6.4, 0.7, 1.6, M.wall, 0, 4.7, 5.0));
+villa.add(hipRoof(6.6, 2.2, 1.1, 5.05, 0, 5.0));
+villa.add(box(1.7, 3.2, 0.2, M.win, 0, 1.6, 4.55));
+for (const fy of [1.7, 4.0]) for (const fx of [-5.4, -3.9, 3.9, 5.4]) villa.add(box(1, 1.7, 0.18, M.win, fx, fy, 4.55));
+for (const wingX of [-9.5, 9.5]) for (const fx of [-1.6, 1.6]) villa.add(box(0.9, 1.5, 0.18, M.win, wingX + fx, 2.1, 3.55));
+villa.add(box(0.7, 1.4, 0.7, M.wall2, -4, 7.6, 0));
+villa.add(box(0.7, 1.4, 0.7, M.wall2,  4, 7.6, 0));
+scene.add(villa);
+
+// siepi lungo il viale
+for (let i=0; i<9; i++){
+  const z = 12 + i*5.5;
+  scene.add(box(0.7, 0.9, 4.6, M.hedge, -4.2, 0.45, z));
+  scene.add(box(0.7, 0.9, 4.6, M.hedge,  4.2, 0.45, z));
+}
+// alberi
+function tree(x, z, s=1){
+  const g = new THREE.Group();
+  const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.22*s, 0.28*s, 2.2*s, 8), M.trunk);
+  trunk.position.y = 1.1*s; trunk.castShadow = true; g.add(trunk);
+  const c1 = new THREE.Mesh(new THREE.ConeGeometry(1.7*s, 4.2*s, 9), M.tree);
+  c1.position.y = 3.4*s; c1.castShadow = true; g.add(c1);
+  const c2 = new THREE.Mesh(new THREE.ConeGeometry(1.3*s, 3*s, 9), M.tree);
+  c2.position.y = 5.1*s; c2.castShadow = true; g.add(c2);
+  g.position.set(x, 0, z); return g;
+}
+for (let i=0; i<7; i++){ const z = 14 + i*6; scene.add(tree(-8.5, z, 1)); scene.add(tree(8.5, z, 1)); }
+for (const [x,z] of [[-20,-6],[-24,6],[-18,16],[22,-4],[26,8],[21,18],[-15,-16],[15,-16],[0,-20],[-28,-2],[30,-2]])
+  scene.add(tree(x, z, 1.1 + (Math.abs(x)%3)*0.1));
+
+// ── dettagli di vita: cagnolino + biciclette ─────────
+function makeDog(){
+  const g = new THREE.Group();
+  g.add(box(1.1,0.5,0.45,M.dog,0,0.6,0));
+  g.add(box(0.5,0.55,0.45,M.dog,0.5,0.62,0));
+  g.add(box(0.42,0.42,0.4,M.dog,0.85,0.9,0));
+  g.add(box(0.26,0.2,0.26,M.dog,1.06,0.82,0));
+  g.add(box(0.1,0.26,0.16,M.dogDk,0.78,1.12,0.14));
+  g.add(box(0.1,0.26,0.16,M.dogDk,0.78,1.12,-0.14));
+  const tail = box(0.5,0.12,0.12,M.dog,-0.62,0.85,0); tail.rotation.z=0.8; g.add(tail);
+  const legs=[];
+  for (const [lx,lz] of [[0.42,0.22],[0.42,-0.22],[-0.42,0.22],[-0.42,-0.22]]){
+    const l = box(0.14,0.62,0.14,M.dogDk,lx,0.31,lz); g.add(l); legs.push(l);
+  }
+  g.userData.legs = legs; g.scale.setScalar(1.15); return g;
+}
+const dog = makeDog(); scene.add(dog);
+
+function makeBike(){
+  const g = new THREE.Group();
+  const w1 = new THREE.Mesh(new THREE.TorusGeometry(0.46,0.07,8,22), M.tire); w1.position.set(0.62,0.46,0); w1.castShadow=true; g.add(w1);
+  const w2 = w1.clone(); w2.position.x=-0.62; g.add(w2);
+  const f1 = box(1.05,0.09,0.09,M.frame,0,0.6,0); f1.rotation.z=0.12; g.add(f1);
+  g.add(box(0.09,0.72,0.09,M.frame,-0.28,0.62,0));
+  g.add(box(0.09,0.62,0.09,M.frame,0.5,0.66,0));
+  g.add(box(0.32,0.1,0.16,M.frame,-0.34,0.98,0));   // sella
+  g.add(box(0.09,0.5,0.09,M.frame,0.6,0.82,0));      // piantone manubrio
+  g.add(box(0.09,0.09,0.52,M.frame,0.6,1.05,0));     // manubrio
+  g.userData.wheels=[w1,w2]; return g;
+}
+function makeRider(){
+  const g = new THREE.Group();
+  g.add(box(0.42,0.72,0.3,M.rider,-0.1,1.5,0));
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.19,14,14), M.skin); head.position.set(-0.05,2.0,0); g.add(head);
+  g.add(box(0.16,0.55,0.16,M.rider,0.05,1.05,0.12));
+  g.add(box(0.16,0.55,0.16,M.rider,0.05,1.05,-0.12));
+  return g;
+}
+// bici in movimento (con ciclista) che attraversa in primo piano
+const moving = new THREE.Group();
+const bikeMove = makeBike(); moving.add(bikeMove); moving.add(makeRider()); scene.add(moving);
+// bici parcheggiate appoggiate vicino all'ingresso
+const parked1 = makeBike(); parked1.position.set(5.6,0,9); parked1.rotation.set(0,-0.5,0.22); scene.add(parked1);
+const parked2 = makeBike(); parked2.position.set(-5.6,0,9); parked2.rotation.set(0,0.5,-0.22); scene.add(parked2);
+
+function updateLife(t){
+  // cagnolino trotterella davanti (sx → dx)
+  const dt = clamp((t-0.12)/0.5, 0, 1);
+  dog.visible = dt>0.001 && dt<0.999;
+  dog.position.set(-15 + dt*29, 0, 12);
+  const ph = dt*42;
+  dog.userData.legs.forEach((l,i)=> l.rotation.x = Math.sin(ph + i*1.57)*0.55);
+  dog.position.y = Math.abs(Math.sin(ph*0.5))*0.05;
+  // bicicletta che passa (sx → dx), un po' più indietro
+  const bt = clamp((t-0.44)/0.46, 0, 1);
+  moving.visible = bt>0.001 && bt<0.999;
+  moving.position.set(-16 + bt*32, 0, 17);
+  const sp = -bt*70;
+  bikeMove.userData.wheels.forEach(w=> w.rotation.z = sp);
+}
+
+// keyframe camera esterni: alto → piscina → viale → ingresso → dentro
+const keys = [
+  { pos:V(8, 40, 55),  look:V(3, 3, 14) },
+  { pos:V(25, 20, 43), look:V(11, 2, 25) },
+  { pos:V(17, 7.5, 32),look:V(12, 0.6, 23) },
+  { pos:V(7, 7, 26),   look:V(0, 4, 6) },
+  { pos:V(0, 4.8, 15), look:V(0, 4, 0) },
+  { pos:V(0, 3.6, 7),  look:V(0, 3.2, -3) }
+];
+const _pos = new THREE.Vector3(), _look = new THREE.Vector3();
+function sampleExt(t){
+  const n = keys.length - 1;
+  const x = clamp(t,0,0.9999) * n;
+  const i = Math.floor(x);
+  const f = smooth(x - i);
+  _pos.lerpVectors(keys[i].pos, keys[i+1].pos, f);
+  _look.lerpVectors(keys[i].look, keys[i+1].look, f);
+}
+
+// ══════════════════════════════════════════════════════
+//  ATTO 2 — INTERNI: le camere, vista "casa di bambola"
+//  (fila di stanze aperte lungo z; la camera isometrica scorre)
+// ══════════════════════════════════════════════════════
+const sceneIn = new THREE.Scene();
+sceneIn.background = new THREE.Color(0x1b140c);
+
+const camIn = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 400);
+const camOffset = V(-20, 13, 9);   // isometrica: da sinistra, dall'alto, verso i fronti aperti
+
+sceneIn.add(new THREE.HemisphereLight(0xfff2dd, 0x2a2116, 1.0));
+const keyIn = new THREE.DirectionalLight(0xffe8cc, 1.35); keyIn.position.set(-14, 20, 8); sceneIn.add(keyIn);
+const fillIn = new THREE.DirectionalLight(0xcbb98f, 0.5); fillIn.position.set(12, 6, -8); sceneIn.add(fillIn);
+
+const IM = {
+  parquet:new THREE.MeshStandardMaterial({ color:0x9a774a, roughness:.7 }),
+  runner: new THREE.MeshStandardMaterial({ color:0x7a352f, roughness:1 }),
+  room:   new THREE.MeshStandardMaterial({ color:0xeadcc2, roughness:.95 }),
+  back:   new THREE.MeshStandardMaterial({ color:0xe3d3b6, roughness:.95 }),
+  wood:   new THREE.MeshStandardMaterial({ color:0x5a4028, roughness:.7 }),
+  brass:  new THREE.MeshStandardMaterial({ color:COL.brass, metalness:.6, roughness:.35 }),
+  pillow: new THREE.MeshStandardMaterial({ color:0xf7f0e2, roughness:1 }),
+  warm:   new THREE.MeshStandardMaterial({ color:0x4a3a26, emissive:0xffd39a, emissiveIntensity:0.9, roughness:.4 })
+};
+
+// camere: una per tipologia, in fila lungo z, fronti aperti verso la camera (-x)
+const rooms = [
+  { z:6,  name:"Camera Classica", sub:"Affaccio sul cortile · 22 m²",     spread:0x35486b, rug:0x6d3a34 },
+  { z:14, name:"Camera Superior", sub:"Vista giardino · 26 m²",           spread:0x4a6047, rug:0x8a5330 },
+  { z:22, name:"Junior Suite",    sub:"Salottino privato · 34 m²",        spread:0x9a6a38, rug:0x60365a },
+  { z:30, name:"Suite Deluxe",    sub:"Soffitti affrescati · 40 m²",      spread:0xa07c46, rug:0x6d3a34 },
+  { z:38, name:"Suite Torretta",  sub:"Vista sul parco secolare · 45 m²", spread:0x38506b, rug:0x8a5330 },
+  { z:46, name:"Appartamento",    sub:"Due ambienti · fino a 4 ospiti",   spread:0x7a4a60, rug:0x604a30 }
+];
+const RCX = 3.6, ROX = 7.2, RD = 7;   // centro stanza x · parete di fondo x · lato z
+
+// helper: posiziona PRIMA di aggiungere (Object3D.add restituisce il padre, non il figlio!)
+const im = (w,h,d,mat,x,y,z)=>{ const m = ibox(w,h,d,mat); m.position.set(x,y,z); return m; };
+const icone = (rad,h,mat,x,y,z)=>{ const m = new THREE.Mesh(new THREE.ConeGeometry(rad,h,12), mat); m.position.set(x,y,z); return m; };
+
+// passatoia del corridoio davanti alle stanze
+const rz0 = rooms[0].z, rz1 = rooms[rooms.length-1].z;
+sceneIn.add(im(2.4, 0.16, rz1 - rz0 + RD, IM.runner, -0.6, 0.09, (rz0 + rz1)/2));
+
+function buildRoom(r){
+  const g = new THREE.Group();
+  g.add(im(RD, 0.24, RD, IM.parquet, RCX, 0, r.z));               // pavimento
+  g.add(im(0.24, 5, RD, IM.back, ROX, 2.5, r.z));                 // parete di fondo (+x)
+  g.add(im(RD, 5, 0.24, IM.room, RCX, 2.5, r.z - RD/2));          // pareti laterali (z)
+  g.add(im(RD, 5, 0.24, IM.room, RCX, 2.5, r.z + RD/2));
+  g.add(im(0.14, 3, 3.2, IM.warm, ROX - 0.16, 2.7, r.z));         // finestra calda
+  const wl = new THREE.PointLight(0xffce90, 6, 12, 2); wl.position.set(ROX - 1.4, 2.8, r.z); g.add(wl);
+  g.add(im(4, 0.05, 4.6, new THREE.MeshStandardMaterial({ color:r.rug, roughness:1 }), RCX - 0.3, 0.16, r.z)); // tappeto
+  // letto (testata contro la parete di fondo)
+  const bx = RCX + 1.4;
+  g.add(im(4, 0.8, 3.2, IM.wood, bx, 0.5, r.z));
+  g.add(im(3.8, 0.5, 3.0, IM.pillow, bx, 1.05, r.z));
+  g.add(im(3.85, 0.16, 3.05, new THREE.MeshStandardMaterial({ color:r.spread, roughness:1 }), bx, 1.3, r.z));
+  g.add(im(0.3, 1.8, 3.4, IM.wood, bx + 2.05, 1.25, r.z));        // testata contro parete fondo
+  g.add(im(1.2, 0.36, 0.7, IM.pillow, bx + 1.4, 1.45, r.z + 0.72));
+  g.add(im(1.2, 0.36, 0.7, IM.pillow, bx + 1.4, 1.45, r.z - 0.72));
+  // comodini + abat-jour
+  for (const nz of [-1.9, 1.9]){
+    g.add(im(0.9, 1.0, 0.9, IM.wood, ROX - 0.9, 0.5, r.z + nz));
+    g.add(icone(0.32, 0.5, IM.warm, ROX - 0.9, 1.28, r.z + nz));
+  }
+  // targhetta ottone accanto alla "porta" (lato corridoio)
+  g.add(im(0.12, 0.9, 0.5, IM.brass, RCX - RD/2 + 0.1, 2.2, r.z - RD/2 + 0.6));
+  sceneIn.add(g);
+}
+rooms.forEach(buildRoom);
+
+// didascalia camere
+const roomcap = document.getElementById('roomcap');
+const capRN = roomcap.querySelector('.rn');
+const capRS = roomcap.querySelector('.rs');
+let capCur = null;
+
+const Z_START = rooms[0].z - 3, Z_END = rooms[rooms.length-1].z + 3;   // corsa della camera
+const _tgt = new THREE.Vector3();
+function interiorCam(t){
+  const tt = clamp(t / 0.85, 0, 1);                    // il viaggio finisce a t=0.85, poi resta fermo
+  const z = Z_START + smooth(tt) * (Z_END - Z_START);  // scorre lungo la fila
+  _tgt.set(3.4, 2.2, z);
+  camIn.position.copy(_tgt).add(camOffset);
+  camIn.lookAt(_tgt);
+  // camera più vicina → didascalia + evidenziazione
+  let near=null, bd=1e9;
+  for (const r of rooms){ const d=Math.abs(r.z - z); if (d<bd){ bd=d; near=r; } }
+  const infl = clamp(1 - bd/4.2, 0, 1);
+  const show = infl > 0.05 && t > 0.02 && t < 0.86;    // si spegne prima della CTA finale
+  roomcap.style.opacity = show ? infl.toFixed(3) : 0;
+  if (near && near !== capCur){ capRN.textContent = near.name; capRS.textContent = near.sub; capCur = near; }
+}
+
+// framing isometrico (ortho) — mostra ~1,5 stanze a schermo
+function frameIn(){
+  const a = innerWidth/innerHeight;
+  const hh = 11, hw = hh*a;
+  camIn.left = -hw; camIn.right = hw; camIn.top = hh; camIn.bottom = -hh;
+  camIn.updateProjectionMatrix();
+}
+frameIn();
+
+// ══════════════════════════════════════════════════════
+//  PROGRESS / SCROLL
+// ══════════════════════════════════════════════════════
+const stages = [...document.querySelectorAll('.stage')].map(el=>({
+  el, a:parseFloat(el.dataset.a), b:parseFloat(el.dataset.b)
+}));
+const cue = document.getElementById('cue');
+const progbar = document.getElementById('progbar');
+const fadeEl = document.getElementById('fade');
+
+let target = 0, current = 0;
+function readScroll(){
+  const max = document.body.scrollHeight - innerHeight;
+  target = max > 0 ? window.scrollY / max : 0;
+}
+addEventListener('scroll', readScroll, { passive:true });
+
+function fade(p, a, b, edge=0.05){
+  if (p < a-edge || p > b+edge) return 0;
+  if (p < a) return (p-(a-edge))/edge;
+  if (p > b) return 1-(p-b)/edge;
+  return 1;
+}
+
+const ACT = 0.46;   // confine esterni → interni (si entra nella villa)
+function applyProgress(p){
+  if (p < ACT){
+    const t = p / ACT;                     // ATTO 1 — dronata esterni
+    sampleExt(t); updateLife(t);
+    camera.position.copy(_pos); camera.lookAt(_look);
+    renderer.render(scene, camera);
+    roomcap.style.opacity = 0;
+  } else {
+    const t = (p - ACT) / (1 - ACT);       // ATTO 2 — corridoio delle camere
+    interiorCam(t);
+    renderer.render(sceneIn, camIn);
+  }
+  fadeEl.style.opacity = Math.max(0, 1 - Math.abs(p - ACT) / 0.05);   // dissolvenza all'ingresso
+  for (const s of stages){
+    const o = fade(p, s.a, s.b);
+    s.el.style.opacity = o;
+    s.el.style.transform = (s.el.classList.contains('s-mid') ? 'translateY(-50%)' : '') +
+      ` translate3d(0, ${(1-o)*20}px, 0)`;
+  }
+  cue.style.opacity = Math.max(0, 1 - p*12);
+  progbar.style.width = (p*100).toFixed(1) + '%';
+}
+
+// hook di test
+window.__go = (p)=>{ target = current = p; applyProgress(p); };
+window.__dbg = ()=>({ p:+current.toFixed(3), act: current<ACT?'esterni':'interni' });
+
+function tick(){
+  current += (target - current) * 0.09;
+  applyProgress(current);
+  requestAnimationFrame(tick);
+}
+
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  frameIn();
+  renderer.setSize(innerWidth, innerHeight, false);
+});
+
+readScroll();
+current = target;
+applyProgress(current);
+requestAnimationFrame(tick);
+setTimeout(()=>document.getElementById('loader').classList.add('hide'), 400);
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Simone × Enrico — Personal brand Mercedes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0e10;--bg-2:#141619;--bg-3:#1b1e22;--card:#16181b;
+    --line:rgba(190,196,204,.13);--line-strong:rgba(190,196,204,.30);
+    --silver:#e9ecef;--silver-dim:#aab0b8;--muted:#7e858d;
+    --chrome:#c6ccd2;--blue:#4a86e8;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--silver);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .arch{font-family:'Archivo',sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  section{padding:84px 0;position:relative}
+  h1,h2,h3{font-family:'Archivo',sans-serif;font-weight:600;letter-spacing:.3px}
+  .eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--chrome);font-weight:500;margin-bottom:16px}
+  h2.big{font-size:clamp(26px,4.2vw,40px);font-weight:700;letter-spacing:0}
+  h2.big em{font-style:normal;color:var(--chrome)}
+  .lead{color:var(--silver-dim);font-size:18px;max-width:58ch;margin-top:16px}
+  a{color:inherit}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);max-width:1040px;margin:0 auto}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;backdrop-filter:blur(10px);background:rgba(13,14,16,.72);border-bottom:1px solid transparent;transition:.3s}
+  nav.scrolled{border-color:var(--line);background:rgba(13,14,16,.93)}
+  nav .brand{font-family:'Archivo',sans-serif;font-weight:600;font-size:17px;letter-spacing:.5px}
+  nav .brand b{color:var(--chrome);font-weight:600}
+  nav .links{display:flex;gap:24px;font-size:14px}
+  nav .links a{color:var(--silver-dim);text-decoration:none;transition:.2s}nav .links a:hover{color:var(--silver)}
+  @media(max-width:720px){nav .links{display:none}}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    background:radial-gradient(900px 520px at 78% 12%,rgba(74,134,232,.10),transparent 60%),radial-gradient(700px 600px at 6% 95%,rgba(198,204,210,.06),transparent 60%),var(--bg)}
+  .hero .kicker{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--chrome);margin-bottom:24px}
+  .hero h1{font-family:'Archivo',sans-serif;font-size:clamp(38px,7vw,72px);line-height:1.05;font-weight:700;letter-spacing:-.5px}
+  .hero h1 em{font-style:normal;color:var(--chrome)}
+  .hero .sub{margin-top:24px;font-size:19px;color:var(--silver-dim);max-width:52ch}
+  .hero .by{margin-top:38px;font-size:14px;color:var(--muted);letter-spacing:.5px}.hero .by b{color:var(--silver);font-weight:500}
+  .scrollcue{margin-top:50px;display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none}
+  .scrollcue .dot{width:22px;height:36px;border:1.5px solid var(--line-strong);border-radius:14px;position:relative}
+  .scrollcue .dot::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;border-radius:2px;background:var(--chrome);transform:translateX(-50%);animation:cue 1.6s infinite}
+  @keyframes cue{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}80%{opacity:0;transform:translate(-50%,12px)}}
+
+  .grid{display:grid;gap:22px}
+  .cards-3{grid-template-columns:repeat(3,1fr)}@media(max-width:820px){.cards-3{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--bg-3),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .card h3{font-size:19px;color:var(--silver);font-weight:600}
+  .card .num{font-family:'Archivo';font-size:40px;font-weight:700;color:var(--chrome);line-height:1}
+  .card p{margin-top:10px;color:var(--silver-dim);font-size:15px}
+  .card .lbl{margin-top:8px;color:var(--silver);font-size:15px}
+  .card .sub{margin-top:4px;color:var(--muted);font-size:13px}
+  .note{color:var(--muted);font-size:13px}
+
+  /* IG MOCK */
+  .ig{max-width:380px;margin:0 auto;border:1px solid var(--line-strong);border-radius:18px;overflow:hidden;background:var(--bg-2)}
+  .ig-head{display:flex;align-items:center;gap:16px;padding:20px}
+  .ig-av{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#2a2d31,#4a86e8);display:flex;align-items:center;justify-content:center;font-family:'Archivo';font-weight:700;font-size:22px;color:#fff;flex-shrink:0}
+  .ig-meta .h{font-size:15px;color:var(--silver);font-weight:500}
+  .ig-meta .b{font-size:13px;color:var(--silver-dim);margin-top:2px}
+  .ig-meta .b span{color:var(--chrome)}
+  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px 3px}
+  .ig-grid .t{aspect-ratio:1;background:linear-gradient(135deg,#1c1f23,#262b30);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+  .ig-grid .t .e{font-size:28px}
+  .ig-grid .t .l{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--silver-dim);text-align:center;padding:0 4px}
+
+  /* FORMAT CARDS */
+  .fmt{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.fmt{grid-template-columns:1fr}}
+  .fcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);transition:transform .25s,border-color .25s}
+  .fcard:hover{transform:translateY(-5px);border-color:var(--line-strong)}
+  .fcard .thumb{aspect-ratio:9/13;background:linear-gradient(160deg,#1d2125,#101214);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}
+  .fcard .thumb .big{font-size:50px}
+  .fcard .thumb .play{position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--silver-dim);background:rgba(0,0,0,.4);padding:4px 10px;border-radius:20px}
+  .fcard .cap{padding:16px 18px}
+  .fcard .cap .t{font-family:'Archivo';font-weight:600;font-size:16px;color:var(--silver)}
+  .fcard .cap .s{font-size:13.5px;color:var(--silver-dim);margin-top:5px}
+
+  .feats{list-style:none;max-width:760px}
+  .feats li{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;color:var(--silver-dim);font-size:16px}
+  .feats li i{color:var(--chrome);font-size:18px;font-style:normal;margin-top:3px}
+  .feats li b{color:var(--silver);font-weight:500;display:block;margin-bottom:2px}
+
+  .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:14px}
+  .plan{background:linear-gradient(180deg,var(--bg-3),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column}
+  .plan.amg{border-color:var(--steel);box-shadow:0 0 0 1px var(--steel) inset}
+  .plan .pill{align-self:flex-start;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;padding:5px 13px;border-radius:30px;margin-bottom:14px}
+  .plan .pill.d{background:rgba(198,204,210,.15);color:var(--chrome)}
+  .plan .pill.a{background:var(--steel);color:#fff}
+  .plan h3{font-family:'Archivo';font-size:26px;font-weight:700;letter-spacing:1px}
+  .plan .price{margin:12px 0 2px}
+  .plan .price b{font-family:'Archivo';font-size:38px;font-weight:700;color:var(--silver)}
+  .plan .price span{color:var(--silver-dim);font-size:15px}
+  .plan .save{color:var(--steel);font-size:13.5px;font-weight:500;margin:4px 0 2px}
+  .plan ul{list-style:none;margin:18px 0;flex:1}
+  .plan ul li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--silver-dim);margin-bottom:11px}
+  .plan ul li i{color:var(--chrome);font-style:normal;margin-top:2px}
+  .plan .deal{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px;color:var(--silver-dim)}
+  .plan .deal b{color:var(--silver);font-weight:500}
+  .close{background:radial-gradient(700px 420px at 50% 0%,rgba(74,134,232,.10),transparent 60%);text-align:center}
+  .close h2{font-size:clamp(28px,5vw,44px);font-weight:700;max-width:20ch;margin:0 auto}.close h2 em{font-style:normal;color:var(--chrome)}
+  .close .humble{color:var(--silver-dim);max-width:56ch;margin:22px auto 0;font-size:17px}
+  .contact{margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:40px;text-decoration:none;font-size:15px;font-weight:500;transition:.2s}
+  .btn-primary{background:var(--chrome);color:#15171a}.btn-primary:hover{background:#fff}
+  .btn-ghost{border:1px solid var(--line-strong);color:var(--silver)}.btn-ghost:hover{border-color:var(--chrome);color:var(--chrome)}
+  footer{text-align:center;padding:34px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}footer b{color:var(--silver-dim);font-weight:500}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">Simone <b>×</b> Enrico</div>
+  <div class="links"><a href="#sguardo">Lo scenario</a><a href="#ig">Instagram</a><a href="#tiktok">I format</a><a href="#come">Come lavoriamo</a><a href="#prezzi">Versioni</a><a href="#contatti">Parliamone</a></div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Una proposta per Simone · Mercedes Carraro</div>
+    <h1 class="arch">Vent'anni di Mercedes.<br><em>Ora anche online.</em></h1>
+    <p class="sub">La tua competenza la conoscono i clienti che entrano in salone. Ma online, oggi, non ti trova nessuno —
+      e quello spazio in Veneto è ancora libero. Ho buttato giù un'idea.</p>
+    <div class="by">Pensata da <b>Enrico Di Franco</b> · per <b>Simone</b></div>
+    <a href="#sguardo" class="scrollcue"><span class="dot"></span> Scorri</a>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- SCENARIO -->
+<section id="sguardo">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Quello che vedo</div>
+      <h2 class="big">La concessionaria c'è. <em>Il venditore no.</em></h2>
+      <p class="lead">La pagina che chi cerca una Mercedes trova è quella di gruppo: generica, per tutte le sedi — non per Santa Maria di Sala.
+        Qualche follower c'è, ma non è pensata per convertire clienti, e ogni tanto la si spinge con sponsorizzate a pagamento.
+        Intanto il territorio locale, online, resta scoperto. In numeri:</p>
+    </div>
+    <div class="grid cards-3 reveal" style="margin-top:42px">
+      <div class="card"><div class="num">8.300</div><div class="lbl">follower sulla pagina di gruppo</div><div class="sub">generica per le 13 sedi (non per Santa Maria di Sala), non ottimizzata per convertire — a volte spinta con sponsorizzate a pagamento</div></div>
+      <div class="card"><div class="num">164</div><div class="lbl">like della sede di Santa Maria di Sala</div><div class="sub">su Facebook: il territorio locale, online, è praticamente invisibile</div></div>
+      <div class="card"><div class="num">0</div><div class="lbl">venditori di riferimento online in zona</div><div class="sub">nessun volto, nessun punto di riferimento: lo spazio è completamente libero</div></div>
+    </div>
+    <p class="lead reveal" style="margin-top:30px">Lo spazio sul territorio — soprattutto <span style="color:var(--silver)">Santa Maria di Sala e dintorni</span> — è davvero vuoto online.
+      E tu hai tutto per coprirlo appieno: esperienza, competenza vera e il rapporto coi clienti che solo chi fa questo da una vita sa costruire.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- INSTAGRAM -->
+<section id="ig">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">La vetrina personale</div>
+      <h2 class="big">Instagram — <em>il tuo biglietto da visita.</em></h2>
+      <p class="lead">Curato, elegante, riconoscibile. Chi cerca una Mercedes in Veneto trova te — non solo il sito aziendale.</p>
+    </div>
+    <div class="grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center;margin-top:42px">
+      <div class="ig">
+        <div class="ig-head">
+          <div class="ig-av">S</div>
+          <div class="ig-meta"><div class="h">simone.mercedes</div><div class="b"><span>Il tuo venditore Mercedes in Veneto</span><br>20 anni di esperienza · Santa Maria di Sala</div></div>
+        </div>
+        <div class="ig-grid">
+          <div class="t"><span class="e">🚗</span><span class="l">Nuovi arrivi</span></div>
+          <div class="t"><span class="e">🔑</span><span class="l">Consegne</span></div>
+          <div class="t"><span class="e">💬</span><span class="l">Il consiglio</span></div>
+          <div class="t"><span class="e">⭐</span><span class="l">Recensioni</span></div>
+          <div class="t"><span class="e">🏁</span><span class="l">Prova su strada</span></div>
+          <div class="t"><span class="e">⚙️</span><span class="l">Allestimenti</span></div>
+          <div class="t"><span class="e">🤝</span><span class="l">Clienti</span></div>
+          <div class="t"><span class="e">📍</span><span class="l">Il salone</span></div>
+          <div class="t"><span class="e">✨</span><span class="l">Offerte</span></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="arch" style="font-size:22px;color:var(--silver)">Una vetrina che lavora 24 ore</h3>
+        <p style="color:var(--silver-dim);margin-top:12px;font-size:16px">Palette coerente, foto curate, un'identità riconoscibile.
+          Il cliente che ti incontra in salone ti ritrova online; chi non ti conosce ancora capisce subito che sei <b style="color:var(--silver);font-weight:500">il riferimento</b> a cui rivolgersi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIKTOK FORMATS -->
+<section id="tiktok">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">I format che funzionano</div>
+      <h2 class="big">TikTok — <em>il canale che ti fa scoprire.</em></h2>
+      <p class="lead">Porta traffico anche fuori dal target classico — giovani, content creator, chi domani parlerà di te a chi compra una Mercedes oggi. Quattro filoni semplici, a rotazione:</p>
+    </div>
+    <div class="fmt reveal" style="margin-top:26px">
+      <div class="fcard"><div class="thumb"><span class="big">🔑</span><span class="play">▶ La consegna</span></div><div class="cap"><div class="t">La consegna delle chiavi</div><div class="s">L'emozione del cliente che ritira l'auto — il momento più condivisibile che c'è.</div></div></div>
+      <div class="fcard"><div class="thumb"><span class="big">💬</span><span class="play">▶ Il consiglio</span></div><div class="cap"><div class="t">Il consiglio del venditore</div><div class="s">"Quale Mercedes per…", differenze tra modelli, dritte. La tua competenza, in 30 secondi.</div></div></div>
+      <div class="fcard"><div class="thumb"><span class="big">🏁</span><span class="play">▶ Prova su strada</span></div><div class="cap"><div class="t">Prova su strada</div><div class="s">Un giro, i dettagli, le sensazioni di guida. Il modello che entra in salone diventa contenuto.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COME LAVORIAMO -->
+<section id="come">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Come lavoriamo</div>
+      <h2 class="big">Tu vendi auto. <em>Al resto penso io.</em></h2>
+      <p class="lead">Il minimo del tuo tempo, il massimo della resa — e soprattutto <b style="color:var(--silver);font-weight:500">senza stress</b>:
+        la mezza giornata di riprese dev'essere svago, non un peso. La vera leva vincente è la voglia di <b style="color:var(--silver);font-weight:500">metterti in gioco</b>;
+        il resto è autenticità — e sui social la realtà paga più di qualsiasi produzione. Quello che vedi è solo una bozza: i contenuti e il piano li costruiamo insieme.</p>
+    </div>
+    <ul class="feats reveal" style="margin-top:34px">
+      <li><i>◆</i><div><b>Mezza giornata di shooting al mese</b>Programmata quando ti fa comodo: in quella mezza giornata giriamo tutti i contenuti del mese.</div></li>
+      <li><i>◆</i><div><b>Tutto il resto da remoto</b>Montaggio, sottotitoli, musica, pubblicazione e gestione dei profili — non ci pensi.</div></li>
+      <li><i>◆</i><div><b>2–3 contenuti a settimana</b>Cadenza costante su Instagram e TikTok: è la costanza che costruisce il personal brand.</div></li>
+      <li><i>◆</i><div><b>Attrezzatura mia, contatto diretto</b>iPhone, stabilizzatore, luci e microfono li porto io. Sempre raggiungibile su WhatsApp.</div></li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VERSIONI -->
+<section id="prezzi">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Due modi per partire</div>
+      <h2 class="big">Scegli il tuo <em>passo.</em></h2>
+      <p class="lead">Si parte quando vuoi — anche subito. Due versioni: una per testare con leggerezza, una per spingere sul serio.</p>
+    </div>
+    <div class="plans reveal">
+      <div class="plan">
+        <span class="pill d">Demo · per iniziare</span>
+        <h3 class="arch">DEMO</h3>
+        <div class="price"><b>1.799€</b> <span>/ 6 mesi</span></div>
+        <div class="save">≈ 299€/mese · anticipato — anziché 349€/mese</div>
+        <ul>
+          <li><i>›</i> 1 mezza giornata di shooting al mese — si girano 15-20 video</li>
+          <li><i>›</i> Montaggio essenziale e autentico: sottotitoli + color</li>
+          <li><i>›</i> 2-3 contenuti a settimana su Instagram e TikTok</li>
+          <li><i>›</i> Gestione completa + contatto diretto WhatsApp</li>
+        </ul>
+        <div class="deal">Preferisci mese su mese? <b>349€/mese</b>, minimo 6 mesi.</div>
+      </div>
+      <div class="plan amg">
+        <span class="pill a">AMG · per spingere</span>
+        <h3 class="arch">AMG</h3>
+        <div class="price"><b>3.299€</b> <span>/ 6 mesi</span></div>
+        <div class="save">≈ 549€/mese · anticipato — anziché 599€/mese</div>
+        <ul>
+          <li><i>›</i> 3 giorni di shooting al mese</li>
+          <li><i>›</i> Attrezzatura e montaggio premium</li>
+          <li><i>›</i> Dronate, POV e contenuti super premium</li>
+          <li><i>›</i> Massima presenza e cadenza su tutti i canali</li>
+        </ul>
+        <div class="deal">Preferisci mese su mese? <b>599€/mese</b>, minimo 6 mesi.</div>
+      </div>
+    </div>
+    <p class="lead reveal" style="margin-top:24px;font-size:16px">Lavoriamo su un orizzonte di <b style="color:var(--silver);font-weight:500">almeno 6 mesi</b>: è il tempo minimo perché l'algoritmo inizi a posizionarti
+      nella nicchia giusta, sul territorio e davanti al target giusto. Non un vincolo che pesa — una strada, perché sui social vince la costanza.</p>
+    <p class="note reveal" style="margin-top:12px">I prezzi sono un punto di partenza: tariamo tutto sulle tue esigenze, e si parte quando vuoi — anche subito.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLOSING -->
+<section id="contatti" class="close">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 class="arch">Lo spazio è libero. <em>Prendiamocelo.</em></h2>
+      <p class="humble">Quella che hai visto è solo una bozza, per farti capire la direzione: il profilo, i format e il piano si costruiscono insieme,
+        sul tuo stile e su quanto e come vuoi esporti. E non dev'essere un peso — anzi: un momento da passare insieme, col sorriso e la voglia
+        di metterti in gioco in questa avventura. Perché sui social pagano la leggerezza e la costanza, il tutto con qualità professionale.
+        Se ti va, scrivimi quando vuoi su WhatsApp al 328 260 4931.</p>
+      <div class="contact">
+        <a class="btn btn-primary" href="https://wa.me/393282604931?text=Ciao%20Enrico%2C%20ho%20visto%20la%20proposta%20per%20il%20personal%20brand!" target="_blank">💬 Scrivimi su WhatsApp</a>
+        <a class="btn btn-ghost" href="https://enricodifranco.it" target="_blank">enricodifranco.it</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><b>Enrico Di Franco</b> · informatico — siti, app, social<br>Un'idea pensata per Simone · Mercedes Carraro, Santa Maria di Sala</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

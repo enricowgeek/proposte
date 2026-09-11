@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Enrico Di Franco — per Milady</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,500&family=Inter:wght@300;400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1a1411;--card:#241c16;--card-2:#2c221b;
+    --line:rgba(214,184,131,.16);--line-strong:rgba(214,184,131,.34);
+    --cream:#f5ecdd;--dim:#cbb8a0;--muted:#9a8a76;
+    --gold:#d6b883;--gold-bright:#e8c98f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(800px 460px at 78% 8%, rgba(214,184,131,.10), transparent 60%),
+      radial-gradient(620px 520px at 8% 100%, rgba(217,139,139,.06), transparent 60%),
+      var(--bg);
+    color:var(--cream);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.6;
+    -webkit-font-smoothing:antialiased;min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:30px 22px;
+  }
+  .card-wrap{width:100%;max-width:480px}
+  .serif{font-family:'Playfair Display',serif}
+  .script{font-family:'Dancing Script',cursive}
+
+  .topline{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;justify-content:center;margin-bottom:30px}
+  .topline span{height:1px;width:34px;background:var(--line-strong)}
+
+  .hero{text-align:center}
+  .hello{font-size:14px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(30px,8vw,42px);line-height:1.12}
+  h1 em{font-style:italic;color:var(--gold)}
+  .who{color:var(--dim);font-size:16px;margin-top:18px;max-width:38ch;margin-left:auto;margin-right:auto}
+  .who b{color:var(--cream);font-weight:500}
+
+  .services{margin:34px 0 28px;display:grid;gap:12px}
+  .svc{display:flex;align-items:center;gap:15px;background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--line);border-radius:14px;padding:15px 17px}
+  .svc .ic{width:42px;height:42px;border-radius:11px;background:rgba(214,184,131,.10);border:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--gold)}
+  .svc .tx .t{font-size:15px;color:var(--cream);font-weight:400}
+  .svc .tx .s{font-size:13px;color:var(--muted);margin-top:1px}
+
+  .teaser{background:linear-gradient(180deg,rgba(214,184,131,.08),rgba(214,184,131,.03));border:1px solid var(--line-strong);border-radius:16px;padding:20px;text-align:center;margin-bottom:26px}
+  .teaser p{color:var(--dim);font-size:14.5px;max-width:34ch;margin:0 auto}
+  .teaser p b{color:var(--cream);font-weight:500}
+  .teaser .look{display:inline-flex;align-items:center;gap:8px;margin-top:15px;background:var(--gold);color:#241a10;font-weight:600;font-size:14px;text-decoration:none;padding:12px 24px;border-radius:40px;transition:.2s}
+  .teaser .look:hover{background:var(--gold-bright)}
+
+  .contact{text-align:center}
+  .contact .ln{color:var(--dim);font-size:14px;max-width:34ch;margin:0 auto 18px}
+  .btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:15px;font-weight:500;padding:13px 22px;border-radius:40px;transition:.2s}
+  .btn-wa{background:var(--gold);color:#241a10}
+  .btn-wa:hover{background:var(--gold-bright)}
+  .btn-site{border:1px solid var(--line-strong);color:var(--cream)}
+  .btn-site:hover{border-color:var(--gold);color:var(--gold)}
+
+  .sign{text-align:center;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+  .sign .name{font-family:'Dancing Script',cursive;font-size:26px;color:var(--gold-bright)}
+  .sign .role{color:var(--muted);font-size:12.5px;letter-spacing:1px;margin-top:2px}
+
+  .fade{opacity:0;transform:translateY(16px);animation:up .7s forwards}
+  .fade.d1{animation-delay:.05s}.fade.d2{animation-delay:.15s}.fade.d3{animation-delay:.25s}.fade.d4{animation-delay:.35s}.fade.d5{animation-delay:.45s}
+  @keyframes up{to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+  <div class="card-wrap">
+
+    <div class="topline fade"><span></span> Per Pasticceria Milady <span></span></div>
+
+    <div class="hero fade d1">
+      <div class="hello">Piacere</div>
+      <h1 class="serif">Una vetrina online <em>all'altezza del vostro negozio.</em></h1>
+      <p class="who">Sono <b>Enrico</b>, informatico. Aiuto le attività del territorio a stare online
+        bene come stanno dal vivo — siti, app e social, fatti su misura e in modo professionale.</p>
+    </div>
+
+    <div class="services fade d2">
+      <div class="svc"><div class="ic">◷</div><div class="tx"><div class="t">Sito web su misura</div><div class="s">elegante, veloce, perfetto da telefono</div></div></div>
+      <div class="svc"><div class="ic">▦</div><div class="tx"><div class="t">Mini-app per ordinare</div><div class="s">il Margherino prenotato da casa, ritiro o consegna</div></div></div>
+      <div class="svc"><div class="ic">◎</div><div class="tx"><div class="t">Instagram &amp; TikTok curati</div><div class="s">i vostri numeri, finalmente con un metodo</div></div></div>
+      <div class="svc"><div class="ic">✦</div><div class="tx"><div class="t">Utility su misura</div><div class="s">qualsiasi automazione utile alla bottega</div></div></div>
+    </div>
+
+    <div class="teaser fade d3">
+      <p>Per curiosità ho già <b>abbozzato il vostro nuovo sito</b> e una <b>mini-app per ordinare il Margherino</b>. Date un'occhiata 👀</p>
+      <a class="look" href="index.html">Guarda l'idea →</a>
+    </div>
+
+    <div class="contact fade d4">
+      <p class="ln">Nessun pacchetto preconfezionato: partiamo da cosa vi serve e dal budget che preferite. Anche solo un caffè per conoscerci.</p>
+      <div class="btns">
+        <a class="btn btn-wa" href="https://wa.me/393282604931?text=Ciao%20Enrico%2C%20abbiamo%20visto%20la%20tua%20proposta%20per%20Milady!" target="_blank">Scrivimi su WhatsApp</a>
+        <a class="btn btn-site" href="https://enricodifranco.it" target="_blank">enricodifranco.it</a>
+      </div>
+    </div>
+
+    <div class="sign fade d5">
+      <div class="name">Enrico Di Franco</div>
+      <div class="role">INFORMATICO · SITI · APP · SOCIAL</div>
+    </div>
+
+  </div>
+</body>
+</html>

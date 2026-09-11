@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Frollo × Enrico — Una vetrina senza tempo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0b0a;--bg-2:#141210;--bg-3:#1a1613;--card:#15110d;
+    --line:rgba(201,164,76,.18);--line-strong:rgba(201,164,76,.36);
+    --ivory:#f1e9da;--ivory-dim:#c4b69b;--muted:#8a7e69;
+    --gold:#c9a44c;--gold-bright:#e3c172;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ivory);font-family:'Inter',system-ui,sans-serif;font-weight:300;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .serif{font-family:'Cormorant Garamond',serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  section{padding:90px 0;position:relative}
+  h1,h2,h3{font-weight:500;letter-spacing:.3px}
+  .eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:18px}
+  h2.big{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:500;letter-spacing:.5px}
+  h2.big em{font-style:italic;color:var(--gold)}
+  .lead{color:var(--ivory-dim);font-size:18px;max-width:58ch;margin-top:16px;font-weight:300}
+  a{color:inherit}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+  .reveal.in{opacity:1;transform:none}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-strong),transparent);max-width:1040px;margin:0 auto}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;backdrop-filter:blur(10px);background:rgba(12,11,10,.72);border-bottom:1px solid transparent;transition:.3s}
+  nav.scrolled{border-color:var(--line);background:rgba(12,11,10,.94)}
+  nav .brand{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:1px}
+  nav .brand b{color:var(--gold);font-weight:600}
+  nav .links{display:flex;gap:26px;font-size:13px;letter-spacing:.5px}
+  nav .links a{color:var(--ivory-dim);text-decoration:none;transition:.2s}nav .links a:hover{color:var(--gold)}
+  @media(max-width:760px){nav .links{display:none}}
+
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    background:radial-gradient(900px 540px at 76% 14%,rgba(201,164,76,.12),transparent 60%),radial-gradient(700px 600px at 6% 95%,rgba(201,164,76,.05),transparent 60%),var(--bg)}
+  .hero .kicker{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+  .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,86px);line-height:1.04;font-weight:500;letter-spacing:.5px}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero .sub{margin-top:26px;font-size:19px;color:var(--ivory-dim);max-width:52ch;font-weight:300}
+  .hero .by{margin-top:40px;font-size:13px;color:var(--muted);letter-spacing:1px}.hero .by b{color:var(--ivory);font-weight:400}
+  .scrollcue{margin-top:52px;display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none}
+  .scrollcue .dot{width:22px;height:36px;border:1px solid var(--line-strong);border-radius:14px;position:relative}
+  .scrollcue .dot::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;border-radius:2px;background:var(--gold);transform:translateX(-50%);animation:cue 1.6s infinite}
+  @keyframes cue{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}80%{opacity:0;transform:translate(-50%,12px)}}
+
+  .grid{display:grid;gap:22px}
+  .cards-3{grid-template-columns:repeat(3,1fr)}@media(max-width:820px){.cards-3{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--bg-3),var(--card));border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+  .card h3{font-family:'Cormorant Garamond',serif;font-size:25px;color:var(--gold-bright);font-weight:500}
+  .card p{margin-top:10px;color:var(--ivory-dim);font-size:15px}
+  .note{color:var(--muted);font-size:13px}
+
+  /* BROWSER */
+  .browser{border:1px solid var(--line-strong);border-radius:12px;overflow:hidden;background:var(--bg-2);box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+  .browser .bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:#0a0908;border-bottom:1px solid var(--line)}
+  .browser .bar .d{width:10px;height:10px;border-radius:50%;background:#3a2f1c}
+  .browser .url{flex:1;margin-left:12px;background:#15110c;border:1px solid var(--line);border-radius:30px;padding:5px 14px;font-size:12px;color:var(--muted);text-align:center}
+  .sitenav{display:flex;align-items:center;justify-content:space-between;padding:16px 34px;border-bottom:1px solid var(--line)}
+  .sitenav .lg{font-family:'Cormorant Garamond',serif;font-size:24px;letter-spacing:2px;color:var(--gold-bright)}
+  .sitenav .mn{display:flex;gap:22px;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ivory-dim)}
+  @media(max-width:600px){.sitenav .mn{display:none}}
+  .site-hero{padding:60px 40px 50px;text-align:center;background:radial-gradient(560px 300px at 50% -10%,rgba(201,164,76,.14),transparent 60%)}
+  .site-hero .tagmini{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  .site-hero h3{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:500;letter-spacing:.5px}
+  .site-hero h3 em{font-style:italic;color:var(--gold)}
+  .site-hero p{color:var(--ivory-dim);max-width:46ch;margin:14px auto 0;font-size:15px}
+  .site-cta{margin-top:26px;display:inline-block;border:1px solid var(--gold);color:var(--gold-bright);font-weight:400;letter-spacing:1px;padding:12px 30px;border-radius:2px;font-size:13px;text-transform:uppercase;text-decoration:none}
+  .site-strip{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+  .site-strip .cell{padding:30px 20px;text-align:center;border-right:1px solid var(--line)}
+  .site-strip .cell:last-child{border-right:none}
+  .ph{height:96px;border-radius:6px;margin-bottom:14px;background:linear-gradient(135deg,#1d1812,#2a2117);display:flex;align-items:center;justify-content:center;font-size:30px}
+  .site-strip .t{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold-bright)}.site-strip .s{color:var(--muted);font-size:12.5px;margin-top:3px}
+  @media(max-width:720px){.site-strip{grid-template-columns:1fr}.site-strip .cell{border-right:none;border-bottom:1px solid var(--line)}}
+
+  /* IG MOCK */
+  .ig{max-width:380px;margin:0 auto;border:1px solid var(--line-strong);border-radius:16px;overflow:hidden;background:var(--bg-2)}
+  .ig-head{display:flex;align-items:center;gap:16px;padding:22px}
+  .ig-av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#7a5e1f);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond';font-weight:600;font-size:26px;color:#0c0b0a;flex-shrink:0}
+  .ig-meta .h{font-size:15px;color:var(--ivory);font-weight:500}
+  .ig-meta .b{font-size:13px;color:var(--ivory-dim);margin-top:2px}
+  .ig-meta .b span{color:var(--gold)}
+  .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;padding:0 3px 3px}
+  .ig-grid .t{aspect-ratio:1;background:linear-gradient(135deg,#1a1510,#272015);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+  .ig-grid .t .e{font-size:28px}
+  .ig-grid .t .l{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--ivory-dim);text-align:center;padding:0 4px}
+
+  /* FORMAT CARDS */
+  .fmt{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:760px){.fmt{grid-template-columns:1fr}}
+  .fcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);transition:transform .25s,border-color .25s}
+  .fcard:hover{transform:translateY(-5px);border-color:var(--line-strong)}
+  .fcard .thumb{aspect-ratio:9/13;background:linear-gradient(160deg,#221a10,#0e0b07);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative}
+  .fcard .thumb .big{font-size:48px}
+  .fcard .thumb .play{position:absolute;bottom:12px;left:12px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--ivory-dim);background:rgba(0,0,0,.4);padding:4px 10px;border-radius:20px}
+  .fcard .cap{padding:16px 20px}
+  .fcard .cap .t{font-family:'Cormorant Garamond';font-size:20px;color:var(--gold-bright);font-weight:500}
+  .fcard .cap .s{font-size:13.5px;color:var(--ivory-dim);margin-top:4px}
+
+  .offer{max-width:580px;margin:30px auto 0;background:linear-gradient(180deg,var(--bg-3),var(--card));border:1px solid var(--gold);box-shadow:0 0 0 1px rgba(201,164,76,.22) inset;border-radius:var(--radius);padding:38px 36px}
+  .offer .pill{display:inline-block;font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:#0c0b0a;background:var(--gold);padding:5px 14px;border-radius:30px;margin-bottom:18px}
+  .offer h3{font-family:'Cormorant Garamond';font-size:34px;font-weight:600;color:var(--gold-bright);letter-spacing:1px}
+  .offer .price{margin:8px 0 2px}
+  .offer .price b{font-family:'Cormorant Garamond';font-size:48px;font-weight:600;color:var(--ivory)}
+  .offer .price span{color:var(--ivory-dim);font-size:16px}
+  .offer .allin{color:var(--gold);font-size:12px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+  .offer ul{list-style:none;margin:18px 0}
+  .offer ul li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:var(--ivory-dim);margin-bottom:13px}
+  .offer ul li i{color:var(--gold);font-style:normal;margin-top:3px}
+  .offer ul li b{color:var(--ivory);font-weight:500}
+  .offer .deal{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;font-size:14px;color:var(--ivory-dim);margin-top:6px}
+  .offer .deal b{color:var(--ivory);font-weight:500}
+  .close{background:radial-gradient(760px 440px at 50% 0%,rgba(201,164,76,.10),transparent 60%);text-align:center}
+  .close h2{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5.5vw,56px);font-weight:500;max-width:20ch;margin:0 auto;letter-spacing:.5px}.close h2 em{font-style:italic;color:var(--gold)}
+  .close .humble{color:var(--ivory-dim);max-width:56ch;margin:24px auto 0;font-size:17px}
+  .contact{margin-top:40px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 30px;border-radius:2px;text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;font-weight:400;transition:.2s}
+  .btn-primary{background:var(--gold);color:#0c0b0a}.btn-primary:hover{background:var(--gold-bright)}
+  .btn-ghost{border:1px solid var(--line-strong);color:var(--ivory)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  footer{text-align:center;padding:36px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}footer b{color:var(--ivory-dim);font-weight:400}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="brand">Frollo <b>×</b> Enrico</div>
+  <div class="links"><a href="#sguardo">Lo sguardo</a><a href="#sito">Il sito</a><a href="#social">I social</a><a href="#proposta">La proposta</a><a href="#contatti">Parliamone</a></div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Una proposta per Gioielleria Frollo · Venezia</div>
+    <h1 class="serif">Dal 1910 a Venezia.<br>Online, <em>all'altezza del nome.</em></h1>
+    <p class="sub">Una maison con la vostra storia merita una presenza digitale curata quanto le vostre vetrine.
+      Ho immaginato come potrebbe essere — con rispetto.</p>
+    <div class="by">Un'idea di <b>Enrico Di Franco</b> · per <b>Gioielleria Frollo</b></div>
+    <a href="#sguardo" class="scrollcue"><span class="dot"></span> Scorri</a>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<!-- SGUARDO -->
+<section id="sguardo">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Quello che vedo</div>
+      <h2 class="big">Un nome che vale. <em>Online, ancora disperso.</em></h2>
+      <p class="lead">Più di un secolo di storia, nel cuore di Venezia: orologi di lusso, alta gioielleria, perizie.
+        Un patrimonio di fiducia che pochissimi possono vantare. Il sito e l'e-commerce ci sono — ma la presentazione non rende ancora giustizia ai pezzi che trattate.</p>
+    </div>
+    <div class="grid cards-3 reveal" style="margin-top:46px">
+      <div class="card"><h3>Dal 1910</h3><p>Una storia di famiglia che attraversa generazioni — Rolex, Cartier, Omega, alta gioielleria, perizie. Un capitale di credibilità raro.</p></div>
+      <div class="card"><h3>Il sito c'è, ma è datato</h3><p>Un e-commerce su template standard, con foto statiche e poco valorizzate. Un Rolex Submariner o un Datejust meritano tutt'altra messa in scena.</p></div>
+      <div class="card"><h3>I social dispersi</h3><p>Due profili Instagram, due pagine Facebook: nessuna identità unica e riconoscibile, per una maison del vostro livello.</p></div>
+    </div>
+    <p class="lead reveal" style="margin-top:30px">L'idea è una sola: <span style="color:var(--ivory)">portare sito, e-commerce e social al livello dei vostri pezzi</span>. Orologi di questo calibro, presentati come si deve, esprimono il loro valore al massimo — e il nome Frollo va dove merita: tra le grandi maison, ben oltre Venezia.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SITO -->
+<section id="sito">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">La vetrina</div>
+      <h2 class="big">Un e-commerce <em>all'altezza dei pezzi.</em></h2>
+      <p class="lead">Il vostro e-commerce c'è già: l'idea è un restyling che lo porti al livello degli orologi che vende — foto e video curati, schede pulite, ogni pezzo nella sua luce. Ecco un assaggio della direzione.</p>
+    </div>
+    <div class="browser reveal" style="margin-top:40px">
+      <div class="bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="url">gioielleriafrollo.it</span></div>
+      <div class="sitenav"><span class="lg">FROLLO</span><span class="mn"><span>Maison</span><span>Orologi</span><span>Gioielli</span><span>Perizie</span><span>Contatti</span></span></div>
+      <div class="site-hero">
+        <div class="tagmini">Venezia · dal 1910</div>
+        <h3>L'arte del tempo e della <em>luce.</em></h3>
+        <p>Orologi di lusso e alta gioielleria, selezionati da quattro generazioni nel cuore di Venezia.</p>
+        <a href="#social" class="site-cta">Scopri la maison</a>
+      </div>
+      <div class="site-strip">
+        <div class="cell"><div class="ph">⌚</div><div class="t">Orologi di lusso</div><div class="s">Rolex, Cartier, Omega — vintage e moderni</div></div>
+        <div class="cell"><div class="ph">💍</div><div class="t">Alta gioielleria</div><div class="s">Diamanti, creazioni e pezzi unici</div></div>
+        <div class="cell"><div class="ph">📜</div><div class="t">Perizie</div><div class="s">Valutazioni e competenza dal 1910</div></div>
+      </div>
+    </div>
+    <p class="note reveal" style="text-align:center;margin-top:16px">Mockup dimostrativo del restyling — al posto delle icone, fotografie e video professionali dei vostri orologi e gioielli.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOCIAL -->
+<section id="social">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Instagram e TikTok, all'altezza</div>
+      <h2 class="big">Le vetrine dove <em>vi scoprono.</em></h2>
+      <p class="lead">Instagram e TikTok sono i due posti dove oggi anche l'alta gioielleria genera traffico e visualizzazioni — e costruisce credibilità: per chi già vi ama, e per chi da fuori non vi ha mai visti. La prima cosa è riunire i profili sparsi in <span style="color:var(--ivory)">un'unica identità</span>, degna del vostro negozio storico.</p>
+    </div>
+
+    <div class="grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center;margin-top:44px">
+      <div class="ig">
+        <div class="ig-head">
+          <div class="ig-av">F</div>
+          <div class="ig-meta"><div class="h">gioielleria_frollo</div><div class="b"><span>Maison dal 1910 · Venezia</span><br>Orologi di lusso · Alta gioielleria · Perizie</div></div>
+        </div>
+        <div class="ig-grid">
+          <div class="t"><span class="e">⌚</span><span class="l">Orologi</span></div>
+          <div class="t"><span class="e">💍</span><span class="l">Anelli</span></div>
+          <div class="t"><span class="e">💎</span><span class="l">Diamanti</span></div>
+          <div class="t"><span class="e">📿</span><span class="l">Collane</span></div>
+          <div class="t"><span class="e">🕰️</span><span class="l">Vintage</span></div>
+          <div class="t"><span class="e">✨</span><span class="l">Dettagli</span></div>
+          <div class="t"><span class="e">🏛️</span><span class="l">La storia</span></div>
+          <div class="t"><span class="e">🚤</span><span class="l">Venezia</span></div>
+          <div class="t"><span class="e">🤍</span><span class="l">Pezzi unici</span></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="serif" style="font-size:26px;color:var(--gold-bright);font-weight:500">Instagram — da due account a una maison sola</h3>
+        <p style="color:var(--ivory-dim);margin-top:12px;font-size:16px">Un solo profilo, una palette coerente, ogni pezzo nella sua luce migliore.
+          Chi vi scopre — un turista, un collezionista, un cliente da fuori — capisce in un istante di essere davanti a una <b style="color:var(--ivory);font-weight:500">grande maison</b>, non a un negozio qualunque.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top:56px">
+      <h3 class="serif" style="font-size:26px;color:var(--gold-bright);font-weight:500;margin-bottom:6px">TikTok — dove la storia viaggia</h3>
+      <p style="color:var(--ivory-dim);font-size:16px;max-width:60ch;margin-bottom:26px">La piattaforma che porta i vostri pezzi davanti a un pubblico nuovo, anche fuori Venezia — e gli stessi contenuti vivono benissimo anche su Instagram. Tre racconti, curati e cinematografici, per emozionare:</p>
+      <div class="fmt">
+        <div class="fcard"><div class="thumb"><span class="big">⌚</span><span class="play">▶ Il dettaglio</span></div><div class="cap"><div class="t">Macro d'autore</div><div class="s">Quadranti, lancette, carati: il dettaglio in primo piano, illuminato come un gioiello da museo.</div></div></div>
+        <div class="fcard"><div class="thumb"><span class="big">🏛️</span><span class="play">▶ La storia</span></div><div class="cap"><div class="t">Dal 1910</div><div class="s">Quattro generazioni, Venezia, l'eredità di un nome. Il racconto che nessun competitor può copiare.</div></div></div>
+        <div class="fcard"><div class="thumb"><span class="big">🚤</span><span class="play">▶ Venezia</span></div><div class="cap"><div class="t">Il fascino della città</div><div class="s">La laguna, la luce, l'eleganza. Frollo e Venezia: due bellezze senza tempo, una sola storia.</div></div></div>
+      </div>
+    </div>
+
+    <p class="lead reveal" style="margin-top:44px">E quando un collezionista, ovunque sia, cerca <span style="color:var(--ivory)">una gioielleria di prestigio a Venezia</span>,
+      il nome che deve trovare — curato, autorevole, riconoscibile — è il vostro.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LA PROPOSTA -->
+<section id="proposta">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">La proposta</div>
+      <h2 class="big">Sito e social, <em>in un'unica cura.</em></h2>
+      <p class="lead">Un solo referente per l'intera presenza online di Frollo — portata, ogni giorno, al livello dei vostri pezzi.</p>
+    </div>
+    <div class="offer reveal">
+      <span class="pill">Maison · tutto incluso</span>
+      <h3>Maison</h3>
+      <div class="price"><b>1.290€</b> <span>/ mese</span></div>
+      <div class="allin">Sito + social · nessun extra</div>
+      <ul>
+        <li><i>◆</i><div><b>Restyling completo</b> di sito ed e-commerce — schede pulite, foto professionali e rendering 3D degli orologi</div></li>
+        <li><i>◆</i><div><b>Instagram &amp; TikTok</b> — contenuti cinematografici, gestione completa, un brand solo</div></li>
+        <li><i>◆</i><div><b>Fino a 3 uscite al mese</b> a Venezia per gli shooting</div></li>
+        <li><i>◆</i><div><b>Disponibilità quotidiana</b> — contatto diretto WhatsApp, sempre</div></li>
+      </ul>
+      <div class="deal"><b>6 mesi anticipati: 6.900€</b> — circa 1.150€/mese.</div>
+    </div>
+    <p class="note reveal" style="text-align:center;margin:18px auto 0;max-width:60ch">L'intera vetrina online di una maison — sito e social — curata ogni giorno da un'unica mano. Un punto di partenza: ogni cosa si tara sulle vostre esigenze.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CLOSING -->
+<section id="contatti" class="close">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 class="serif">Una maison senza tempo merita <em>una vetrina senza tempo.</em></h2>
+      <p class="humble">Quella che avete visto è solo una bozza, per dare l'idea della direzione. Il sito, il profilo e i contenuti si costruiscono insieme,
+        nel pieno rispetto del vostro stile e della vostra storia. Senza impegno: se vi va, sarei felice di conoscervi.</p>
+      <div class="contact">
+        <a class="btn btn-primary" href="https://wa.me/393282604931?text=Ciao%20Enrico%2C%20ho%20visto%20la%20proposta%20per%20Frollo!" target="_blank">Scrivimi su WhatsApp</a>
+        <a class="btn btn-ghost" href="https://enricodifranco.it" target="_blank">enricodifranco.it</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><b>Enrico Di Franco</b> · comunicazione digitale — siti, social, contenuti<br>Un'idea pensata per Gioielleria Frollo · Venezia</footer>
+
+<script>
+  const nav=document.getElementById('nav');
+  addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
