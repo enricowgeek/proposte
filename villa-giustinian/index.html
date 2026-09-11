@@ -973,8 +973,18 @@ document.addEventListener('click', function(ev){
   VGtrack('prenota_click', {origine: a.id || a.className, arrivo: i&&i.value, partenza: o&&o.value});
 });
 
-/* ---------- MODULO CONTATTO (Netlify Forms, nessun backend) ---------- */
-(function(){
+/* ---------- MODULO CONTATTO ----------
+   Nessun backend nostro: gli invii vanno a Web3Forms (chiave = email di destinazione) e arrivano via email.
+   Con chiave vuota si usa Netlify Forms (POST a '/'), valido solo se il sito gira su Netlify. */
+window.VG_FORM_KEY = '';
+window.VGformPost = function(fields){
+  var f = Object.assign({}, fields);
+  var url = '/';
+  if (window.VG_FORM_KEY) { url = 'https://api.web3forms.com/submit'; f.access_key = window.VG_FORM_KEY; f.subject = 'Villa Giustinian — nuovo contatto (' + (f.origine||'sito') + ')'; f.from_name = 'Sito Villa Giustinian'; }
+  return fetch(url, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded', 'Accept':'application/json'}, body:new URLSearchParams(f).toString()})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r; });
+};
+document.addEventListener('DOMContentLoaded', function(){
   var box=document.getElementById('lead'), f=document.getElementById('leadForm');
   if(!box||!f) return;
   f.addEventListener('submit', function(ev){
@@ -982,13 +992,13 @@ document.addEventListener('click', function(ev){
     var i=document.getElementById('in'), o=document.getElementById('out');
     var li=document.getElementById('leadIn'), lo=document.getElementById('leadOut');
     if(li&&i) li.value=i.value||''; if(lo&&o) lo.value=o.value||'';
-    var data=new URLSearchParams(new FormData(f)).toString();
+    var data={}; new FormData(f).forEach(function(v,k){ data[k]=v; });
     var btn=f.querySelector('button'); btn.disabled=true; btn.textContent='Invio…';
-    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data})
-      .then(function(r){ if(!r.ok) throw new Error(r.status); box.classList.add('sent'); VGtrack('lead_inviato', {arrivo:li&&li.value, partenza:lo&&lo.value}); })
+    VGformPost(data)
+      .then(function(){ box.classList.add('sent'); VGtrack('lead_inviato', {arrivo:li&&li.value, partenza:lo&&lo.value}); })
       .catch(function(){ btn.disabled=false; btn.textContent='Riprova'; });
   });
-})();
+});
 </script>
 <script>
 /* POST INSTAGRAM REALI — incolla qui i codici degli ultimi 3 post e appaiono da soli.
@@ -1482,11 +1492,11 @@ var IG_POSTS = [];
       if(!chk.checked){ chk.parentNode.style.color='var(--brass)'; return; }
       var canale = okTel && okMail ? 'email+telefono' : (okTel ? 'telefono' : 'email');
       var i=document.getElementById('in'), o=document.getElementById('out');
-      var body=new URLSearchParams({'form-name':'contatto-villa', email:okMail?e:'', telefono:okTel?t:'', esigenza:need||'non indicata', canale:canale,
-        arrivo:(i&&i.value)||'', partenza:(o&&o.value)||'', consenso:'si', origine:'chatbot:'+(reason||'')}).toString();
+      var fields={'form-name':'contatto-villa', email:okMail?e:'', telefono:okTel?t:'', esigenza:need||'non indicata', canale:canale,
+        arrivo:(i&&i.value)||'', partenza:(o&&o.value)||'', consenso:'si', origine:'chatbot:'+(reason||'')};
       btn.disabled=true; btn.textContent='Invio…';
-      fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
-        .then(function(r){ if(!r.ok) throw 0;
+      VGformPost(fields)
+        .then(function(){
           leadDone=true; leadCard=null; try{ sessionStorage.setItem('vg_lead_done','1'); }catch(_){}
           var how = okTel && okMail ? 'via email o al numero che ci hai lasciato' : (okTel ? 'al numero che ci hai lasciato, su WhatsApp o con una chiamata' : 'via email');
           m.innerHTML='<div class="lt">Perfetto, grazie! 🙌</div><div class="ls">Ti ricontattiamo a breve '+how+'. Prenotando dal sito la piscina è inclusa e hai la miglior tariffa garantita.</div>';
