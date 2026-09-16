@@ -35,7 +35,7 @@ h1,h2,h3{margin:0; line-height:1.05}
   background:var(--arancio);
 }
 #foglie{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.13}
-#palloncini{position:fixed; inset:0; z-index:1; pointer-events:none}
+#palloncini{position:fixed; top:0; left:0; width:100vw; height:100lvh; z-index:1; pointer-events:none}
 .contenuto{position:relative; z-index:2}
 
 /* ---------- titoli stile logo ---------- */
@@ -94,38 +94,36 @@ h1,h2,h3{margin:0; line-height:1.05}
 
 /* ---------- hero ---------- */
 .hero{min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center;
-  padding:104px 20px 70px; position:relative}
-.hero-inner{max-width:760px; margin:0 auto}
-.insegna{
-  position:relative; isolation:isolate;
-  margin-top:70px; background:var(--crema); border:3px solid var(--verde-scuro); border-radius:30px;
-  padding:32px 26px 30px; box-shadow:0 6px 0 var(--verde-scuro);
+  padding:110px 20px 80px; position:relative}
+.hero-inner{max-width:900px; margin:0 auto}
+.marchio{margin:0; line-height:.88; font-size:clamp(4.2rem,15vw,11.5rem); letter-spacing:.01em}
+.marchio .parola{display:inline-block; margin:0 .08em;
+  -webkit-text-stroke:.022em #3d1a00;
+  filter:drop-shadow(0 .04em 0 rgba(61,26,0,.55)) drop-shadow(0 .12em .1em rgba(61,26,0,.25));
+  animation:entra .8s cubic-bezier(.34,1.56,.64,1) both}
+.marchio .parola:nth-child(1){animation-delay:.15s}
+.marchio .parola:nth-child(2){animation-delay:.38s}
+@keyframes entra{
+  from{opacity:0; transform:translateY(.5em) scale(.55) rotate(-5deg)}
+  to{opacity:1; transform:none}
 }
-/* foto del posto: appena accennate, affiorano al passaggio del mouse */
-.scatto{position:absolute; inset:0; z-index:0; border-radius:inherit; overflow:hidden; background-size:cover; background-position:center;
-  opacity:.16; transition:opacity .5s ease, transform .6s ease; pointer-events:none}
-.insegna:hover .scatto,.scheda:hover .scatto{opacity:.4; transform:scale(1.04)}
-@media (hover:none){                      /* col dito non c'è il passaggio del mouse: si vedono già da sole */
-  .scatto,.scheda .scatto,.pannello .scatto{opacity:.26}
+.citta{margin:.2em 0 0; font-family:'Luckiest Guy',cursive; font-size:clamp(1.3rem,3.4vw,2.2rem); letter-spacing:.32em;
+  text-indent:.32em; color:#fff; text-shadow:0 2px 0 rgba(107,45,0,.6), 0 0 16px rgba(107,45,0,.5);
+  animation:sale .7s ease-out both; animation-delay:.7s}
+.claim{margin:22px auto 0; max-width:30ch; font-weight:800; font-size:clamp(1.15rem,2.8vw,1.55rem); line-height:1.3; color:#fff;
+  text-shadow:0 2px 0 rgba(107,45,0,.6), 0 0 18px rgba(107,45,0,.55), 0 4px 14px rgba(107,45,0,.4);
+  animation:sale .7s ease-out both; animation-delay:.85s}
+.info-riga{margin:18px 0 0; display:flex; flex-wrap:wrap; justify-content:center; gap:8px 26px;
+  font-weight:800; font-size:clamp(.95rem,2vw,1.08rem); color:#fff8ea; text-shadow:0 1px 0 rgba(107,45,0,.6), 0 0 14px rgba(107,45,0,.5);
+  animation:sale .7s ease-out both; animation-delay:1s}
+.info-riga span{display:inline-flex; align-items:center; gap:.4em}
+.info-riga svg{width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round}
+.hero-cta{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px;
+  animation:sale .7s ease-out both; animation-delay:1.15s}
+@keyframes sale{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .marchio .parola,.citta,.claim,.info-riga,.hero-cta{animation:none}
 }
-.insegna > *:not(.scatto),
-.scheda > *:not(.scatto){position:relative; z-index:1}
-.scheda .scatto{opacity:.15}
-.scheda li,.scheda .testata h3,.insegna .apertura,.insegna .indirizzo{text-shadow:0 1px 3px rgba(255,253,247,.95), 0 0 8px rgba(255,253,247,.8)}
-.stemma{width:clamp(112px,20vw,150px); height:auto; aspect-ratio:1; border-radius:50%; margin:-86px auto 14px;
-  border:4px solid var(--verde-scuro); box-shadow:0 5px 0 var(--verde-scuro);
-  background:var(--arancio); object-fit:cover}
-.hero h1{font-size:clamp(1.62rem,5.4vw,3.3rem)}
-.hero h1 .sotto{display:block; font-size:.52em; margin-top:.28em}
-.fascia{display:inline-flex; align-items:center; gap:12px; margin:18px auto 0; padding:10px 20px;
-  background:#fff; border-radius:18px; border:2px solid #dbe8c4; text-align:left}
-.fascia svg{width:30px; height:30px; flex:0 0 30px; stroke:var(--verde); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
-.fascia span{display:block; font-weight:700; font-size:.9rem; color:#3d5a38; line-height:1.2}
-.fascia b{display:block; font-size:clamp(1.25rem,4vw,1.5rem); color:var(--arancio); line-height:1.15; white-space:nowrap}
-.indirizzo{margin:6px 0 0; font-weight:700; color:#3d5a38; display:flex; align-items:center; justify-content:center; gap:.4em}
-.indirizzo svg{width:19px; height:19px; stroke:var(--verde); fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round}
-.hero-cta{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:26px}
-
 
 /* ---------- sezioni ---------- */
 .wrap{width:100%; max-width:var(--max); margin:0 auto; padding:0 20px}
@@ -295,7 +293,7 @@ footer .social a:hover svg{stroke:var(--verde-scuro)}
 footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 
 /* barra mobile */
-.barra{position:fixed; left:0; right:0; bottom:0; z-index:70; display:none; gap:10px;
+.barra{position:fixed; left:0; right:0; bottom:0; z-index:70; display:none; gap:10px; transform:translateY(110%); transition:transform .35s ease;
   padding:10px 14px calc(10px + env(safe-area-inset-bottom));
   background:rgba(253,251,233,.96); backdrop-filter:blur(10px); border-top:3px solid var(--verde-scuro)}
 .barra .btn{flex:1; font-size:1rem; padding:.6em .8em; min-height:52px}
@@ -325,10 +323,13 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
   .menu .btn{margin:12px 0 0; border-bottom:3px solid #4a1d05}
   .burger{display:grid}
   .barra{display:flex}
+  .barra.visibile{transform:none}
   .sec{padding:52px 0}
   .striscia .griglia{grid-template-columns:repeat(2,1fr); gap:22px}
   .due{grid-template-columns:1fr}
-  .insegna{padding:26px 18px 24px; border-radius:28px}
+  .hero{padding:96px 18px 60px}
+  .info-riga{flex-direction:column; gap:8px}
+  .hero-cta .btn{width:100%}
 }
 </style>
 </head>
@@ -393,20 +394,22 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-inner">
-    <div class="insegna">
-      <div class="scatto" style="background-image:url(foto/hero.webp)"></div>
-      <img class="stemma" src="logo-giumapark.webp" width="150" height="150" alt="Logo GiumaPark" fetchpriority="high">
-      <h1 class="display">Playground e feste<br>per bambini a Mestre</h1>
-      <div class="fascia">
-        <svg aria-hidden="true"><use href="#i-orologio"/></svg>
-        <div><span>Aperto tutti i giorni</span><b>16:00&nbsp;–&nbsp;19:00</b></div>
-      </div>
-      <p class="indirizzo"><svg aria-hidden="true"><use href="#i-pin"/></svg> Via Don Federico Tosatto 5, Mestre</p>
-      <div class="hero-cta">
-        <a class="btn btn-rosso btn-lg" href="#richiesta">Prenota una festa</a>
-        <a class="btn btn-chiaro btn-lg" href="tel:+393515878573">Chiama ora</a>
-      </div>
-
+    <h1 class="marchio" aria-label="GiumaPark">
+      <span class="parola display">Giuma</span>
+      <span class="parola display">Park</span>
+    </h1>
+    <p class="citta">Mestre</p>
+    <p class="claim">Playground al coperto e feste per bambini</p>
+    <p class="info-riga">
+      <span><svg aria-hidden="true"><use href="#i-pin"/></svg> Via Don Federico Tosatto 5</span>
+      <span><svg aria-hidden="true"><use href="#i-orologio"/></svg> Aperto tutti i giorni 16:00 – 19:00</span>
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-verde btn-lg" href="https://wa.me/393515878573" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke="#fff" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-chat"/></svg>
+        Scrivici su WhatsApp
+      </a>
+      <a class="btn btn-chiaro btn-lg" href="#richiesta">Compila il modulo</a>
     </div>
   </div>
 </section>
@@ -743,8 +746,15 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     var r = forma === 'tondo'
       ? (piccolo ? 13 + Math.random() * 11 : 16 + Math.random() * 16)
       : (piccolo ? 17 + Math.random() * 8  : 30 + Math.random() * 16);
+    var x;
+    if (W >= 900){                                    // su schermo largo volano ai lati, il centro resta ai testi
+      var fascia = W * 0.24;
+      x = Math.random() < .5 ? 24 + Math.random() * (fascia - 48) : W - fascia + 24 + Math.random() * (fascia - 48);
+    } else {
+      x = 20 + Math.random() * (W - 40);
+    }
     return {
-      x: 20 + Math.random() * (W - 40),
+      x: x,
       y: sotto ? H + r + Math.random() * H * 0.6 : Math.random() * H,
       r: r,
       forma: forma,
@@ -834,19 +844,21 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       }
     }
   }
-  var frame = 0;
+  var frame = 0, ultimoT = 0;
   function ciclo(t){
+    var dt = ultimoT ? Math.min((t - ultimoT) / 16.67, 2.5) : 1;   // frame equivalenti, con tetto dopo una pausa
+    ultimoT = t;
     if (++frame % 20 === 0) assicuraSagome();
     ctx.clearRect(0, 0, W, H);
     for (var i = 0; i < palle.length; i++){
       var p = palle[i];
-      if (p !== trascinato) p.y -= p.v;
+      if (p !== trascinato) p.y -= p.v * dt;
       if (p.y < -p.r * 3){ palle[i] = nuovaPalla(true); continue; }
       disegnaPalla(p, t);
     }
     for (var j = pezzi.length - 1; j >= 0; j--){
       var q = pezzi[j];
-      q.x += q.vx; q.y += q.vy; q.vy += 0.16; q.vita -= 0.018;
+      q.x += q.vx * dt; q.y += q.vy * dt; q.vy += 0.16 * dt; q.vita -= 0.018 * dt;
       if (q.vita <= 0){ pezzi.splice(j, 1); continue; }
       ctx.globalAlpha = Math.max(q.vita, 0);
       ctx.fillStyle = q.col;
@@ -916,7 +928,13 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
   }
   if (!ridotto){
     dimensiona(); popola(); requestAnimationFrame(ciclo);
-    addEventListener('resize', function(){ dimensiona(); popola(); }, {passive:true});
+    var ultimaW = W, ultimaH = H;
+    addEventListener('resize', function(){
+      var dW = Math.abs(innerWidth - ultimaW), dH = Math.abs(innerHeight - ultimaH);
+      if (dW < 40 && dH < 220) return;            // barra del browser che va e viene: non si tocca nulla
+      dimensiona(); popola();
+      ultimaW = innerWidth; ultimaH = innerHeight;
+    }, {passive:true});
     addEventListener('pointerdown', giu, {passive:true});
     addEventListener('pointermove', muovi, {passive:true});
     addEventListener('pointerup', su, {passive:true});
@@ -1071,6 +1089,14 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       scoppiaVetrina(e.target.closest('.pall-wrap'));
     });
   }
+
+  /* ---------- barra contatti: compare solo dopo l'hero ---------- */
+  var barra = document.querySelector('.barra'), hero = document.getElementById('top');
+  if (barra && hero && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      barra.classList.toggle('visibile', !es[0].isIntersecting);
+    }, {threshold:.25}).observe(hero);
+  } else if (barra){ barra.classList.add('visibile'); }
 
   document.getElementById('anno').textContent = new Date().getFullYear();
 })();
