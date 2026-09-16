@@ -98,33 +98,36 @@ h1,h2,h3{margin:0; line-height:1.05}
 .hero{min-height:100svh; display:flex; align-items:center; justify-content:center; text-align:center;
   padding:110px 20px 80px; position:relative}
 .hero-inner{max-width:900px; margin:0 auto}
+.medaglione{display:block; width:clamp(96px,14vw,130px); height:auto; aspect-ratio:1; border-radius:50%;
+  margin:0 auto 18px; border:4px solid #fff; box-shadow:0 6px 0 rgba(61,26,0,.35), 0 14px 30px -10px rgba(61,26,0,.5);
+  animation:entra .7s cubic-bezier(.34,1.56,.64,1) both}
 .marchio{margin:0; line-height:.88; font-size:clamp(4.2rem,15vw,11.5rem); letter-spacing:.01em}
 .marchio .parola{display:inline-block; margin:0 .08em;
   -webkit-text-stroke:.022em #3d1a00;
   filter:drop-shadow(0 .04em 0 rgba(61,26,0,.55)) drop-shadow(0 .12em .1em rgba(61,26,0,.25));
   animation:entra .8s cubic-bezier(.34,1.56,.64,1) both}
-.marchio .parola:nth-child(1){animation-delay:.15s}
-.marchio .parola:nth-child(2){animation-delay:.38s}
+.marchio .parola:nth-child(1){animation-delay:.32s}
+.marchio .parola:nth-child(2){animation-delay:.52s}
 @keyframes entra{
   from{opacity:0; transform:translateY(.5em) scale(.55) rotate(-5deg)}
   to{opacity:1; transform:none}
 }
 .citta{margin:.2em 0 0; font-family:'Luckiest Guy',cursive; font-size:clamp(1.3rem,3.4vw,2.2rem); letter-spacing:.32em;
   text-indent:.32em; color:#fff; text-shadow:0 2px 0 rgba(107,45,0,.6), 0 0 16px rgba(107,45,0,.5);
-  animation:sale .7s ease-out both; animation-delay:.7s}
+  animation:sale .7s ease-out both; animation-delay:.85s}
 .claim{margin:22px auto 0; max-width:30ch; font-weight:800; font-size:clamp(1.15rem,2.8vw,1.55rem); line-height:1.3; color:#fff;
   text-shadow:0 2px 0 rgba(107,45,0,.6), 0 0 18px rgba(107,45,0,.55), 0 4px 14px rgba(107,45,0,.4);
-  animation:sale .7s ease-out both; animation-delay:.85s}
+  animation:sale .7s ease-out both; animation-delay:1s}
 .info-riga{margin:18px 0 0; display:flex; flex-wrap:wrap; justify-content:center; gap:8px 26px;
   font-weight:800; font-size:clamp(.95rem,2vw,1.08rem); color:#fff8ea; text-shadow:0 1px 0 rgba(107,45,0,.6), 0 0 14px rgba(107,45,0,.5);
-  animation:sale .7s ease-out both; animation-delay:1s}
+  animation:sale .7s ease-out both; animation-delay:1.12s}
 .info-riga span{display:inline-flex; align-items:center; gap:.4em}
 .info-riga svg{width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round}
 .hero-cta{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px;
-  animation:sale .7s ease-out both; animation-delay:1.15s}
+  animation:sale .7s ease-out both; animation-delay:1.28s}
 @keyframes sale{from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:none}}
 @media (prefers-reduced-motion:reduce){
-  .marchio .parola,.citta,.claim,.info-riga,.hero-cta{animation:none}
+  .medaglione,.marchio .parola,.citta,.claim,.info-riga,.hero-cta{animation:none}
 }
 
 /* ---------- sezioni ---------- */
@@ -329,7 +332,9 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
   .sec{padding:52px 0}
   .striscia .griglia{grid-template-columns:repeat(2,1fr); gap:22px}
   .due{grid-template-columns:1fr}
-  .hero{padding:96px 18px 60px}
+  .hero{padding:92px 18px 56px}
+  .marchio{font-size:clamp(3.6rem,17vw,4.6rem)}
+  .medaglione{margin-bottom:12px}
   .info-riga{flex-direction:column; gap:8px}
   .hero-cta{gap:14px; align-items:center}
   .hero-cta .btn-chiaro{flex:1; min-width:0}
@@ -398,6 +403,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-inner">
+    <img class="medaglione" src="logo-giumapark.webp" width="130" height="130" alt="" fetchpriority="high">
     <h1 class="marchio" aria-label="GiumaPark">
       <span class="parola display">Giuma</span>
       <span class="parola display">Park</span>
