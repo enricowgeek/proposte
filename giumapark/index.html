@@ -174,11 +174,12 @@ h1,h2,h3{margin:0; line-height:1.05}
   background:linear-gradient(100deg,var(--crema) 0%,var(--crema) 36%,rgba(255,253,247,.7) 50%,rgba(255,253,247,0) 64%)}
 .store-testo{max-width:min(560px,58%); position:relative; z-index:2}
 .grappolo{position:absolute; right:-3%; bottom:-4%; width:68%; aspect-ratio:2/1; z-index:0}
-.pall-wrap{position:absolute; display:block; animation:galleggia ease-in-out infinite; will-change:transform}
+.pall-wrap{position:absolute; display:block; animation:galleggia ease-in-out infinite}
+@media (hover:hover){ .pall-wrap{will-change:transform} }
 .pall-wrap img{height:100%; width:auto; display:block; user-select:none; -webkit-user-drag:none;
   transition:transform .25s cubic-bezier(.34,1.56,.64,1), filter .2s}
 .pall-wrap.scoppiato img{transform:scale(.35); opacity:0; transition:transform .16s ease-in, opacity .16s ease-in}
-.pall-wrap.gonfia img{animation:gonfiaggio 1.05s linear both; transform-origin:50% 94%; will-change:transform}
+.pall-wrap.gonfia img{animation:gonfiaggio 1.05s linear both; transform-origin:50% 94%}
 @keyframes gonfiaggio{
   0%{transform:scale(0.1400,0.1400) rotate(0.00deg); opacity:0.00}
   4%{transform:scale(0.3305,0.2798) rotate(0.48deg); opacity:0.40}
@@ -441,7 +442,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 
     <div class="tris">
       <article class="scheda rv">
-        <div class="scatto" style="background-image:url(foto/playground.webp)"></div>
+        <div class="scatto" data-bg="foto/playground.webp"></div>
         <div class="testata t-verde">
           <span class="ico"><svg aria-hidden="true"><use href="#i-scivolo"/></svg></span>
           <h3>Playground</h3>
@@ -457,7 +458,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       </article>
 
       <article class="scheda rv d1" id="compleanni">
-        <div class="scatto" style="background-image:url(foto/compleanni.webp)"></div>
+        <div class="scatto" data-bg="foto/compleanni.webp"></div>
         <div class="testata t-rosso">
           <span class="ico"><svg aria-hidden="true"><use href="#i-torta"/></svg></span>
           <h3>Compleanni</h3>
@@ -473,7 +474,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       </article>
 
       <article class="scheda rv d2" id="estate">
-        <div class="scatto" style="background-image:url(foto/estivi.webp)"></div>
+        <div class="scatto" data-bg="foto/estivi.webp"></div>
         <div class="testata t-azzurro">
           <span class="ico"><svg aria-hidden="true"><use href="#i-sole"/></svg></span>
           <h3>Centri estivi</h3>
@@ -501,7 +502,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     <h2 class="rv" style="margin-top:64px">La festa di compleanno</h2>
 
     <div class="store rv">
-      <div class="scatto" style="background-image:url(foto/playground.webp)"></div>
+      <div class="scatto" data-bg="foto/playground.webp"></div>
       <div class="store-testo">
         <div class="testata t-rosso" style="border:0; padding:0 0 14px">
           <span class="ico"><svg aria-hidden="true"><use href="#i-torta"/></svg></span>
@@ -565,23 +566,23 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       </div>
 
       <div class="grappolo" id="grappolo">
-        <span class="pall-wrap" style="left:2.3%;  top:57.6%; height:30.3%; animation-delay:-0.0s; animation-duration:4.4s"><img src="palloncini/stella.webp" alt="Palloncino a stella" draggable="false"></span>
-        <span class="pall-wrap" style="left:6.4%;  top:10.6%; height:37.9%; animation-delay:-0.7s; animation-duration:4.8s"><img src="palloncini/azzurro.webp" alt="Palloncino azzurro" draggable="false"></span>
-        <span class="pall-wrap" style="left:18.9%; top:19.7%; height:51.5%; animation-delay:-1.4s; animation-duration:5.1s"><img src="palloncini/giraffa.webp" alt="Palloncino giraffa" draggable="false"></span>
-        <span class="pall-wrap" style="left:32.6%; top:7.6%;  height:32.6%; animation-delay:-2.1s; animation-duration:5.5s"><img src="palloncini/cuore.webp" alt="Palloncino a cuore" draggable="false"></span>
-        <span class="pall-wrap" style="left:31.8%; top:51.5%; height:40.2%; animation-delay:-2.8s; animation-duration:5.8s"><img src="palloncini/elefante.webp" alt="Palloncino elefante" draggable="false"></span>
-        <span class="pall-wrap" style="left:47%;   top:24.2%; height:51.5%; animation-delay:-3.5s; animation-duration:6.2s"><img src="palloncini/panda.webp" alt="Palloncino panda" draggable="false"></span>
-        <span class="pall-wrap" style="left:50%;   top:60.6%; height:35.6%; animation-delay:-4.2s; animation-duration:6.5s"><img src="palloncini/leone.webp" alt="Palloncino leone" draggable="false"></span>
-        <span class="pall-wrap" style="left:65.2%; top:6%;    height:36.4%; animation-delay:-4.9s; animation-duration:6.8s"><img src="palloncini/mylar.webp" alt="Palloncino verde" draggable="false"></span>
-        <span class="pall-wrap" style="left:66.7%; top:48.5%; height:43.9%; animation-delay:-5.6s; animation-duration:7.2s"><img src="palloncini/zebra.webp" alt="Palloncino zebra" draggable="false"></span>
-        <span class="pall-wrap" style="left:79.9%; top:16.7%; height:45.5%; animation-delay:-6.3s; animation-duration:7.6s"><img src="palloncini/scimmia.webp" alt="Palloncino scimmia" draggable="false"></span>
+        <span class="pall-wrap" style="left:2.3%;  top:57.6%; height:30.3%; animation-delay:-0.0s; animation-duration:4.4s"><img src="palloncini/stella.webp" alt="Palloncino a stella" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:6.4%;  top:10.6%; height:37.9%; animation-delay:-0.7s; animation-duration:4.8s"><img src="palloncini/azzurro.webp" alt="Palloncino azzurro" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:18.9%; top:19.7%; height:51.5%; animation-delay:-1.4s; animation-duration:5.1s"><img src="palloncini/giraffa.webp" alt="Palloncino giraffa" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:32.6%; top:7.6%;  height:32.6%; animation-delay:-2.1s; animation-duration:5.5s"><img src="palloncini/cuore.webp" alt="Palloncino a cuore" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:31.8%; top:51.5%; height:40.2%; animation-delay:-2.8s; animation-duration:5.8s"><img src="palloncini/elefante.webp" alt="Palloncino elefante" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:47%;   top:24.2%; height:51.5%; animation-delay:-3.5s; animation-duration:6.2s"><img src="palloncini/panda.webp" alt="Palloncino panda" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:50%;   top:60.6%; height:35.6%; animation-delay:-4.2s; animation-duration:6.5s"><img src="palloncini/leone.webp" alt="Palloncino leone" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:65.2%; top:6%;    height:36.4%; animation-delay:-4.9s; animation-duration:6.8s"><img src="palloncini/mylar.webp" alt="Palloncino verde" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:66.7%; top:48.5%; height:43.9%; animation-delay:-5.6s; animation-duration:7.2s"><img src="palloncini/zebra.webp" alt="Palloncino zebra" draggable="false" loading="lazy"></span>
+        <span class="pall-wrap" style="left:79.9%; top:16.7%; height:45.5%; animation-delay:-6.3s; animation-duration:7.6s"><img src="palloncini/scimmia.webp" alt="Palloncino scimmia" draggable="false" loading="lazy"></span>
       </div>
     </div>
 
     <h2 class="rv" style="margin-top:64px">Noleggio gonfiabili</h2>
 
     <div class="store rv">
-      <div class="scatto" style="background-image:url(foto/compleanni.webp)"></div>
+      <div class="scatto" data-bg="foto/compleanni.webp"></div>
       <div class="store-testo">
         <div class="testata t-azzurro" style="border:0; padding:0 0 14px">
           <span class="ico"><svg aria-hidden="true"><use href="#i-gonfiabile"/></svg></span>
@@ -660,7 +661,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 
       <div class="rv d1">
         <div class="pannello">
-          <div class="scatto" style="background-image:url(foto/parco.webp)"></div>
+          <div class="scatto" data-bg="foto/parco.webp"></div>
           <ul class="recapiti">
             <li><span class="ic" style="background:var(--verde)"><svg aria-hidden="true"><use href="#i-tel"/></svg></span>
               <span><b>Tamara</b><a href="tel:+393515878573">351 587 8573</a></span></li>
@@ -725,7 +726,10 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   var SPRITE = {};
-  ['leone','giraffa','scimmia','zebra','elefante','panda','cuore','stella','mylar','azzurro'].forEach(function(nome){
+  var LISTA = innerWidth < 700
+    ? ['leone','giraffa','panda','zebra','cuore','azzurro']                                   // telefono: sei bastano
+    : ['leone','giraffa','scimmia','zebra','elefante','panda','cuore','stella','mylar','azzurro'];
+  LISTA.forEach(function(nome){
     var im = new Image();
     im.src = 'palloncini/' + nome + '.webp';
     im.onload = function(){ SPRITE[nome].pronto = true; };
@@ -1098,6 +1102,30 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       scoppiaVetrina(e.target.closest('.pall-wrap'));
     });
   }
+
+  /* ---------- foto di sfondo: scaricate solo quando servono ---------- */
+  var scatti = document.querySelectorAll('.scatto[data-bg]');
+  function mostraFoto(el){ el.style.backgroundImage = 'url(' + el.getAttribute('data-bg') + ')'; el.removeAttribute('data-bg'); }
+  if ('IntersectionObserver' in window){
+    var oFoto = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ mostraFoto(e.target); oFoto.unobserve(e.target); } });
+    }, {rootMargin:'400px 0px'});
+    scatti.forEach(function(el){ oFoto.observe(el); });
+    // rete di sicurezza: se l'osservatore tace (scheda in background), controllo io allo scroll
+    var occupato = false;
+    function controllaFoto(){
+      if (occupato) return; occupato = true;
+      requestAnimationFrame(function(){
+        document.querySelectorAll('.scatto[data-bg]').forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if (r.top < innerHeight + 400 && r.bottom > -400){ mostraFoto(el); oFoto.unobserve(el); }
+        });
+        occupato = false;
+      });
+    }
+    addEventListener('scroll', controllaFoto, {passive:true});
+    document.addEventListener('visibilitychange', function(){ if (!document.hidden) controllaFoto(); });
+  } else { scatti.forEach(mostraFoto); }
 
   /* ---------- barra contatti: compare solo dopo l'hero ---------- */
   var barra = document.querySelector('.barra'), hero = document.getElementById('top');
