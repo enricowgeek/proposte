@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0d11">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="UCenter">
+<title>UCenter · Prenota</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,800&family=Barlow:wght@400;500;600&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d11; --bg-2:#12151b; --txt:#f1f2f4; --mut:#8d96a1; --faint:rgba(255,255,255,.09);
+  --red:#c42a22; --red-hi:#e0392f; --brass:var(--red-hi); --ok:#2fbf62;
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --sans:"Barlow",system-ui,sans-serif; --serif:"Playfair Display",Georgia,serif;
+  --pad:24px; --ease:cubic-bezier(.16,1,.3,1);
+  --st:env(safe-area-inset-top); --sb:env(safe-area-inset-bottom);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:var(--sans);background:#050608;color:var(--txt);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit;background:none;border:0}
+button{cursor:pointer;touch-action:manipulation}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--red-hi);outline-offset:3px;border-radius:4px}
+svg.i{width:22px;height:22px;flex:0 0 22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.app{max-width:480px;min-height:100vh;min-height:100dvh;margin:0 auto;background:var(--bg);position:relative;padding-bottom:calc(88px + var(--sb))}
+@media (min-width:540px){.app{box-shadow:0 0 0 1px var(--faint)}}
+
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;min-height:60px;padding:calc(8px + var(--st)) 12px 8px var(--pad);
+  background:rgba(11,13,17,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+header .logo{width:92px}
+header h1{flex:1;font-size:1.05rem;font-weight:600}
+header .back{width:44px;height:44px;margin-left:-14px;display:grid;place-items:center}
+header .sp{flex:1}
+header .hl{min-height:44px;display:flex;align-items:center;padding:0 12px;color:var(--mut);font-size:.9rem}
+header .demo{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);opacity:.6;padding-right:4px}
+
+main{padding:8px var(--pad) 40px}
+.h{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:3rem;line-height:.9;letter-spacing:-.01em}
+.h em{color:var(--red-hi)}
+.sub{color:var(--mut);margin-top:12px}
+.lbl{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:44px 0 6px}
+.muted{color:var(--mut)}
+
+/* liste a righe: niente scatole, solo filetti */
+.rows{list-style:none}
+.rows>*{border-bottom:1px solid var(--faint)}
+.row{display:flex;align-items:center;gap:16px;width:100%;min-height:72px;padding:14px 0;text-align:left;transition:opacity .2s}
+.row:active{opacity:.6}
+.row .ic{color:var(--red-hi)}
+.row .ic.b{color:var(--brass)}
+.row .t{flex:1;min-width:0}
+.row .t b{display:block;font-size:1.15rem;font-weight:600}
+.row .t span{display:block;color:var(--mut);font-size:.92rem;margin-top:2px}
+.row .ch{color:var(--mut)}
+.row .end{font-weight:600;white-space:nowrap}
+.row .time{font-family:var(--display);font-weight:700;font-size:1.6rem;min-width:64px}
+.next{display:flex;align-items:center;gap:12px;margin-top:28px;padding:16px 0;border-top:1px solid var(--faint);border-bottom:1px solid var(--faint)}
+.next .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:0 0 8px}
+.links{display:flex;flex-wrap:wrap;gap:4px 28px;margin-top:44px}
+.links a,.links button{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--mut);font-size:.95rem}
+.links a:hover,.links button:hover{color:var(--txt)}
+
+/* giorni e orari */
+.days{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:8px calc(var(--pad)*-1) 0;padding:0 var(--pad)}
+.days::-webkit-scrollbar{display:none}
+.day{flex:0 0 52px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;transition:background .25s var(--ease)}
+.day small{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.day b{font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1.1}
+.day.on{background:var(--txt);color:var(--bg)}
+.day.on small{color:#555}
+.seg{display:flex;gap:28px;margin-top:28px}
+.seg button{min-height:44px;color:var(--mut);font-weight:600;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.seg button.on{color:var(--txt);border-color:var(--red-hi)}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 8px;margin-top:24px}
+.tm{height:52px;border-radius:12px;font-family:var(--display);font-weight:700;font-size:1.25rem;transition:background .2s,color .2s}
+.tm:hover:not(:disabled){background:var(--bg-2)}
+.tm:disabled{color:#3a4049;text-decoration:line-through;text-decoration-thickness:1px;cursor:default}
+.tm.on{background:var(--red);color:#fff}
+.empty{color:var(--mut);padding:40px 0;text-align:center}
+
+/* riepilogo */
+.big{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:2.6rem;line-height:.95}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1px solid var(--faint);display:grid;place-items:center}
+.stepper b{min-width:28px;text-align:center;font-size:1.15rem}
+.switch{width:52px;height:32px;border-radius:16px;background:#2a2f37;position:relative;transition:background .25s;flex:0 0 52px}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;transition:transform .3s var(--ease)}
+.switch.on{background:var(--ok)}
+.switch.on::after{transform:translateX(20px)}
+.field{display:block;margin-top:20px}
+.field span{font-size:.85rem;color:var(--mut)}
+.field input{display:block;width:100%;min-height:48px;border-bottom:1px solid rgba(255,255,255,.25);font-size:1.1rem;padding:6px 0}
+.field input:focus{outline:none;border-color:var(--red-hi)}
+.radio{width:22px;height:22px;border-radius:50%;border:1.6px solid #5a626e;flex:0 0 22px;position:relative}
+.on>.radio{border-color:var(--red-hi)}
+.on>.radio::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--red-hi)}
+.fine{color:var(--mut);font-size:.88rem;margin-top:20px}
+
+/* barra d'azione fissa in basso */
+.cta{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:480px;z-index:30;display:flex;align-items:center;gap:16px;
+  padding:14px var(--pad) calc(14px + var(--sb));background:rgba(11,13,17,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--faint)}
+.cta .tot{flex:1;min-width:0}
+.cta .tot small{display:block;color:var(--mut);font-size:.8rem}
+.cta .tot b{font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 26px;border-radius:999px;background:var(--red);color:#fff;
+  font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:.06em;text-transform:uppercase;transition:transform .15s var(--ease),background .2s,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.35}
+.btn.full{width:100%}
+.btn.wa{background:#1fae54}
+.btn.brass{background:var(--red);color:#fff}
+
+/* conferma */
+.ok{padding-top:36px}
+.ok .ck{width:64px;height:64px;border-radius:50%;background:var(--ok);display:grid;place-items:center;animation:pop .6s var(--ease)}
+.ok .ck svg{width:30px;height:30px;stroke-width:2.4}
+@keyframes pop{from{transform:scale(.3);opacity:0}}
+.ticket{margin-top:36px;background:#f3f4f6;color:#111;border-radius:22px;padding:24px}
+.ticket .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.ticket .sp{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:1.9rem;line-height:1}
+.ticket .code{font-family:var(--display);font-weight:700;font-size:1.1rem;letter-spacing:.08em;color:#555}
+.ticket dl{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+.ticket dt{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#777}
+.ticket dd{font-weight:600;margin-top:2px}
+.ticket .qr{display:flex;align-items:center;gap:18px;margin-top:22px;padding-top:22px;border-top:1px dashed #c9ccd2}
+.ticket .qr svg{width:84px;height:84px;flex:0 0 84px}
+.ticket .qr p{font-size:.9rem;color:#444}
+.after{margin-top:40px;padding-top:28px;border-top:1px solid var(--faint)}
+.after .s{font-family:var(--serif);font-style:italic;font-size:1.7rem;line-height:1.15}
+.after p{color:var(--mut);margin:10px 0 20px}
+
+/* partite */
+.av{display:flex!important;margin-top:6px}
+.av i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:.66rem;font-weight:600;margin-right:-6px;border:2px solid var(--bg);color:#fff}
+.av i.free{border:1.5px dashed #5a626e;background:var(--bg)}
+.join{min-height:44px;padding:0 4px;color:var(--red-hi);font-weight:600}
+.in{display:inline-flex;align-items:center;gap:6px;color:var(--ok);font-weight:600;font-size:.9rem}
+
+/* tavolo */
+
+
+/* navigazione */
+nav.tab{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:480px;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);
+  padding:6px 8px calc(6px + var(--sb));background:rgba(11,13,17,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--faint)}
+nav.tab a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:52px;font-size:.72rem;color:var(--mut);position:relative;transition:color .2s}
+nav.tab a.on{color:var(--txt)}
+nav.tab a.on svg{color:var(--red-hi)}
+nav.tab .n{position:absolute;top:4px;left:calc(50% + 8px);min-width:16px;height:16px;border-radius:8px;background:var(--red-hi);color:#fff;font-size:.62rem;font-weight:600;display:grid;place-items:center;padding:0 4px}
+.noTab nav.tab{display:none}
+
+/* foglio dal basso */
+.scrim{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:50%;bottom:0;z-index:51;width:100%;max-width:480px;transform:translate(-50%,105%);transition:transform .45s var(--ease);
+  background:var(--bg-2);border-radius:24px 24px 0 0;padding:12px var(--pad) calc(24px + var(--sb));max-height:86vh;overflow:auto}
+.sheet.on{transform:translate(-50%,0)}
+.sheet .grab{width:36px;height:4px;border-radius:2px;background:#3a414c;margin:0 auto 22px}
+.sheet h3{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:2rem;line-height:1}
+.toast{position:fixed;left:50%;bottom:calc(104px + var(--sb));transform:translate(-50%,12px);z-index:60;background:var(--txt);color:#111;padding:12px 18px;border-radius:999px;
+  font-weight:600;font-size:.92rem;opacity:0;transition:all .3s var(--ease);pointer-events:none;width:max-content;max-width:88vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.fade{animation:fin .4s var(--ease)}
+@keyframes fin{from{opacity:0;transform:translateY(10px)}}
+/* elementi che esistono solo su schermo largo */
+.side-only{display:none}
+.split2>aside{display:none}
+
+/* ─── computer: barra laterale, due colonne, finestre centrate ─── */
+@media (min-width:960px){
+  body{background:var(--bg)}
+  .app{max-width:none;padding:0 0 0 264px;box-shadow:none!important}
+  nav.tab,.noTab nav.tab{display:flex;flex-direction:column;align-items:stretch;gap:2px;top:0;bottom:0;left:0;transform:none;width:264px;max-width:none;
+    padding:36px 20px;border-top:0;border-right:1px solid var(--faint);background:var(--bg)}
+  nav.tab .logo{width:104px;margin:0 12px 40px}
+  nav.tab a{flex-direction:row;justify-content:flex-start;gap:14px;min-height:48px;padding:0 12px;border-radius:12px;font-size:1rem}
+  nav.tab a:hover{color:var(--txt)}
+  nav.tab a.on{background:var(--bg-2)}
+  nav.tab .n{position:static;margin-left:auto}
+  nav.tab .side-only{display:block}
+  nav.tab .foot{margin-top:auto;padding:0 12px;color:var(--mut);font-size:.9rem;display:grid;gap:10px}
+  nav.tab .foot a{min-height:0;padding:0;font-size:.9rem}
+  header{padding:28px 64px 8px;background:var(--bg);backdrop-filter:none}
+  header:not(.back-on){display:none}
+  main{padding:56px 64px 80px;max-width:1180px}
+  header.back-on+main{padding-top:24px}
+  .h{font-size:4.6rem}
+  .rows.grid2{display:grid;grid-template-columns:1fr 1fr;column-gap:56px}
+  .split2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:72px;align-items:start}
+  .split2>aside{display:block;position:sticky;top:40px}
+  .times{grid-template-columns:repeat(6,1fr)}
+  .days{margin:8px 0 0;padding:0}
+  .cta{position:sticky;left:auto;transform:none;width:auto;max-width:1052px;margin:0 64px;padding:20px 0;border-top:1px solid var(--faint);background:rgba(11,13,17,.96)}
+  .cta .btn{min-width:220px}
+  .sheet{top:50%;bottom:auto;max-width:440px;border-radius:24px;padding:28px 32px;opacity:0;pointer-events:none;
+    transform:translate(-50%,-46%) scale(.98);transition:transform .35s var(--ease),opacity .25s}
+  .sheet.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+  .sheet .grab{display:none}
+  .toast{bottom:40px}
+  .ok-grid{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:80px;align-items:start}
+  .hint{color:var(--mut);padding:14px 0;border-top:1px solid var(--faint)}
+}
+@media (max-width:959px){.split2.on-wide{display:block}}
+@media (prefers-reduced-motion:reduce){.fade,.ok .ck{animation:none}.sheet,.scrim{transition:none}}
+
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header id="hdr"></header>
+  <main id="view"></main>
+  <nav class="tab" id="tab" aria-label="Navigazione"></nav>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ══════════ icone (un solo stile: tratto 1.6, angoli tondi) ══════════ */
+const P={
+  padel:'<circle cx="10" cy="9" r="6"/><path d="M14.2 13.2 20 19"/><path d="M8 7h.01M11 6h.01M12 9h.01M9 10h.01"/>',
+  ball:'<circle cx="12" cy="12" r="9"/><path d="m12 7 4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M20.5 9.5 16 10M17 20l-2.5-5.5M7 20l2.5-5.5M3.5 9.5 8 10"/>',
+  coach:'<circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0"/><path d="m16 11 2 2 4-4"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/>',
+  glass:'<path d="M7 3h10l-.8 7a4.2 4.2 0 0 1-8.4 0z"/><path d="M12 14.5V21M8.5 21h7"/>',
+  spark:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+  chev:'<path d="m9 6 6 6-6 6"/>', back:'<path d="m15 6-6 6 6 6"/>',
+  home:'<path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/>',
+  ticket:'<path d="M3 7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 6v2M14 11v2M14 16v2"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>',
+  minus:'<path d="M5 12h14"/>', plus:'<path d="M12 5v14M5 12h14"/>', check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  cal:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+  pin:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
+  wa:'<path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3 3z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 1a4 4 0 0 1-2-2l1-1-1-2z"/>',
+  ig:'<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 7h.01"/>',
+  menu:'<path d="M5 4h14v16H5z"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+  down:'<path d="M12 4v12M6 11l6 6 6-6M5 20h14"/>'
+};
+const I=(n,cls='')=>`<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${P[n]}</svg>`;
+
+/* ══════════ dati del centro (da ugroup.it e dal menu del Bistrot) ══════════ */
+const CENTER={addr:'Viale Sanremo 61, Spinea',tel:'+390410970126',telH:'041 0970126',wa:'393515958924',waH:'351 5958924',mail:'ucenter@ugroup.it',
+  ig:'https://www.instagram.com/ucenter_spinea/',igB:'https://www.instagram.com/ucenter_bistrot/',
+  maps:'https://www.google.com/maps/search/?api=1&query=UCenter+Viale+Sanremo+61+Spinea'};
+// il sito attuale dice sia "tre" sia "sei" campi da padel: qui 6, da confermare
+const SPORTS={
+  padel:{name:'Padel',icon:'padel',durs:[60,90,120],def:90,players:[2,4],defP:4,step:2,
+    courts:[1,2,3,4,5,6].map(n=>({id:'p'+n,name:'Campo P'+n,tags:'Panoramico, coperto'})),   // «Campo P1» come sul cartello in struttura
+    price:(c,d,pk)=>Math.round((pk?56:44)*d/90)},
+  calcetto:{name:'Calcio a 5',icon:'ball',durs:[60,90],def:60,players:[6,14],defP:10,step:1,
+    courts:[{id:'c1',name:'Campo 1',tags:'Gomma, coperto, tribuna, fino a 7 vs 7'},{id:'c4',name:'Campo 4',tags:'Sintetico, coperto'},{id:'ce',name:'Campo esterno',tags:'Sintetico, all\'aperto'}],
+    price:(c,d,pk)=>Math.round(((pk?80:65)-(c.id==='ce'?10:0))*d/60)},
+  lezione:{name:'Lezione',icon:'coach',durs:[60],def:60,players:[1,4],defP:1,step:1,
+    courts:[{id:'m1',name:'Maestro 1',tags:'Certificato'},{id:'m2',name:'Maestro 2',tags:'Certificato'}],
+    price:()=>st.lez?.price||40},
+  tavolo:{name:'Bistrot',icon:'glass',courts:[{id:'t',name:'Tavolo',tags:''}],price:()=>0}
+};
+const LESSONS=[
+  {id:'singola',name:'Lezione singola',d:60,p:[1,1],price:40,sub:'Un\'ora, tu e il maestro'},
+  {id:'gruppo',name:'Lezione di gruppo',d:60,p:[2,4],price:64,sub:'Un\'ora, da due a quattro persone'},
+  {id:'partita',name:'Partita-lezione',d:90,p:[4,4],price:80,sub:'Un\'ora e mezza giocando'},
+  {id:'pack',name:'Pacchetto da cinque',d:60,p:[1,1],price:185,sub:'Con un ingresso omaggio sui campi'}
+];
+const MOMENTS=[ // orari del Bistrot indicativi, da confermare
+  {id:'pranzo',t:'Pranzo',from:12*60,to:14*60,dur:90},
+  {id:'aperitivo',t:'Aperitivo',from:18*60,to:20*60+30,dur:90},
+  {id:'cena',t:'Cena',from:19*60+30,to:22*60,dur:120}];
+const OPEN=9*60, CLOSE=24*60, LAST=23*60;
+
+/* ══════════ utilità ══════════ */
+const $=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(2,'0');
+const hm=m=>`${pad(Math.floor(m/60)%24)}:${pad(m%60)}`;
+const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parse=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const DOW=['dom','lun','mar','mer','gio','ven','sab'], MON=['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+const today=()=>ymd(new Date());
+const nowMin=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
+const addDays=n=>ymd(new Date(parse(today()).getTime()+n*864e5));
+const dayLabel=s=>{const diff=Math.round((parse(s)-parse(today()))/864e5),d=parse(s);
+  return diff===0?'oggi':diff===1?'domani':`${DOW[d.getDay()]} ${d.getDate()} ${MON[d.getMonth()]}`};
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+const isWeekend=s=>[0,6].includes(parse(s).getDay());
+const peakOf=(s,m)=>isWeekend(s)||m>=18*60;
+const eur=n=>n.toLocaleString('it-IT',{minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2})+' €';
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function hash(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){let s=seed||1;return()=>(s=Math.imul(s^(s>>>15),2246822507)^Math.imul(s^(s>>>13),3266489909),((s>>>=0)%1e6)/1e6)}
+const EMBED=new URLSearchParams(location.search).has('embed');
+const store={get(k,d){try{return JSON.parse(localStorage.getItem('uc_'+k))??d}catch{return d}},set(k,v){try{localStorage.setItem('uc_'+k,JSON.stringify(v))}catch{}}};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2600)}
+
+/* ══════════ disponibilità simulata, ma coerente ══════════ */
+const agendaCache={};
+function agenda(date,sport,courtId){
+  const key=date+sport+courtId; if(agendaCache[key]) return agendaCache[key];
+  const r=rng(hash(key)),we=isWeekend(date),list=[];
+  const lens=sport==='padel'?[60,90,90,120]:[60,60,90];
+  let t=OPEN;
+  while(t<LAST){
+    // probabilità che a quest'ora parta una prenotazione: la sera è piena ma non esaurita
+    const busy=(t>=17*60?.34:t>=12*60&&t<14*60?.22:.12)+(we?.1:0)-(sport==='lezione'?.05:0);
+    if(r()<busy){const d=lens[Math.floor(r()*lens.length)];list.push([t,Math.min(t+d,CLOSE)]);t+=d}else t+=30;
+  }
+  return agendaCache[key]=list;
+}
+const myBookings=()=>store.get('bk',[]);
+function isFree(date,sport,court,start,dur){
+  const end=start+dur;
+  if(end>CLOSE||(date===today()&&start<nowMin()+15)) return false;
+  const busy=agenda(date,sport,court.id).concat(myBookings().filter(b=>b.date===date&&b.court===court.id&&b.sport===sport).map(b=>[b.start,b.start+b.dur]));
+  return !busy.some(([a,b])=>start<b&&end>a);
+}
+const freeCourts=(date,sport,start,dur)=>SPORTS[sport].courts.filter(c=>isFree(date,sport,c,start,dur));
+function tablesLeft(date,m){
+  if(date===today()&&m<nowMin()+30) return 0;
+  const r=rng(hash('t'+date+m));return Math.max(0,Math.floor(r()*(isWeekend(date)?3:6)+(m>=20*60?-1:1)));
+}
+const upcoming=()=>myBookings().filter(b=>b.date>today()||(b.date===today()&&b.start+b.dur>nowMin())).sort((a,b)=>(a.date+hm(a.start)).localeCompare(b.date+hm(b.start)));
+
+/* ══════════ stato dei flussi ══════════ */
+const st={sport:'padel',date:today(),dur:90,start:null,court:null,players:4,pay:'centro',extra:true,lez:null,match:null};
+const tav={date:today(),moment:'aperitivo',start:null,guests:2};
+
+/* ══════════ router ══════════ */
+const routes={'':home,sport:sportView,lezioni,checkout,ok:okView,partite,mie,info,corsi,tavolo};
+const FLOW=['checkout','tavolo'];
+const wide=()=>matchMedia('(min-width:960px)').matches;            // schermate con il pulsante fisso: la barra delle schede si nasconde
+let lastHash='';
+const go=h=>location.hash=h;
+function render(){
+  const [r,...args]=location.hash.replace(/^#\/?/,'').split('/');
+  const fn=routes[r]||home;
+  closeSheet();
+  // ciò che si sta scrivendo sopravvive al ridisegno
+  const draft={};['fName','fTel','fNote'].forEach(i=>{const e=document.getElementById(i);if(e&&e.value)draft[i]=e.value});
+  const out=fn(...args);
+  $('#view').innerHTML=`<div class="fade ${out.cls||''}">${out.body}</div>${out.cta||''}`;
+  Object.entries(draft).forEach(([i,v])=>{const e=document.getElementById(i);if(e)e.value=v});
+  header(out.title,out.back);
+  $('#app').classList.toggle('noTab',FLOW.includes(r));
+  tabs(out.tab||r||'home');
+  out.after&&out.after();
+  if(location.hash!==lastHash) scrollTo(0,0); else $('#view .fade').classList.remove('fade');
+  lastHash=location.hash;
+}
+addEventListener('hashchange',render);
+function header(title,back){
+  $('#hdr').classList.toggle('back-on',!!back);
+  $('#hdr').innerHTML=back
+    ?`<button class="back" aria-label="Indietro" onclick="history.length>1?history.back():go('#/')">${I('back')}</button><h1>${title||''}</h1>`
+    :`<img class="logo" src="../img/logo-bianco.png" alt="UCenter"><span class="sp"></span><span class="demo">Demo</span>${EMBED?'':'<a class="hl" href="../">Il sito</a>'}`;
+}
+function tabs(on){
+  const n=upcoming().length;
+  $('#tab').innerHTML=`<img class="logo side-only" src="../img/logo-bianco.png" alt="UCenter">`+[['home','#/','home','Home'],['partite','#/partite','users','Partite'],['mie','#/mie','ticket','Prenotazioni'],['info','#/info','info','Info']]
+    .map(([k,h,ic,t])=>`<a href="${h}" class="${k===on?'on':''}" ${k===on?'aria-current="page"':''}>${I(ic)}${t}${k==='mie'&&n?`<span class="n">${n}</span>`:''}</a>`).join('')
+    +`<div class="foot side-only"><a href="../">Torna al sito</a><span>Demo · dati di esempio</span></div>`;
+}
+
+/* ══════════ HOME ══════════ */
+function nextFree(sport,count){
+  const out=[];
+  for(let day=0;day<2&&out.length<count;day++){
+    const date=addDays(day), from=day?16*60:Math.max(OPEN,Math.ceil((nowMin()+15)/30)*30);
+    for(let m=from;m<=LAST&&out.length<count;m+=30){const n=freeCourts(date,sport,m,SPORTS[sport].def).length;if(n)out.push({sport,date,m,n})}
+  }
+  return out;
+}
+function home(){
+  const h=new Date().getHours(), up=upcoming()[0];
+  const soon=[...nextFree('padel',2),...nextFree('calcetto',1)].sort((a,b)=>(a.date+hm(a.m)).localeCompare(b.date+hm(b.m)));
+  const item=(href,ic,t,s,b)=>`<a class="row" href="${href}">${I(ic,'ic'+(b?' b':''))}<span class="t"><b>${t}</b><span>${s}</span></span>${I('chev','ch')}</a>`;
+  return{body:`
+    <h2 class="h" style="margin-top:20px">${h<12?'Buongiorno':h<18?'Ciao':'Buonasera'},<br><em>cosa giochi?</em></h2>
+    ${up?`<a class="next" href="#/ok/${up.id}"><span class="dot"></span><span style="flex:1">${up.label} · ${dayLabel(up.date)} alle ${hm(up.start)}</span>${I('chev','ch')}</a>`:''}
+    <div class="rows grid2" style="margin-top:28px">
+      ${item('#/sport/padel','padel','Padel','Sei campi panoramici, coperti')}
+      ${item('#/sport/calcetto','ball','Calcio a 5','Due coperti e uno all\'aperto')}
+      ${item('#/lezioni','coach','Lezioni di padel','Con due maestri certificati')}
+      ${item('#/partite','users','Partite aperte','Ti manca un giocatore?')}
+      ${item('#/tavolo','glass','Tavolo al Bistrot','Cicchetti, aperitivi, cene',true)}
+      ${item('#/corsi','spark','Corsi e Summer Camp','Silver Fitness, camp 6–13 anni')}
+    </div>
+    ${soon.length?`<p class="lbl">Liberi a breve</p><div class="rows grid2">${soon.map(x=>`
+      <button class="row" onclick="quick('${x.sport}','${x.date}',${x.m})"><span class="time">${hm(x.m)}</span>
+        <span class="t"><b style="font-size:1rem">${SPORTS[x.sport].name}</b><span>${cap(dayLabel(x.date))} · ${x.n} ${x.n>1?'campi liberi':'campo libero'}</span></span>${I('chev','ch')}</button>`).join('')}</div>`:''}
+    <div class="links">
+      <a href="https://wa.me/${CENTER.wa}" target="_blank" rel="noopener">${I('wa')}WhatsApp</a>
+      <a href="tel:${CENTER.tel}">${I('phone')}Chiama</a>
+      ${installLink()}
+    </div>`};
+}
+function quick(sport,date,m){Object.assign(st,{sport,date,dur:SPORTS[sport].def,start:m,court:null,players:SPORTS[sport].defP,match:null});go(`#/sport/${sport}/${m}`)}
+
+/* ══════════ GIORNO E ORARIO ══════════ */
+const dayStrip=(sel,fn)=>`<div class="days">${[...Array(14)].map((_,i)=>{const d=addDays(i),x=parse(d);
+  return`<button class="day ${d===sel?'on':''}" onclick="${fn}('${d}')" aria-pressed="${d===sel}"><small>${i===0?'oggi':DOW[x.getDay()]}</small><b>${x.getDate()}</b></button>`}).join('')}</div>`;
+function sportView(sport='padel',pre){
+  if(!SPORTS[sport]||sport==='tavolo') sport='padel';
+  const S=SPORTS[sport];
+  if(st.sport!==sport) Object.assign(st,{sport,dur:S.def,start:null,court:null,players:S.defP,match:null});
+  if(!S.durs.includes(st.dur)) st.dur=S.def;
+  if(st.date<today()) st.date=today();
+  if(pre&&location.hash!==lastHash) st.start=+pre;
+  // gli orari già passati di oggi non si mostrano: barrati restano solo quelli occupati
+  const from=st.date===today()?Math.max(OPEN,Math.ceil((nowMin()+15)/30)*30):OPEN;
+  const slots=[];for(let m=from;m<=LAST;m+=30)slots.push({m,n:freeCourts(st.date,sport,m,st.dur).length});
+  return{title:sport==='lezione'?(st.lez?.name||'Lezione'):S.name,back:true,tab:'home',body:`
+    <div class="split2"><div>
+    ${dayStrip(st.date,'setDate')}
+    ${S.durs.length>1?`<div class="seg" role="group" aria-label="Durata">${S.durs.map(d=>`<button class="${d===st.dur?'on':''}" onclick="setDur(${d})">${d} min</button>`).join('')}</div>`:''}
+    <div class="times">${slots.map(s=>`<button class="tm ${st.start===s.m&&s.n?'on':''}" ${s.n?'':'disabled aria-label="'+hm(s.m)+' occupato"'} onclick="pick(${s.m})">${hm(s.m)}</button>`).join('')}</div>
+    ${slots.some(s=>s.n)?'':`<p class="empty">${slots.length?'Tutto pieno.':'Per oggi è tardi.'} Prova un altro giorno.</p>`}
+    <p class="fine">Non trovi l'orario? <a href="https://wa.me/${CENTER.wa}?text=${encodeURIComponent(`Ciao! Cerco ${S.name.toLowerCase()} ${dayLabel(st.date)}, avete posto?`)}" target="_blank" rel="noopener" style="color:var(--txt);text-decoration:underline">Scrivici</a>.</p>
+    </div><aside id="side"><p class="hint">Scegli un orario: qui compaiono ${sport==='lezione'?'i maestri liberi':'i campi liberi'}.</p></aside></div>`,
+    after:()=>{if(pre&&location.hash!==lastHash&&st.start!=null&&freeCourts(st.date,sport,st.start,st.dur).length)pick(st.start)}};
+}
+function setDate(d){st.date=d;st.start=null;render()}
+function setDur(d){st.dur=d;st.start=null;render()}
+function pick(m){
+  st.start=m;
+  document.querySelectorAll('.tm').forEach(b=>b.classList.toggle('on',b.textContent===hm(m)));
+  const S=SPORTS[st.sport],pk=peakOf(st.date,m),cs=freeCourts(st.date,st.sport,m,st.dur);
+  const html=`<h3>${hm(m)}–${hm(m+st.dur)}</h3><p class="muted" style="margin-top:8px">${cap(dayLabel(st.date))} · ${st.dur} minuti</p>
+    <div class="rows" style="margin-top:20px">${cs.map(c=>{const pr=S.price(c,st.dur,pk);return`
+      <button class="row" onclick="chooseCourt('${c.id}')"><span class="t"><b>${c.name}</b><span>${c.tags}</span></span>
+        <span class="end">${eur(pr)}${st.sport==='lezione'?'':`<span class="muted" style="display:block;font-weight:400;font-size:.8rem;text-align:right">${eur(+(pr/(st.sport==='padel'?4:10)).toFixed(2))} a testa</span>`}</span></button>`}).join('')}</div>`;
+  if(wide()&&$('#side')) $('#side').innerHTML=`<div class="fade">${html}</div>`; else openSheet(html);
+}
+function chooseCourt(id){st.court=id;st.pay='centro';closeSheet();go('#/checkout')}
+
+/* ══════════ LEZIONI ══════════ */
+function lezioni(){
+  return{title:'Lezioni di padel',back:true,tab:'home',body:`
+    <p class="sub" style="margin-top:4px">Per principianti e intermedi. Di giorno, di sera e il sabato. Racchette incluse.</p>
+    <div class="rows" style="margin-top:20px">${LESSONS.map(l=>`
+      <button class="row" onclick="chooseLesson('${l.id}')"><span class="t"><b>${l.name}</b><span>${l.sub}</span></span><span class="end">${eur(l.price)}</span></button>`).join('')}</div>
+    <p class="fine">Il prezzo cambia con i partecipanti e l'orario. Qui sono di esempio.</p>`};
+}
+function chooseLesson(id){
+  const l=LESSONS.find(x=>x.id===id); st.lez=l; SPORTS.lezione.durs=[l.d]; SPORTS.lezione.def=l.d;
+  Object.assign(st,{sport:'lezione',dur:l.d,start:null,court:null,players:l.p[0],match:null}); go('#/sport/lezione');
+}
+
+/* ══════════ RIEPILOGO ══════════ */
+function checkout(){
+  const S=SPORTS[st.sport], c=S.courts.find(x=>x.id===st.court);
+  if(!c||st.start==null) return sportView(st.sport);
+  const pk=peakOf(st.date,st.start), price=st.match?st.match.price:S.price(c,st.dur,pk);
+  const [a,b]=st.sport==='lezione'?st.lez.p:S.players; st.players=Math.min(b,Math.max(a,st.players));
+  const per=st.sport==='lezione'||st.match?null:price/st.players;
+  const me=store.get('me',{name:'',tel:''}), abb=store.get('abb',8);
+  const pays=[['centro','Al centro','In reception, prima di giocare'],['online','Adesso','Carta, Apple Pay o Google Pay'],
+    ...(st.sport==='padel'&&!st.match?[['abb','Con l\'abbonamento',`Ti restano ${abb} ingressi`]]:[])];
+  if(!pays.some(p=>p[0]===st.pay)) st.pay='centro';
+  return{title:'Riepilogo',back:true,tab:'home',body:`<div class="split2 on-wide"><div>
+    <p class="big" style="margin-top:16px">${st.match?'Partita aperta':st.sport==='lezione'?st.lez.name:S.name}<br><span style="color:var(--mut)">${c.name}</span></p>
+    <p class="sub">${cap(dayLabel(st.date))}, ${hm(st.start)}–${hm(st.start+st.dur)}</p>
+    <div class="rows" style="margin-top:28px">
+      ${st.match?'':`<div class="row"><span class="t"><b>${st.sport==='lezione'?'Partecipanti':'Giocatori'}</b><span>${per?eur(+per.toFixed(2))+' a testa':`Da ${a} a ${b}`}</span></span>
+        <span class="stepper"><button onclick="setPl(-1)" aria-label="Meno">${I('minus')}</button><b>${st.players}</b><button onclick="setPl(1)" aria-label="Più">${I('plus')}</button></span></div>`}
+      <button class="row" onclick="st.extra=!st.extra;render()" role="switch" aria-checked="${st.extra}"><span class="t"><b>${st.sport==='calcetto'?'Palloni e casacche':'Racchette e palline'}</b><span>Gratis, pronte in reception</span></span><span class="switch ${st.extra?'on':''}"></span></button>
+    </div>
+    <p class="lbl">Pagamento</p>
+    <div class="rows">${pays.map(([id,t,s])=>`<button class="row ${st.pay===id?'on':''}" onclick="st.pay='${id}';render()" role="radio" aria-checked="${st.pay===id}"><span class="radio"></span><span class="t"><b>${t}</b><span>${s}</span></span></button>`).join('')}</div>
+    </div><div>
+    <p class="lbl">I tuoi dati</p>
+    <label class="field"><span>Nome e cognome</span><input id="fName" autocomplete="name" value="${esc(me.name)}"></label>
+    <label class="field"><span>Cellulare, per il promemoria</span><input id="fTel" type="tel" autocomplete="tel" value="${esc(me.tel)}"></label>
+    <p class="fine">Cancelli gratis fino a 24 ore prima.</p></div></div>`,
+    cta:`<div class="cta"><div class="tot"><small>Totale</small><b>${st.pay==='abb'?'1 ingresso':eur(price)}</b></div><button class="btn" onclick="confirmBk()">Conferma</button></div>`};
+}
+function setPl(d){const S=SPORTS[st.sport],[a,b]=st.sport==='lezione'?st.lez.p:S.players;st.players=Math.min(b,Math.max(a,st.players+d*S.step));render()}
+function readMe(){
+  const name=$('#fName').value.trim(),tel=$('#fTel').value.trim();
+  if(name.length<2){toast('Manca il nome');$('#fName').focus();return null}
+  if(tel.replace(/\D/g,'').length<8){toast('Manca il numero di cellulare');$('#fTel').focus();return null}
+  store.set('me',{name,tel});return{name,tel};
+}
+const newCode=n=>'UC-'+(hash(Date.now()+n)%90000+10000);
+function confirmBk(){
+  const me=readMe(); if(!me) return;
+  const S=SPORTS[st.sport],c=S.courts.find(x=>x.id===st.court),pk=peakOf(st.date,st.start);
+  if(!st.match&&!isFree(st.date,st.sport,c,st.start,st.dur)){toast('Qualcuno è stato più veloce: scegli un altro orario');go('#/sport/'+st.sport);return}
+  const code=newCode(me.name);
+  store.set('bk',[...myBookings(),{id:code,sport:st.sport,label:st.match?'Partita aperta':st.sport==='lezione'?st.lez.name:S.name,court:c.id,courtName:c.name,
+    date:st.date,start:st.start,dur:st.dur,players:st.players,price:st.match?st.match.price:S.price(c,st.dur,pk),pay:st.pay}]);
+  if(st.pay==='abb') store.set('abb',store.get('abb',8)-1);
+  if(st.match) store.set('joined',[...store.get('joined',[]),st.match.id]);
+  st.match=null; go('#/ok/'+code);
+}
+
+/* ══════════ CONFERMA ══════════ */
+function qr(code){
+  const n=21,r=rng(hash(code));let s='';
+  const f=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="#111"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#f3f4f6"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#111"/>`;
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++){if((x<8&&y<8)||(x>12&&y<8)||(x<8&&y>12))continue;if(r()<.48)s+=`<rect x="${x}" y="${y}" width="1" height="1" fill="#111"/>`}
+  return`<svg viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" role="img" aria-label="Codice della prenotazione">${s}${f(0,0)}${f(14,0)}${f(0,14)}</svg>`;
+}
+function okView(id){
+  const b=myBookings().find(x=>x.id===id); if(!b) return mie();
+  const tb=b.sport==='tavolo';
+  const msg=tb?`Ho prenotato un tavolo al Bistrot di UCenter, ${dayLabel(b.date)} alle ${hm(b.start)}. Siamo in ${b.players}, ci sei?`
+    :`Ho prenotato ${b.label.toLowerCase()} a UCenter, ${dayLabel(b.date)} alle ${hm(b.start)} (${b.courtName}). Ci sei?`;
+  const after=Math.ceil((b.start+b.dur)/30)*30;
+  const upsell=!tb&&after>=12*60&&after<=22*60&&!myBookings().some(x=>x.sport==='tavolo'&&x.date===b.date&&Math.abs(x.start-after)<=60);
+  const pay=b.pay==='online'?'Pagato':b.pay==='abb'?'Abbonamento':b.pay==='bistrot'?'Al tavolo':'Al centro, '+eur(b.price);
+  const TK=`<div class="ticket">
+      <div class="top"><span class="sp">${tb?'Bistrot':b.label}</span><span class="code">${b.id}</span></div>
+      <dl>
+        <div><dt>Quando</dt><dd>${cap(dayLabel(b.date))}, ${hm(b.start)}</dd></div>
+        <div><dt>${tb?'Persone':b.sport==='lezione'?'Maestro':'Campo'}</dt><dd>${tb?b.players:b.courtName}</dd></div>
+        <div><dt>${tb?'Momento':'Durata'}</dt><dd>${tb?b.moment:b.dur+' minuti'}</dd></div>
+        <div><dt>Pagamento</dt><dd>${pay}</dd></div>
+      </dl>
+      <div class="qr">${qr(b.id)}<p>Mostralo ${tb?'al Bistrot':'in reception'}. Basta il telefono.</p></div>
+    </div>`;
+  return{tab:'mie',body:`<div class="ok-grid"><div>
+    <div class="ok"><div class="ck">${I('check')}</div>
+      <h2 class="h" style="margin-top:24px">${tb?'Tavolo<br><em>tenuto</em>':'Si<br><em>gioca</em>'}</h2>
+      <p class="sub">${tb?'Ti aspettiamo al Bistrot.':'Ti mandiamo un promemoria su WhatsApp due ore prima.'}</p></div>
+    ${wide()?'':TK}
+    ${upsell?`<div class="after"><p class="s">E dopo la partita?</p><p>Finite alle ${hm(b.start+b.dur)}. Ti teniamo un tavolo al Bistrot per le ${hm(after)}.</p>
+      <a class="btn brass" href="#/tavolo/${b.date}/${after}/${b.players}">Tienimi il tavolo</a></div>`:''}
+    <div style="margin-top:40px"><a class="btn wa full" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">${I('wa')}${tb?'Avvisa gli amici':'Invita i compagni'}</a></div>
+    <div class="links" style="margin-top:12px;justify-content:center">
+      <button onclick="ics('${b.id}')">${I('cal')}Calendario</button>
+      <a href="${CENTER.maps}" target="_blank" rel="noopener">${I('pin')}Indicazioni</a>
+    </div></div>${wide()?`<div>${TK}</div>`:''}</div>`};
+}
+function ics(id){
+  const b=myBookings().find(x=>x.id===id); if(!b) return;
+  const at=m=>{const d=new Date(parse(b.date).getTime()+Math.floor(m/1440)*864e5);return`${ymd(d).replace(/-/g,'')}T${pad(Math.floor(m%1440/60))}${pad(m%60)}00`};
+  const txt=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//UCenter//Prenotazioni//IT','BEGIN:VEVENT',`UID:${b.id}@ucenter`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g,'').split('.')[0]}Z`,`DTSTART:${at(b.start)}`,`DTEND:${at(b.start+b.dur)}`,
+    `SUMMARY:${b.label} · ${b.courtName} — UCenter`,'LOCATION:UCenter\\, Viale Sanremo 61\\, Spinea',`DESCRIPTION:Codice ${b.id}`,
+    'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:Tra due ore a UCenter','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'text/calendar'}));a.download=`ucenter-${b.id}.ics`;a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+
+/* ══════════ BISTROT: TAVOLO ══════════ */
+function tavolo(date,start,guests){
+  // i dati nel link (dal biglietto della partita) valgono solo all'arrivo, non a ogni ridisegno
+  if(date&&location.hash!==lastHash){tav.date=date;tav.start=+start||null;if(guests)tav.guests=Math.min(12,Math.max(1,+guests));
+    const m=MOMENTS.slice().reverse().find(x=>tav.start>=x.from&&tav.start<=x.to);if(m)tav.moment=m.id}
+  if(tav.date<today()) tav.date=today();
+  const mo=MOMENTS.find(m=>m.id===tav.moment), me=store.get('me',{name:'',tel:''});
+  const slots=[];for(let m=mo.from;m<=mo.to;m+=30)if(!(tav.date===today()&&m<nowMin()+30))slots.push({m,n:tablesLeft(tav.date,m)});
+  const ok=tav.start!=null&&slots.some(s=>s.m===tav.start&&s.n);
+  return{title:'Tavolo al Bistrot',back:true,tab:'home',cls:'bis',body:`<div class="split2 on-wide"><div>
+    ${dayStrip(tav.date,'setTavDate')}
+    <div class="seg" role="group" aria-label="Momento">${MOMENTS.map(m=>`<button class="${m.id===tav.moment?'on':''}" onclick="tav.moment='${m.id}';tav.start=null;render()">${m.t}</button>`).join('')}</div>
+    <div class="times">${slots.map(s=>`<button class="tm ${tav.start===s.m&&s.n?'on':''}" ${s.n?'':'disabled'} onclick="tav.start=${s.m};render()">${hm(s.m)}</button>`).join('')}</div>
+    ${slots.length?'':'<p class="empty">Per oggi è tardi: scegli un altro giorno o momento.</p>'}
+    </div><div>
+    <div class="rows" style="margin-top:28px"><div class="row"><span class="t"><b>Persone</b><span>Oltre dodici, scrivici</span></span>
+      <span class="stepper"><button onclick="tav.guests=Math.max(1,tav.guests-1);render()" aria-label="Meno">${I('minus')}</button><b>${tav.guests}</b><button onclick="tav.guests=Math.min(12,tav.guests+1);render()" aria-label="Più">${I('plus')}</button></span></div></div>
+    <label class="field"><span>Nome e cognome</span><input id="fName" autocomplete="name" value="${esc(me.name)}"></label>
+    <label class="field"><span>Cellulare</span><input id="fTel" type="tel" autocomplete="tel" value="${esc(me.tel)}"></label>
+    <label class="field"><span>Una nota, se serve</span><input id="fNote" placeholder="Compleanno, seggiolone…"></label>
+    <div class="links"><a href="../bistrot/" ${EMBED?'target="_top"':''}>${I('menu')}Guarda il menu</a></div></div></div>`,
+    cta:`<div class="cta"><div class="tot"><small>${cap(dayLabel(tav.date))}</small><b>${ok?hm(tav.start)+' · '+tav.guests+(tav.guests>1?' persone':' persona'):'Scegli l\'ora'}</b></div><button class="btn brass" ${ok?'':'disabled'} onclick="confirmTav()">Prenota</button></div>`};
+}
+function setTavDate(d){tav.date=d;tav.start=null;render()}
+function confirmTav(){
+  const me=readMe(); if(!me) return;
+  const mo=MOMENTS.find(m=>m.id===tav.moment), code=newCode(me.name);
+  store.set('bk',[...myBookings(),{id:code,sport:'tavolo',label:'Tavolo al Bistrot',court:'t',courtName:`Tavolo per ${tav.guests}`,date:tav.date,start:tav.start,
+    dur:mo.dur,players:tav.guests,price:0,pay:'bistrot',moment:mo.t,note:($('#fNote')?.value||'').trim()}]);
+  go('#/ok/'+code);
+}
+
+/* ══════════ PARTITE APERTE ══════════ */
+const NAMES=['Luca','Giulia','Marco','Sara','Davide','Elena','Matteo','Chiara','Andrea','Paolo','Marta','Nicola'];
+const AVC=['#3b6fd1','#c42a22','#2f9a46','#b0772b','#7a4fc9','#1f8f9a'];
+function matches(){
+  const out=[];
+  for(let day=0;day<5;day++){
+    const date=addDays(day),r=rng(hash('m'+date)),k=1+Math.floor(r()*2);
+    for(let i=0;i<k;i++){
+      const start=(18+Math.floor(r()*5))*60+(r()<.5?0:30); if(date===today()&&start<nowMin()+30) continue;
+      const have=1+Math.floor(r()*3),court=SPORTS.padel.courts[Math.floor(r()*6)];
+      out.push({id:`${date}-${start}`,date,start,dur:90,court,level:(2+Math.floor(r()*5)*.5).toFixed(1),
+        who:[...Array(have)].map(()=>NAMES[Math.floor(r()*NAMES.length)]),price:Math.round(SPORTS.padel.price(court,90,true)/4)});
+    }
+  }
+  return out.sort((a,b)=>(a.date+hm(a.start)).localeCompare(b.date+hm(b.start)));
+}
+function partite(){
+  const joined=store.get('joined',[]);
+  return{tab:'partite',body:`
+    <h2 class="h" style="margin-top:20px">Partite<br><em>aperte</em></h2>
+    <p class="sub">Entra in una partita già prenotata e dividi il campo.</p>
+    <div class="rows" style="margin-top:24px">${matches().map(m=>{const free=4-m.who.length,j=joined.includes(m.id);return`
+      <div class="row"><span class="time">${hm(m.start)}</span>
+        <span class="t"><b style="font-size:1rem">${cap(dayLabel(m.date))} · livello ${m.level}</b>
+          <span class="av">${m.who.map((n,i)=>`<i style="background:${AVC[(hash(n)+i)%AVC.length]}" title="${n}">${n[0]}</i>`).join('')}${'<i class="free"></i>'.repeat(free)}</span>
+          <span>${free} ${free>1?'posti':'posto'} · ${eur(m.price)} a testa</span></span>
+        ${j?`<span class="in">${I('check')}Ci sei</span>`:`<button class="join" onclick="joinMatch('${m.id}')">Entra</button>`}</div>`}).join('')}</div>`};
+}
+function joinMatch(id){
+  const m=matches().find(x=>x.id===id); if(!m) return;
+  Object.assign(st,{sport:'padel',date:m.date,start:m.start,dur:m.dur,court:m.court.id,players:1,match:m,pay:'online'}); go('#/checkout');
+}
+
+/* ══════════ LE TUE PRENOTAZIONI ══════════ */
+function mie(){
+  const up=upcoming(), abb=store.get('abb',8);
+  return{tab:'mie',body:`
+    <h2 class="h" style="margin-top:20px">Le tue<br><em>prenotazioni</em></h2>
+    ${up.length?`<div class="rows" style="margin-top:24px">${up.map(b=>`
+      <div class="row">${I(SPORTS[b.sport].icon,'ic'+(b.sport==='tavolo'?' b':''))}<a class="t" href="#/ok/${b.id}"><b>${b.sport==='tavolo'?'Bistrot · '+b.courtName.toLowerCase():b.label+' · '+b.courtName}</b><span>${cap(dayLabel(b.date))}, ${hm(b.start)}</span></a>
+        <button class="join" style="color:var(--mut)" onclick="cancelBk('${b.id}')">Annulla</button></div>`).join('')}</div>`
+      :`<p class="sub" style="margin-top:24px">Niente in programma. <a href="#/" style="color:var(--txt);text-decoration:underline">Prenota</a>.</p>`}
+    ${abb<8?`<p class="lbl">Abbonamento padel</p><p style="font-size:1.1rem">${abb} ingressi rimasti <span class="muted">· validi sei mesi</span></p>`:''}`};
+}
+function cancelBk(id){
+  openSheet(`<h3>Annullare?</h3><p class="muted" style="margin:10px 0 24px">Il posto torna libero. Gratis fino a 24 ore prima.</p>
+    <button class="btn full" onclick="doCancel('${id}')">Sì, annulla</button><button class="btn full" style="background:none;margin-top:6px" onclick="closeSheet()">No, tienila</button>`);
+}
+function doCancel(id){
+  const b=myBookings().find(x=>x.id===id); if(b?.pay==='abb') store.set('abb',store.get('abb',8)+1);
+  store.set('bk',myBookings().filter(x=>x.id!==id)); toast('Prenotazione annullata'); render();
+}
+
+/* ══════════ CORSI E CAMP ══════════ */
+function corsi(){
+  const wait=store.get('wait',[]);
+  const it=(id,t,s,a)=>`<div style="padding:28px 0;border-bottom:1px solid var(--faint)"><b style="font-size:1.25rem">${t}</b><p class="muted" style="margin-top:6px">${s}</p>
+    ${wait.includes(id)?`<p class="in" style="margin-top:14px">${I('check')}Richiesta inviata</p>`:`<button class="join" style="margin-top:8px" onclick="ask('${id}','${t}')">${a}</button>`}</div>`;
+  return{title:'Corsi e camp',back:true,tab:'home',body:`
+    ${it('silver','Silver Fitness','Allenamento a bassa intensità per i senior. Mobilità, forza, equilibrio.','Chiedi un posto')}
+    ${it('camp','Summer Camp 2027','Dai 6 ai 13 anni, a giugno. Calcio, padel, pallavolo, giochi d\'acqua e laboratori.','Avvisami quando apre')}
+    ${it('torneo','Tornei','Padel e calcetto, tutto l\'anno, per ogni livello.','Voglio giocare')}
+    <p class="fine">Segreteria: lun–ven 9–17, sabato 9–13.</p>`};
+}
+function ask(id,t){
+  const me=store.get('me',{name:'',tel:''});
+  openSheet(`<h3>${t}</h3><p class="muted" style="margin-top:8px">Ti richiamiamo con orari e prezzi.</p>
+    <label class="field"><span>Nome e cognome</span><input id="fName" value="${esc(me.name)}" autocomplete="name"></label>
+    <label class="field"><span>Cellulare</span><input id="fTel" type="tel" value="${esc(me.tel)}" autocomplete="tel"></label>
+    <button class="btn full" style="margin-top:28px" onclick="sendAsk('${id}')">Invia</button>`);
+}
+function sendAsk(id){const me=readMe();if(!me)return;store.set('wait',[...store.get('wait',[]),id]);toast('Richiesta inviata (demo)');render()}
+
+/* ══════════ INFO ══════════ */
+function info(){
+  const L=(h,ic,t,ext)=>`<a class="row" href="${h}" ${ext?'target="_blank" rel="noopener"':''}>${I(ic,'ic')}<span class="t"><b style="font-size:1.05rem;font-weight:500">${t}</b></span></a>`;
+  return{tab:'info',body:`
+    <h2 class="h" style="margin-top:20px">UCenter<br><em>Spinea</em></h2>
+    <div class="rows" style="margin-top:24px">
+      ${L(CENTER.maps,'pin',CENTER.addr,1)}${L('tel:'+CENTER.tel,'phone',CENTER.telH)}${L('https://wa.me/'+CENTER.wa,'wa','WhatsApp '+CENTER.waH,1)}
+      ${L(CENTER.ig,'ig','@ucenter_spinea',1)}${L(CENTER.igB,'glass','@ucenter_bistrot',1)}
+    </div>
+    <p class="lbl">Da sapere</p>
+    <p class="muted" style="max-width:36ch">Racchette, palloni e casacche sono gratis. L'abbonamento padel è personale e vale sei mesi. Si cancella gratis fino a 24 ore prima.</p>
+    <div class="links">${installLink()}</div>`};
+}
+
+/* ══════════ installazione, senza App Store ══════════ */
+let deferred=null;
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e});
+const standalone=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const installLink=()=>EMBED||standalone()?'':`<button onclick="install()">${I('down')}Aggiungi alla Home</button>`;
+async function install(){
+  if(deferred){deferred.prompt();const r=await deferred.userChoice;deferred=null;if(r.outcome==='accepted')toast('Fatto, la trovi nella Home');return}
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  openSheet(`<h3>Aggiungi alla Home</h3><p class="muted" style="margin:12px 0 4px">${ios?'In Safari: tocca Condividi, poi «Aggiungi alla schermata Home».':'Dal menu del browser: «Installa app» o «Aggiungi a schermata Home».'}</p>
+    <button class="btn full" style="margin-top:24px" onclick="closeSheet()">Ok</button>`);
+}
+
+/* ══════════ foglio dal basso ══════════ */
+function openSheet(h){$('#sheet').innerHTML=`<div class="grab"></div>${h}`;$('#sheet').classList.add('on');$('#scrim').classList.add('on')}
+function closeSheet(){$('#sheet').classList.remove('on');$('#scrim').classList.remove('on')}
+$('#scrim').onclick=closeSheet;
+addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet()});
+
+if('serviceWorker' in navigator&&!EMBED&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+let wasWide=wide();addEventListener('resize',()=>{if(wide()!==wasWide){wasWide=wide();closeSheet();render()}});
+render();
+</script>
+</body>
+</html>

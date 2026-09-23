@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0d11">
+<title>UCenter Spinea — Padel, calcio a 5, Bistrot</title>
+<meta name="description" content="UCenter, Spinea: sei campi da padel panoramici al coperto, tre campi da calcio a 5, corsi, Summer Camp e UCenter Bistrot. Prenota online.">
+<link rel="icon" type="image/png" href="prenota/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,800&family=Barlow:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0d11; --bg-2:#101319; --txt:#f1f2f4; --mut:#8d96a1; --faint:rgba(255,255,255,.1);
+  --red:#c42a22; --red-hi:#e0392f;
+  --wine:#0e0f13; --cream:var(--txt); --brass:var(--red-hi);   /* un'unica palette: nero e rosso, anche per il Bistrot */
+  --display:"Barlow Condensed","Arial Narrow",sans-serif; --sans:"Barlow",system-ui,sans-serif; --serif:"Playfair Display",Georgia,serif;
+  --gut:clamp(20px,5vw,72px); --sec:clamp(112px,16vw,220px); --max:1240px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--txt);font-size:18px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--red-hi);outline-offset:4px}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+
+/* tipografia: pochi livelli, molto netti */
+.d{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;line-height:.88;letter-spacing:-.01em}
+.d1{font-size:clamp(3.6rem,12vw,10.5rem)}
+.d2{font-size:clamp(3rem,8.5vw,7.5rem)}
+.d3{font-size:clamp(2rem,4vw,3.2rem)}
+.lede{font-size:clamp(1.15rem,1.9vw,1.45rem);line-height:1.5;color:#d3d8de;max-width:34ch}
+.p{color:var(--mut);max-width:52ch}
+.p b,.lede b{color:var(--txt);font-weight:600}
+.num{font-family:var(--display);font-weight:700;font-size:1rem;letter-spacing:.14em;color:var(--red-hi)}
+
+/* azioni: un pulsante pieno per sezione, il resto sono link */
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:var(--red);color:#fff;
+  font-family:var(--display);font-weight:700;font-size:1.1rem;letter-spacing:.08em;text-transform:uppercase;transition:background .25s var(--ease),transform .25s var(--ease)}
+.btn:hover{background:var(--red-hi);transform:translateY(-2px)}
+.link{display:inline-flex;align-items:center;gap:10px;min-height:44px;font-weight:600;border-bottom:1px solid transparent;transition:gap .3s var(--ease),color .2s}
+.link svg{width:18px;height:18px;transition:transform .3s var(--ease)}
+.link:hover svg{transform:translateX(4px)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 32px;margin-top:40px}
+
+/* ─── barra in alto ─── */
+.top{position:fixed;inset:0 0 auto;z-index:40;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(18px + env(safe-area-inset-top)) var(--gut) 18px;transition:background .4s var(--ease)}
+.top.solid{background:rgba(11,13,17,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.logo{width:112px;height:auto}
+.top nav{display:flex;align-items:center;gap:36px;font-size:.95rem;font-weight:500}
+.top nav a:not(.btn){opacity:.75;transition:opacity .2s}
+.top nav a:not(.btn):hover{opacity:1}
+.top .btn{min-height:44px;padding:0 22px;font-size:1rem}
+.burger{display:none;width:44px;height:44px;border:0;background:none;color:#fff;cursor:pointer}
+.burger svg{width:26px;height:26px}
+.menu{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;flex-direction:column;justify-content:center;gap:6px;padding:0 var(--gut);
+  opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.menu.open{opacity:1;pointer-events:auto}
+.menu a{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(2.6rem,11vw,4rem);line-height:1.1}
+.menu .x{position:absolute;top:calc(18px + env(safe-area-inset-top));right:var(--gut);width:44px;height:44px;border:0;background:none;color:#fff;cursor:pointer}
+.menu .x svg{width:28px;height:28px}
+.menu p{margin-top:36px;color:var(--mut);font-size:1rem}
+
+/* ─── il film ─── */
+#sky{position:fixed;inset:0;z-index:0;background:
+  radial-gradient(90% 60% at 70% 100%,rgba(171,29,24,.35),transparent 60%),
+  linear-gradient(180deg,#06080d 0%,#0f1829 45%,#271f31 78%,#352126 100%)}
+#scene{position:fixed;inset:0;z-index:1}
+#scene canvas{display:block;width:100%!important;height:100%!important}
+/* velo scuro in basso a sinistra: il testo si legge senza bisogno di riquadri */
+#vign{position:fixed;inset:0;z-index:2;pointer-events:none;background:
+  linear-gradient(0deg,rgba(8,10,14,.92) 0%,rgba(8,10,14,.55) 32%,transparent 62%),
+  linear-gradient(90deg,rgba(8,10,14,.55) 0%,transparent 55%)}
+#film{position:relative;z-index:3;pointer-events:none}
+#ui{position:fixed;inset:0;z-index:4;pointer-events:none}
+
+.hero{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(64px,12vh,120px);top:auto;transform:none}
+.hero h1{max-width:9ch}
+.hero h1 em{color:var(--red-hi);font-style:italic}
+.hero .lede{margin-top:28px}
+.hero .cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 32px;margin-top:36px;pointer-events:auto}
+
+.stop{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(64px,12vh,120px);max-width:880px;padding:0;opacity:0;will-change:opacity,transform}
+.stop .d2,.finale .d2{font-size:clamp(2.8rem,6.6vw,6rem)}
+.stop.on{pointer-events:auto}
+.stop .d2{margin-top:14px}
+.stop .lede{margin-top:22px}
+.stop .actions{margin-top:26px}
+.stop.bis .d2{font-family:var(--serif);font-style:italic;font-weight:500;text-transform:none;letter-spacing:-.01em;line-height:1}
+.stop.bis .num{color:var(--brass)}
+.finale{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(64px,12vh,120px);opacity:0}
+.finale .lede{margin-top:22px}
+.finale .cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 32px;margin-top:36px}
+.finale.on .cta{pointer-events:auto}
+
+.cue{position:absolute;right:var(--gut);bottom:clamp(64px,12vh,120px);display:flex;align-items:center;gap:12px;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.cue i{width:40px;height:1px;background:var(--mut);position:relative;overflow:hidden}
+.cue i::after{content:"";position:absolute;inset:0;background:var(--red-hi);transform:translateX(-100%);animation:cue 2.2s var(--ease) infinite}
+@keyframes cue{60%,100%{transform:translateX(100%)}}
+.dots{position:absolute;right:var(--gut);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:6px;pointer-events:auto}
+.dots button{width:44px;height:28px;border:0;background:none;cursor:pointer;display:flex;align-items:center;justify-content:flex-end}
+.dots button::after{content:"";width:14px;height:2px;background:rgba(255,255,255,.3);transition:width .4s var(--ease),background .3s}
+.dots button.on::after{width:32px;background:var(--red-hi)}
+.dots span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.bar{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--red-hi)}
+.tag{display:none}
+.loader{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;transition:opacity .7s var(--ease)}
+.loader.hide{opacity:0;pointer-events:none}
+.loader img{width:132px;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+/* ─── contenuti ─── */
+main{position:relative;z-index:10;background:var(--bg)}
+main section{padding:var(--sec) 0}
+.intro .lede{max-width:24ch;font-size:clamp(1.6rem,3.6vw,3rem);line-height:1.25;color:var(--txt);font-weight:500}
+.intro .lede span{color:var(--mut)}
+
+.split{display:grid;grid-template-columns:5fr 6fr;gap:clamp(40px,8vw,120px);align-items:end}
+.facts{list-style:none;margin-top:36px;max-width:44ch}
+.facts li{padding:16px 0;border-top:1px solid var(--faint);color:#cfd5dc}
+.facts li:last-child{border-bottom:1px solid var(--faint)}
+.wide{margin-top:clamp(72px,10vw,140px);aspect-ratio:21/9;overflow:hidden;border-radius:4px}
+.wide img{width:100%;height:100%;object-fit:cover}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,8vw,120px);margin-top:clamp(72px,10vw,140px)}
+.cols h3{margin-bottom:18px}
+.cols .p+.p{margin-top:14px}
+
+.campi{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,4vw,56px);margin-top:clamp(64px,9vw,120px)}
+.campo figure{aspect-ratio:4/5;overflow:hidden;border-radius:4px}
+.campo img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.campo:hover img{transform:scale(1.04)}
+.campo h3{margin-top:24px}
+.campo p{color:var(--mut);margin-top:8px;max-width:30ch}
+
+/* bistrot: stessa casa, un'altra luce */
+.bistrot{background:radial-gradient(60% 50% at 85% 10%,rgba(196,42,34,.12),transparent 70%),var(--wine);color:var(--cream)}
+.bistrot .serif{font-family:var(--serif);font-weight:500;font-size:clamp(3.2rem,9vw,8rem);line-height:.95;letter-spacing:-.02em}
+.bistrot .serif em{color:var(--brass)}
+.bistrot .lede{color:#d3d8de}
+
+.carta{display:grid;grid-template-columns:6fr 4fr;gap:clamp(40px,8vw,120px);margin-top:clamp(80px,11vw,150px);align-items:start}
+.voci{list-style:none}
+.voci li{padding:22px 0;border-top:1px solid var(--faint)}
+.voci li:last-child{border-bottom:1px solid var(--faint)}
+.voci .r{display:flex;align-items:baseline;justify-content:space-between;gap:20px;font-family:var(--serif);font-size:clamp(1.25rem,2vw,1.6rem)}
+.voci .r b{font-weight:500;font-variant-numeric:tabular-nums;color:var(--brass);font-size:1.05rem;font-family:var(--sans)}
+.voci p{color:var(--mut);font-size:.98rem;margin-top:4px}
+.reel{aspect-ratio:9/16;border-radius:4px;overflow:hidden;position:relative;display:block;
+  background:radial-gradient(80% 55% at 50% 30%,rgba(224,57,47,.45),transparent 65%),linear-gradient(170deg,#241416,#08090c)}
+.reel svg{position:absolute;left:50%;top:50%;width:56px;height:56px;transform:translate(-50%,-50%);color:#fff;opacity:.9}
+.reel-cap{margin-top:14px;font-size:.95rem;color:var(--mut)}
+.bistrot .combo{margin-top:clamp(80px,11vw,150px);font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.6rem);line-height:1.25;max-width:26ch}
+.bistrot .combo em{color:var(--brass)}
+
+.app-sec .grid{display:grid;grid-template-columns:1fr auto;gap:clamp(48px,9vw,140px);align-items:center}
+.steps{list-style:none;margin-top:48px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:64px 1fr;padding:18px 0;border-top:1px solid var(--faint);color:#cfd5dc;max-width:44ch}
+.steps li:last-child{border-bottom:1px solid var(--faint)}
+.steps li::before{content:"0" counter(s);font-family:var(--display);font-weight:700;color:var(--red-hi);letter-spacing:.1em}
+.phone{width:320px;height:660px;border-radius:46px;background:#000;padding:10px;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 1px #262a31}
+.phone iframe{width:100%;height:100%;border:0;border-radius:37px;background:var(--bg)}
+
+.info .grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,9vw,140px);margin-top:clamp(56px,8vw,110px)}
+.big-links a,.big-links div{display:block;font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1.2;letter-spacing:.01em}
+.big-links a{transition:color .2s}
+.big-links a:hover{color:var(--red-hi)}
+.small-list{list-style:none;color:var(--mut)}
+.small-list li{padding:14px 0;border-top:1px solid var(--faint);display:flex;justify-content:space-between;gap:20px}
+.small-list li:last-child{border-bottom:1px solid var(--faint)}
+.small-list b{color:var(--txt);font-weight:500;text-align:right}
+.news{display:flex;gap:12px;align-items:center;margin-top:40px;max-width:460px;border-bottom:1px solid rgba(255,255,255,.3)}
+.news input{flex:1;background:none;border:0;color:#fff;font:inherit;padding:14px 0;min-height:52px}
+.news input:focus{outline:none}
+.news:focus-within{border-color:var(--red-hi)}
+.news button{background:none;border:0;color:#fff;font-weight:600;cursor:pointer;min-height:44px;padding:0 4px}
+.news-note{font-size:.85rem;color:var(--mut);margin-top:12px}
+
+footer{position:relative;z-index:10;background:var(--bg);padding:56px 0 calc(56px + env(safe-area-inset-bottom));border-top:1px solid var(--faint);font-size:.9rem;color:var(--mut)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 40px}
+footer nav{display:flex;flex-wrap:wrap;gap:12px 28px}
+footer a:hover{color:var(--txt)}
+
+.fab{position:fixed;right:var(--gut);bottom:calc(20px + env(safe-area-inset-bottom));z-index:50;opacity:0;transform:translateY(16px);pointer-events:none;
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.fab.on{opacity:1;transform:none;pointer-events:auto}
+.fab .btn{box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,12px);z-index:80;background:var(--txt);color:#111;padding:12px 20px;border-radius:999px;font-weight:600;font-size:.95rem;
+  opacity:0;transition:all .35s var(--ease);pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+.rv{opacity:0;transform:translateY(32px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.rv.shown{opacity:1;transform:none}
+
+@media (max-width:980px){
+  .split,.cols,.carta,.info .grid{grid-template-columns:1fr}
+  .campi{grid-template-columns:1fr;gap:64px}
+  .campo figure{aspect-ratio:4/3}
+  .app-sec .grid{grid-template-columns:1fr;justify-items:start}
+  .carta .reel{max-width:280px}
+}
+@media (max-width:760px){
+  body{font-size:17px}
+  .top nav a:not(.btn){display:none}
+  .burger{display:block}
+  .top .btn{display:none}
+  .logo{width:96px}
+  .dots,.cue{display:none}
+  .hero,.stop,.finale{bottom:calc(40px + env(safe-area-inset-bottom))}
+  .wide{aspect-ratio:4/3}
+  .phone{width:290px;height:600px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .cue i::after,.loader img{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="loader" id="loader"><img src="img/logo-bianco.png" alt="UCenter"></div>
+
+<header class="top" id="top">
+  <a href="#" aria-label="UCenter, torna all'inizio"><img class="logo" src="img/logo-bianco.png" alt="UCenter" width="112" height="40"></a>
+  <nav>
+    <a href="#padel">Padel</a>
+    <a href="#calcetto">Calcio a 5</a>
+    <a href="#bistrot">Bistrot</a>
+    <a href="#info">Info</a>
+    <a class="btn" href="prenota/">Prenota</a>
+    <button class="burger" id="burger" aria-label="Apri il menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 8h16M4 16h16"/></svg></button>
+  </nav>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <button class="x" id="menuX" aria-label="Chiudi il menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <a href="#padel">Padel</a>
+  <a href="#calcetto">Calcio a 5</a>
+  <a href="#bistrot">Bistrot</a>
+  <a href="#corsi">Corsi e camp</a>
+  <a href="#info">Info</a>
+  <a href="prenota/" style="color:var(--red-hi)">Prenota</a>
+  <p>Viale Sanremo 61, Spinea · 041 0970126</p>
+</div>
+
+<div id="sky"></div>
+<div id="scene" aria-hidden="true"></div>
+<div id="vign"></div>
+<div id="film"></div>
+
+<div id="ui">
+  <div class="hero" id="hero">
+    <h1 class="d d1">Lo sport ha una <em>casa</em></h1>
+    <p class="lede">Padel, calcio a 5 e un bistrot, a Spinea.</p>
+    <div class="cta"><a class="btn" href="prenota/">Prenota un campo</a><a class="link" href="#" data-go="1">Scopri il centro <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a></div>
+  </div>
+
+  <section class="stop" data-i="1">
+    <span class="num">01</span>
+    <h2 class="d d2">11.882 m² di sport</h2>
+    <p class="lede">Cinque campi, una club house, un bistrot. Rinnovato da poco, pensato per restare.</p>
+  </section>
+
+  <section class="stop" data-i="2">
+    <span class="num">02</span>
+    <h2 class="d d2">Padel</h2>
+    <p class="lede">Sei campi panoramici, al coperto. Vedi ogni scambio, con qualsiasi meteo.</p>
+    <div class="actions"><a class="link" href="prenota/#/sport/padel">Prenota il padel <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </section>
+
+  <section class="stop" data-i="3">
+    <span class="num">03</span>
+    <h2 class="d d2">Calcio a 5</h2>
+    <p class="lede">Campo 1 in gomma con tribuna, campo 4 in sintetico. Coperti, fino a sette contro sette.</p>
+    <div class="actions"><a class="link" href="prenota/#/sport/calcetto">Prenota il calcetto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </section>
+
+  <section class="stop" data-i="4">
+    <span class="num">04</span>
+    <h2 class="d d2">Campo esterno</h2>
+    <p class="lede">Erba sintetica all'aperto, per le sere d'estate.</p>
+  </section>
+
+  <section class="stop bis" data-i="5">
+    <span class="num">05</span>
+    <h2 class="d2">La partita continua a tavola</h2>
+    <p class="lede">UCenter Bistrot: cicchetti fatti in casa, pizza in pala, cene.</p>
+    <div class="actions"><a class="link" href="prenota/#/tavolo">Prenota un tavolo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="link" href="bistrot/">Il menu</a></div>
+  </section>
+
+  <div class="finale" id="finale">
+    <h2 class="d d2">Prenoti in trenta secondi</h2>
+    <p class="lede">Campi, lezioni e tavoli, da un'unica app. Gli orari liberi li vedi subito.</p>
+    <div class="cta"><a class="btn" href="prenota/">Apri la prenotazione</a></div>
+  </div>
+
+  <div class="cue" id="cue">Scorri<i></i></div>
+  <div class="dots" id="dots"></div>
+  <div class="bar" id="pbar"></div>
+</div>
+
+<main id="main">
+
+  <section class="intro"><div class="wrap">
+    <p class="lede rv">UCenter è un centro sportivo a Spinea. <span>Padel, calcio a 5, corsi, un Summer Camp per i ragazzi e un bistrot dove fermarsi dopo.</span></p>
+  </div></section>
+
+  <section id="padel" style="padding-top:0"><div class="wrap">
+    <div class="split">
+      <h2 class="d d2 rv">Padel</h2>
+      <div class="rv">
+        <p class="lede">Campi panoramici al coperto, finiture di alta qualità. Si gioca bene e si guarda meglio.</p>
+        <ul class="facts">
+          <li>Sei campi coperti, con vetri panoramici</li>
+          <li>Racchette e palline a noleggio, gratis</li>
+          <li>Partite aperte per trovare compagni del tuo livello</li>
+        </ul>
+        <div class="actions"><a class="btn" href="prenota/#/sport/padel">Prenota il padel</a></div>
+      </div>
+    </div>
+    <figure class="wide rv"><img loading="lazy" src="img/padel-vetro.jpg" alt="Campo da padel panoramico al coperto, con archi in legno"></figure>
+    <div class="cols" id="lezioni">
+      <div class="rv">
+        <h3 class="d d3">Lezioni</h3>
+        <p class="p">Con <b>due maestri certificati</b>, per principianti e intermedi, da soli o in gruppo. Di giorno, di sera e il sabato.</p>
+        <p class="p">Un'ora di lezione, un'ora e mezza la partita-lezione. Con il <b>pacchetto da cinque</b> c'è un ingresso omaggio.</p>
+        <div class="actions" style="margin-top:28px"><a class="link" href="prenota/#/lezioni">Prenota una lezione <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="rv">
+        <h3 class="d d3">Abbonamento</h3>
+        <p class="p">Un pacchetto di ingressi a prezzo agevolato, <b>personale</b> e valido <b>sei mesi</b>.</p>
+        <p class="p">Nell'app diventa digitale: gli ingressi si scalano da soli, niente tessera da dimenticare a casa.</p>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="calcetto" style="background:var(--bg-2)"><div class="wrap">
+    <div class="split">
+      <h2 class="d d2 rv">Calcio a 5</h2>
+      <p class="lede rv">Tre campi per privati e società, spogliatoi riservati, palloni e casacche dalla reception. E tornei tutto l'anno.</p>
+    </div>
+    <div class="campi">
+      <article class="campo rv"><figure><img loading="lazy" src="img/calcetto-campo1.jpg" alt="Campo 1, pavimento in gomma, coperto"></figure>
+        <h3 class="d d3">Campo 1</h3><p>In gomma, coperto, con tribuna e quattro spogliatoi. Il più grande: fino a sette contro sette.</p></article>
+      <article class="campo rv"><figure><img loading="lazy" src="img/calcetto-campo4.jpg" alt="Campo 4, erba sintetica, coperto"></figure>
+        <h3 class="d d3">Campo 4</h3><p>Erba sintetica al riparo da pioggia e freddo.</p></article>
+      <article class="campo rv"><figure><img loading="lazy" src="img/calcetto-esterno.jpg" alt="Campo esterno in erba sintetica"></figure>
+        <h3 class="d d3">Esterno</h3><p>Erba sintetica all'aperto, illuminato la sera.</p></article>
+    </div>
+    <div class="actions rv" style="margin-top:64px"><a class="btn" href="prenota/#/sport/calcetto">Prenota il calcetto</a></div>
+  </div></section>
+
+  <section class="bistrot" id="bistrot"><div class="wrap">
+    <h2 class="serif rv">UCenter <em>Bistrot</em></h2>
+    <p class="lede rv" style="margin-top:36px">Cucina genuina, atmosfera moderna, eleganza informale. Il caffè prima di giocare, i cicchetti dopo, la cena con chi vuoi.</p>
+    <div class="actions rv"><a class="btn" href="prenota/#/tavolo">Prenota un tavolo</a><a class="link" href="bistrot/">Sfoglia il menu <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    <div class="carta">
+      <ul class="voci rv">
+        <li><div class="r">Burrata e acciughe<b>9 €</b></div><p>Pomodorini ciliegino, misticanza, acciughe del Cantabrico</p></li>
+        <li><div class="r">Spaghettino sugo e stracciatella<b>11 €</b></div><p>Pomodorini ciliegino, stracciatella, basilico</p></li>
+        <li><div class="r">Burger UCenter<b>12 €</b></div><p>Fassona, melanzane e zucchine, edamer</p></li>
+        <li><div class="r">Tagliere grande<b>32 €</b></div><p>Salumi e formaggi, per quattro</p></li>
+        <li><div class="r">Sbrisolona e passito<b>6 €</b></div><p>Con Passito di Pantelleria</p></li>
+      </ul>
+      <div class="rv">
+        <a class="reel" href="https://www.instagram.com/ucenter_bistrot/" target="_blank" rel="noopener" aria-label="Guarda i reel del Bistrot su Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></a>
+        <p class="reel-cap">Qui il vostro reel · @ucenter_bistrot</p>
+      </div>
+    </div>
+    <p class="combo rv">Prenoti il campo, e l'app ti tiene <em>il tavolo per dopo</em>.</p>
+  </div></section>
+
+  <section id="corsi"><div class="wrap">
+    <div class="cols" style="margin-top:0">
+      <div class="rv">
+        <h2 class="d d2">Corsi</h2>
+        <p class="lede" style="margin-top:28px"><b>Silver Fitness</b>: allenamento a bassa intensità pensato per i senior, per mobilità, forza ed equilibrio.</p>
+        <p class="p" style="margin-top:18px">Istruttori certificati, sala climatizzata tutto l'anno.</p>
+        <div class="actions"><a class="link" href="prenota/#/corsi">Chiedi un posto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="rv" id="camp">
+        <h2 class="d d2">Summer Camp</h2>
+        <p class="lede" style="margin-top:28px">Dai 6 ai 13 anni, a giugno: calcio, padel, pallavolo, giochi d'acqua e laboratori.</p>
+        <p class="p" style="margin-top:18px">Posti limitati, perché ogni bambino sia seguito bene.</p>
+        <div class="actions"><a class="link" href="prenota/#/corsi">Avvisami per il 2027 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+    </div>
+    <figure class="wide rv"><img loading="lazy" src="img/camp-allenamento.jpg" alt="Bambini al Summer Camp di UCenter"></figure>
+  </div></section>
+
+  <section class="app-sec" id="app" style="background:var(--bg-2)"><div class="wrap grid">
+    <div>
+      <h2 class="d d2 rv">Una sola app</h2>
+      <p class="lede rv" style="margin-top:28px">Padel, calcetto, lezioni e tavolo al bistrot. Si aggiunge al telefono dal sito, senza App Store.</p>
+      <ol class="steps rv">
+        <li>Scegli cosa e quando: gli orari liberi sono già lì</li>
+        <li>Conferma in un tocco, paghi online o al centro</li>
+        <li>Inviti la squadra su WhatsApp</li>
+      </ol>
+      <div class="actions rv"><a class="btn" href="prenota/">Apri l'app</a></div>
+    </div>
+    <div class="phone rv"><iframe title="Anteprima dell'app di prenotazione" data-src="prenota/?embed=1" loading="lazy"></iframe></div>
+  </div></section>
+
+  <section class="info" id="info"><div class="wrap">
+    <h2 class="d d2 rv">Vieni a trovarci</h2>
+    <div class="grid">
+      <div class="big-links rv">
+        <a href="https://www.google.com/maps/search/?api=1&query=UCenter+Viale+Sanremo+61+Spinea" target="_blank" rel="noopener">Viale Sanremo 61, Spinea</a>
+        <a href="tel:+390410970126">041 0970126</a>
+        <a href="https://wa.me/393515958924" target="_blank" rel="noopener">WhatsApp 351 5958924</a>
+        <a href="mailto:ucenter@ugroup.it">ucenter@ugroup.it</a>
+      </div>
+      <div class="rv">
+        <ul class="small-list">
+          <li>Segreteria <b>lun–ven 9–17, sab 9–13</b></li>
+          <li>Instagram <b><a href="https://www.instagram.com/ucenter_spinea/" target="_blank" rel="noopener">@ucenter_spinea</a></b></li>
+          <li>Bistrot <b><a href="https://www.instagram.com/ucenter_bistrot/" target="_blank" rel="noopener">@ucenter_bistrot</a></b></li>
+        </ul>
+        <form class="news" id="news"><input type="email" required placeholder="La tua email, per le novità" aria-label="Email per la newsletter"><button type="submit">Iscriviti</button></form>
+        <p class="news-note">Promo e tornei, una volta al mese.</p>
+      </div>
+    </div>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>UCenter · Unica SSD · Spinea</span>
+  <nav><a href="#">Safeguarding</a><a href="#">Modello organizzativo</a><a href="#">Privacy</a><a href="#">Cookie</a></nav>
+  <span>Concept di Enrico Di Franco · modello 3D e prezzi indicativi</span>
+</div></footer>
+
+<div class="fab" id="fab"><a class="btn" href="prenota/">Prenota</a></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(()=>{
+  const top=document.getElementById('top'), fab=document.getElementById('fab'), menu=document.getElementById('menu');
+  const setMenu=o=>{menu.classList.toggle('open',o);menu.setAttribute('aria-hidden',!o)};
+  document.getElementById('burger').onclick=()=>setMenu(true);
+  document.getElementById('menuX').onclick=()=>setMenu(false);
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+  const toast=m=>{const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),2800)};
+  document.getElementById('news').addEventListener('submit',e=>{e.preventDefault();toast('Iscrizione ricevuta (demo)');e.target.reset()});
+  addEventListener('scroll',()=>{const y=scrollY;top.classList.toggle('solid',y>innerHeight*.6);fab.classList.toggle('on',y>innerHeight*1.2&&innerWidth<=760)},{passive:true});
+  // "shown" e non "in": la classe "in" è già usata dai contenitori
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('shown');io.unobserve(e.target)}}),{rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  setTimeout(()=>document.getElementById('loader').classList.add('hide'),4000);
+  const fr=document.querySelector('.phone iframe');
+  const io2=new IntersectionObserver(es=>{if(es[0].isIntersecting){fr.src=fr.dataset.src;io2.disconnect()}},{rootMargin:'400px'});
+  io2.observe(fr);
+})();
+</script>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const smooth=t=>{t=clamp(t,0,1);return t*t*(3-2*t)};
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+const mobile=matchMedia('(max-width:760px)').matches||matchMedia('(pointer:coarse)').matches;
+const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ═════════ tappe del film (p = avanzamento 0→1) ═════════ */
+// ogni tappa: finestra in cui la scheda è visibile + chiave camera
+const STOPS=[
+  {name:'Inizio',        a:0.00,b:0.07},
+  {name:'Il centro',     a:0.15,b:0.23},
+  {name:'Padel',         a:0.31,b:0.40},
+  {name:'Calcio a 5',    a:0.48,b:0.57},
+  {name:'Campo esterno', a:0.63,b:0.70},
+  {name:'Club house',    a:0.77,b:0.85},
+  {name:'Prenota',       a:0.93,b:1.01}
+];
+
+/* ═════════ renderer ═════════ */
+const host=document.getElementById('scene');
+const renderer=new THREE.WebGLRenderer({antialias:!mobile||devicePixelRatio<2,alpha:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.5:2));
+renderer.setSize(innerWidth,innerHeight,false);
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.08;
+renderer.localClippingEnabled=true;
+renderer.shadowMap.enabled=!mobile;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+host.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.fog=new THREE.Fog(0x2a2233,70,190);
+const camera=new THREE.PerspectiveCamera(46,innerWidth/innerHeight,.5,500);
+
+/* luci: tramonto freddo + luci calde della struttura */
+scene.add(new THREE.HemisphereLight(0xa9bde0,0x1c2118,1.05));
+const sun=new THREE.DirectionalLight(0xffc49a,1.9);
+sun.position.set(-50,38,26);
+if(!mobile){
+  sun.castShadow=true; sun.shadow.mapSize.set(2048,2048);
+  Object.assign(sun.shadow.camera,{left:-60,right:60,top:60,bottom:-60,near:1,far:180});
+  sun.shadow.bias=-.0005;
+}
+scene.add(sun);
+const rim=new THREE.DirectionalLight(0x6d8fd6,.55); rim.position.set(40,20,-40); scene.add(rim);
+
+/* materiali */
+const mat=(color,o={})=>new THREE.MeshStandardMaterial({color,roughness:.85,...o});
+const M={
+  ground:mat(0x33402f,{roughness:1}), grass2:mat(0x3b4a33,{roughness:1}),
+  asphalt:mat(0x2b2d31,{roughness:.95}), pavers:mat(0x9b8375,{roughness:.95}), paversD:mat(0x8a7163,{roughness:.95}),
+  path:mat(0x9e5a4c,{roughness:.95}),
+  brick:mat(0x96462f,{roughness:.9}), brickD:mat(0x7c3a28,{roughness:.9}),
+  glass:mat(0x2c3c4c,{roughness:.2,metalness:.4,emissive:0xffb46a,emissiveIntensity:.55}),
+  glassUp:mat(0x2c3c4c,{roughness:.2,metalness:.4,emissive:0xffd9a8,emissiveIntensity:.35}),
+  roofG:mat(0x5d636b,{roughness:.6,metalness:.3}), steel:mat(0xc9ced4,{roughness:.4,metalness:.6}),
+  wood:mat(0x9a6a3c,{roughness:.7}), white:mat(0xf1f1ee,{roughness:.6}), black:mat(0x15171b,{roughness:.6}),
+  tree:mat(0x27402c,{roughness:1}), tree2:mat(0x31503a,{roughness:1}), trunk:mat(0x4a3826,{roughness:1}),
+  house:mat(0xd9cdb8,{roughness:.95}), house2:mat(0xc9b49a,{roughness:.95}), roofR:mat(0xa4523a,{roughness:.8}),
+  seat:mat(0xab1d18,{roughness:.6}),
+  lamp:new THREE.MeshBasicMaterial({color:0xfff3d6})
+  };
+const box=(w,h,d,m,x,y,z,cast=true)=>{const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);o.castShadow=cast;o.receiveShadow=true;return o};
+const plane=(w,d,m,x,y,z)=>{const o=new THREE.Mesh(new THREE.PlaneGeometry(w,d),m);o.rotation.x=-Math.PI/2;o.position.set(x,y,z);o.receiveShadow=true;return o};
+
+/* texture disegnate a mano (niente immagini da scaricare) */
+function tex(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t}
+const padelTex=tex(256,512,(g,w,h)=>{
+  g.fillStyle='#1f5fbf';g.fillRect(0,0,w,h);
+  g.strokeStyle='#fff';g.lineWidth=6;g.strokeRect(6,6,w-12,h-12);
+  const s1=h*.1525,s2=h*.8475;
+  g.beginPath();g.moveTo(6,s1);g.lineTo(w-6,s1);g.moveTo(6,s2);g.lineTo(w-6,s2);g.moveTo(w/2,s1);g.lineTo(w/2,s2);g.stroke();
+  g.fillStyle='#e8ecf2';g.fillRect(0,h/2-3,w,6);
+});
+function fieldTex(base,stripe,lines='#fff'){return tex(256,448,(g,w,h)=>{
+  g.fillStyle=base;g.fillRect(0,0,w,h);
+  if(stripe){g.fillStyle=stripe;for(let i=0;i<h;i+=56)g.fillRect(0,i,w,28)}
+  g.strokeStyle=lines;g.lineWidth=5;g.strokeRect(8,8,w-16,h-16);
+  g.beginPath();g.moveTo(8,h/2);g.lineTo(w-8,h/2);g.stroke();
+  g.beginPath();g.arc(w/2,h/2,34,0,Math.PI*2);g.stroke();
+  g.beginPath();g.arc(w/2,8,62,0,Math.PI);g.stroke();
+  g.beginPath();g.arc(w/2,h-8,62,Math.PI,0);g.stroke();
+})}
+const outdoorTex=fieldTex('#2f8a3a','#2a7c34');
+const rubberTex=fieldTex('#3e7fa6',null,'#f4f4f4');
+const synthTex=fieldTex('#3a9447','#348640','#f5f0d8');
+
+const world=new THREE.Group(); scene.add(world);
+
+/* terreno, strade, parcheggio */
+world.add(plane(600,600,M.ground,0,0,0));
+world.add(plane(160,9,M.asphalt,0,.03,-52));           // strada a nord
+world.add(plane(9,140,M.asphalt,-44,.03,0));           // strada a ovest
+world.add(plane(22,30,M.asphalt,-31,.035,-26));        // parcheggio
+for(let i=0;i<7;i++) world.add(box(1.8,1.1,3.6,[M.white,M.black,M.steel,mat(0xab1d18)][i%4],-37+i*2.9,.55,-22+((i%2)*-7),!mobile));
+world.add(plane(4.5,40,M.path,-1.5,.04,6));            // vialetto in porfido rosso
+world.add(plane(60,8,M.paversD,0,.035,-20));
+
+/* ─── CLUB HOUSE: edificio in mattoni a mezzaluna + gradinata ─── */
+const club=new THREE.Group(); world.add(club);
+const CX=6,CZ=-6;                                       // centro dell'arco
+const arcSeg=(rIn,rOut,h,y,m,a0,a1,n,glassFace=false)=>{
+  const rm=(rIn+rOut)/2, len=(a1-a0)*rm/n*1.04;
+  for(let i=0;i<n;i++){
+    const a=a0+(i+.5)*(a1-a0)/n;
+    const o=box(len,h,rOut-rIn,m,CX+Math.cos(a)*rm,y,CZ+Math.sin(a)*rm);
+    o.lookAt(CX,y,CZ); club.add(o);
+  }
+};
+const A0=Math.PI*1.12, A1=Math.PI*1.9;
+arcSeg(15.5,20,1.2,.6,M.brick,A0,A1,26);               // zoccolo
+arcSeg(16.2,20,2.8,2.6,M.brickD,A0,A1,26);             // corpo piano terra (interno)
+arcSeg(15.5,15.9,2.6,2.5,M.glass,A0,A1,26);            // vetrata del bar (piano terra)
+arcSeg(15.5,20,.6,4.3,M.brick,A0,A1,26);               // marcapiano
+arcSeg(16.2,20,2.6,5.9,M.brickD,A0,A1,26);
+arcSeg(15.5,15.9,2.4,5.8,M.glassUp,A0,A1,26);          // vetrata sala corsi (primo piano)
+arcSeg(14.2,20.8,.45,7.35,M.roofG,A0-.03,A1+.03,30);   // tetto a sbalzo
+// colonne in acciaio sottili lungo la vetrata
+for(let i=0;i<=13;i++){
+  const a=A0+i*(A1-A0)/13, r=14.5;
+  const c=new THREE.Mesh(new THREE.CylinderGeometry(.11,.11,7.2,8),M.steel);
+  c.position.set(CX+Math.cos(a)*r,3.6,CZ+Math.sin(a)*r); c.castShadow=true; club.add(c);
+}
+// torre in mattoni all'estremità est
+{const a=A1+.02; club.add(box(6,8.4,6,M.brick,CX+Math.cos(a)*18,4.2,CZ+Math.sin(a)*18));}
+// gradinata ad anfiteatro che scende verso la piazza
+for(let k=0;k<5;k++){
+  const r0=9.2+k*1.25, h=.35*(k+1);
+  arcSeg(r0,r0+1.25,h,h/2,k%2?M.pavers:M.paversD,A0+.06,A1-.06,22);
+}
+// piazza
+{const p=new THREE.Mesh(new THREE.CircleGeometry(9.3,48,Math.PI,Math.PI),M.pavers);p.rotation.x=-Math.PI/2;p.position.set(CX,.04,CZ);p.receiveShadow=true;club.add(p)}
+world.add(plane(26,6,M.pavers,CX,.035,CZ+2.5));
+// dehors del bar: tavolini e ombrelloni
+for(const [dx,dz] of [[-4,-4],[0,-6.2],[4,-4]]){
+  const x=CX+dx,z=CZ+dz;
+  club.add(box(1,.08,1,M.white,x,.9,z,false));
+  const pole=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,2.6,6),M.steel);pole.position.set(x,1.3,z);club.add(pole);
+  const um=new THREE.Mesh(new THREE.ConeGeometry(1.4,.55,8),M.seat);um.position.set(x,2.7,z);um.castShadow=true;club.add(um);
+}
+const barLight=new THREE.PointLight(0xffb46a,mobile?30:45,26,2); barLight.position.set(CX,3,CZ-9); club.add(barLight);
+// il Bistrot: altri tavolini, lucine a festone sopra il dehors e l'insegna sulla vetrata
+for(const [dx,dz] of [[-6.5,-1.5],[6.5,-1.5],[-2,-2],[2,-2]]){
+  const x=CX+dx,z=CZ+dz;
+  club.add(box(.9,.08,.9,M.white,x,.85,z,false));
+  for(const s of [-1,1]) club.add(box(.4,.5,.4,M.brickD,x+s*.75,.25,z,false));
+}
+{
+  // festoni di lucine lungo la vetrata, da una colonna all'altra
+  const bulbs=[], N=13, r=14.2;
+  for(let i=0;i<N;i++){
+    const a0=A0+i*(A1-A0)/N, a1=A0+(i+1)*(A1-A0)/N;
+    const p0=V(CX+Math.cos(a0)*r,4.15,CZ+Math.sin(a0)*r), p1=V(CX+Math.cos(a1)*r,4.15,CZ+Math.sin(a1)*r);
+    for(let j=0;j<6;j++){const t=j/6,p=new THREE.Vector3().lerpVectors(p0,p1,t);p.y-=Math.sin(t*Math.PI)*.45;bulbs.push(p)}
+  }
+  const bulb=new THREE.InstancedMesh(new THREE.SphereGeometry(.08,6,6),new THREE.MeshBasicMaterial({color:0xffd9a0}),bulbs.length);
+  const m4=new THREE.Matrix4(); bulbs.forEach((p,i)=>bulb.setMatrixAt(i,m4.makeTranslation(p.x,p.y,p.z))); club.add(bulb);
+  const drawSign=(g,w,h)=>{g.fillStyle='#0b0d11';g.fillRect(0,0,w,h);g.strokeStyle='#e0392f';g.lineWidth=4;g.strokeRect(8,8,w-16,h-16);
+    g.fillStyle='#f1f2f4';g.textAlign='center';g.textBaseline='middle';
+    let fs=46; do{g.font=`italic 600 ${fs}px "Playfair Display", Georgia, serif`;fs-=2}while(g.measureText('UCenter Bistrot').width>w-120&&fs>20);
+    g.fillText('UCenter Bistrot',w/2,h/2+3)};
+  const sign=tex(512,128,drawSign);
+  // l'insegna si ridisegna quando il font del Bistrot è arrivato
+  document.fonts.load('italic 600 58px "Playfair Display"').then(()=>{drawSign(sign.image.getContext('2d'),512,128);sign.needsUpdate=true;dirty=true}).catch(()=>{});
+  const sg=new THREE.Mesh(new THREE.PlaneGeometry(6,1.5),new THREE.MeshBasicMaterial({map:sign}));
+  sg.position.set(CX,5.55,CZ-13.9); club.add(sg);   // appesa sotto la pensilina, davanti alle colonne
+}
+
+/* ─── TENSOSTRUTTURA CALCETTO (campo 1 + campo 4) ─── */
+const clipUp=[new THREE.Plane(V(0,1,0),-.02)];
+const membrane=(color)=>new THREE.MeshStandardMaterial({color,roughness:.55,emissive:0x2e2a22,emissiveIntensity:.6,
+  transparent:true,opacity:1,side:THREE.DoubleSide,clippingPlanes:clipUp});
+const domeMat=membrane(0xf2f1ec);
+const dome=new THREE.Group(); dome.position.set(-17,0,6); world.add(dome);
+{
+  const R=11, L=18;
+  const shell=new THREE.Mesh(new THREE.CapsuleGeometry(R,L,10,40),domeMat);
+  shell.rotation.x=Math.PI/2; shell.scale.set(1,1,.6);   // capsula lungo z, schiacciata in altezza
+  shell.castShadow=true; shell.receiveShadow=true; dome.add(shell);
+  // costoloni
+  for(let i=0;i<=8;i++){
+    const z=-L/2+i*L/8;
+    const rib=new THREE.Mesh(new THREE.TorusGeometry(R+.05,.12,6,40,Math.PI),mat(0xd9d7cf,{transparent:true,side:THREE.DoubleSide}));
+    rib.position.z=z; rib.scale.set(1,.6,1); dome.add(rib);
+  }
+  // fascia vetrata alla base
+  const band=new THREE.Mesh(new THREE.CylinderGeometry(R+.02,R+.02,.9,40,1,true,0,Math.PI*2),mat(0x2e6f55,{emissive:0x184a38,emissiveIntensity:.5,transparent:true}));
+  band.scale.set(1,1,1); band.position.y=.45; band.visible=false; dome.add(band);
+  // interni: campo 1 (gomma) e campo 4 (sintetico)
+  const c1=plane(17,15,new THREE.MeshStandardMaterial({map:rubberTex,roughness:.8}),0,.06,-7.5); c1.rotation.z=Math.PI/2; dome.add(c1);
+  const c4=plane(16,13,new THREE.MeshStandardMaterial({map:synthTex,roughness:.95}),0,.06,8); c4.rotation.z=Math.PI/2; dome.add(c4);
+  dome.add(box(17.4,.3,.2,M.white,0,.15,.5));
+  // tribuna del campo 1
+  for(let k=0;k<3;k++) dome.add(box(1,.5*(k+1),12,M.seat,-9.6-k,.25*(k+1),-7.5));
+  // porte
+  for(const [x,z] of [[0,-14.6],[0,-.6],[0,1.8],[0,14.3]]) dome.add(box(3,1.2,.3,M.white,x,.6,z,false));
+  dome.userData={mat:domeMat,ribs:dome.children.filter(o=>o.geometry?.type==='TorusGeometry')};
+}
+
+/* ─── SALA PADEL: arcate in legno, membrana, campi panoramici ─── */
+const padMat=membrane(0xeef0ea);
+const padel=new THREE.Group(); padel.position.set(-17,0,-30); world.add(padel);
+{
+  const R=9, L=26;
+  const shell=new THREE.Mesh(new THREE.CylinderGeometry(R,R,L,40,1,true),padMat);
+  shell.rotation.z=Math.PI/2; shell.scale.set(.72,1,1); shell.castShadow=true; padel.add(shell);
+  for(const s of [-1,1]){
+    const end=new THREE.Mesh(new THREE.CircleGeometry(R,40),new THREE.MeshStandardMaterial({color:0x7fb0d9,transparent:true,opacity:.28,
+      roughness:.1,metalness:.3,side:THREE.DoubleSide,clippingPlanes:clipUp,depthWrite:false}));
+    end.rotation.y=Math.PI/2; end.scale.set(1,.72,1); end.position.x=s*L/2; padel.add(end);
+  }
+  // arcate in legno lamellare (restano visibili quando la membrana sparisce)
+  const arches=[];
+  for(let i=0;i<=6;i++){
+    const a=new THREE.Mesh(new THREE.TorusGeometry(R-.15,.22,8,40,Math.PI),M.wood);
+    a.rotation.y=Math.PI/2; a.scale.set(1,.72,1); a.position.x=-L/2+i*L/6; a.castShadow=true; padel.add(a); arches.push(a);
+  }
+  // 6 campi: 3 per fila, 2 file
+  const court=new THREE.MeshStandardMaterial({map:padelTex,roughness:.7});
+  const glassW=new THREE.MeshStandardMaterial({color:0xbfe0ff,transparent:true,opacity:.22,roughness:.05,metalness:.2,depthWrite:false});
+  let n=0;
+  for(const cz of [-4.1,4.1]) for(const cx of [-7.6,0,7.6]){
+    const c=plane(4.4,7.4,court,cx,.06,cz); padel.add(c);
+    for(const s of [-1,1]){
+      padel.add(box(4.4,1.3,.06,glassW,cx,.7,cz+s*3.7,false));        // vetri di fondo
+      padel.add(box(.06,.9,7.4,glassW,cx+s*2.2,.45,cz,false));
+    }
+    padel.add(box(4.4,.35,.04,M.black,cx,.2,cz,false));              // rete
+    n++;
+  }
+  padel.userData={mat:padMat,arches};
+}
+
+/* ─── CAMPO ESTERNO ─── */
+const out=new THREE.Group(); out.position.set(11,0,10); world.add(out);
+{
+  const f=plane(14,24,new THREE.MeshStandardMaterial({map:outdoorTex,roughness:1}),0,.05,0); out.add(f);
+  world.add(plane(17,27,M.grass2,11,.03,10));
+  // recinzione
+  const fence=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(15.4,3.2,25.4)),new THREE.LineBasicMaterial({color:0x9aa3ae,transparent:true,opacity:.55}));
+  fence.position.y=1.6; out.add(fence);
+  for(let i=0;i<=8;i++) for(const s of [-1,1]){
+    const p=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,3.2,5),M.steel);p.position.set(s*7.7,1.6,-12.7+i*25.4/8);out.add(p);
+  }
+  for(const z of [-11.8,11.8]) out.add(box(3,1.1,.25,M.white,0,.55,z,false));
+  // torri faro
+  for(const [x,z] of [[-8.6,-13.5],[8.6,-13.5],[-8.6,13.5],[8.6,13.5]]){
+    const p=new THREE.Mesh(new THREE.CylinderGeometry(.09,.12,8,6),M.steel);p.position.set(x,4,z);out.add(p);
+    out.add(box(1.2,.35,.35,M.lamp,x*.96,8,z*.97,false));
+  }
+  const fl=new THREE.PointLight(0xfff1d6,mobile?40:60,34,2); fl.position.set(0,9,0); out.add(fl);
+}
+
+/* ─── alberi, case di Spinea intorno ─── */
+function tree(x,z,s=1,m=M.tree){
+  const g=new THREE.Group();
+  const t=new THREE.Mesh(new THREE.CylinderGeometry(.18*s,.25*s,2*s,6),M.trunk);t.position.y=s;g.add(t);
+  const c=new THREE.Mesh(new THREE.IcosahedronGeometry(1.9*s,0),m);c.position.y=3.1*s;c.scale.y=1.25;c.castShadow=true;g.add(c);
+  g.position.set(x,0,z);return g;
+}
+let seed=7; const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+for(let i=0;i<18;i++) world.add(tree(24+rnd()*9,-12+i*1.9+rnd()*1.5,1+rnd()*.5,i%2?M.tree:M.tree2));     // fascia verde a est
+for(let i=0;i<12;i++) world.add(tree(-33+rnd()*3,-6+i*3.6,1+rnd()*.4,i%2?M.tree2:M.tree));
+for(let i=0;i<10;i++) world.add(tree(-10+i*4.5+rnd(),46+rnd()*3,1+rnd()*.5));
+for(let i=0;i<(mobile?14:26);i++){
+  const x=-60+i*(mobile?9:4.8)+rnd()*2, z=-64-rnd()*18, w=5+rnd()*4, d=6+rnd()*3, h=4+rnd()*4;
+  world.add(box(w,h,d,i%2?M.house:M.house2,x,h/2,z,!mobile));
+  const r=new THREE.Mesh(new THREE.ConeGeometry(1,1,4),M.roofR); r.rotation.y=Math.PI/4; r.scale.set(w*.72,1.8,d*.72); r.position.set(x,h+.9,z); world.add(r);
+}
+
+/* ═════════ percorso della camera ═════════ */
+// [p, posizione, punto guardato] — le tappe hanno due chiavi uguali = sosta
+const K=[
+  [0.00, V(46,54,84),  V(-2,0,-4)],
+  [0.07, V(40,48,74),  V(-2,0,-4)],
+  [0.15, V(-58,44,50), V(-3,0,-6)],
+  [0.23, V(-52,40,42), V(-3,0,-6)],
+  [0.31, V(-40,18,-9),  V(-17,0,-30)],
+  [0.40, V(-37,14,-12), V(-17,0,-30)],
+  [0.48, V(6,17,26),   V(-17,0,5)],
+  [0.57, V(4,14,23),   V(-17,0,5)],
+  [0.63, V(16,15,38),  V(10,0,6)],
+  [0.70, V(15,12,34),  V(10,0,6)],
+  [0.77, V(6,4.2,6),   V(6,3.2,-18)],
+  [0.85, V(6,3.8,3),   V(6,3.4,-18)],
+  [0.93, V(34,62,66),  V(-2,0,-6)],
+  [1.00, V(30,70,58),  V(-2,0,-6)]
+];
+const _p=new THREE.Vector3(),_l=new THREE.Vector3();
+function cam(p){
+  let i=0; while(i<K.length-2&&p>K[i+1][0]) i++;
+  const [p0,a0,l0]=K[i],[p1,a1,l1]=K[i+1];
+  const f=smooth((p-p0)/(p1-p0));
+  _p.lerpVectors(a0,a1,f); _l.lerpVectors(l0,l1,f);
+}
+
+/* inquadratura: su desktop il soggetto si sposta a destra (scheda a sinistra),
+   su telefono sale nella metà alta (scheda in basso) */
+function frame(){
+  const w=innerWidth,h=innerHeight;
+  camera.aspect=w/h;
+  // il testo sta in basso: il soggetto sale nella metà alta dell'inquadratura
+  if(w<=760) camera.setViewOffset(w,h,0,h*.22,w,h);
+  else camera.setViewOffset(w,h,-w*.08,h*.12,w,h);
+  camera.updateProjectionMatrix();
+}
+frame();
+
+/* ═════════ collegamento con l'interfaccia ═════════ */
+const film=document.getElementById('film');
+const hero=document.getElementById('hero'), finale=document.getElementById('finale');
+const stopEls=[...document.querySelectorAll('.stop')];
+const cue=document.getElementById('cue'), pbar=document.getElementById('pbar'), ui=document.getElementById('ui');
+const dotsEl=document.getElementById('dots');
+
+let filmH=0, lastW=innerWidth, lastH=innerHeight;
+function sizeFilm(){ filmH=Math.round(innerHeight*(mobile?7.5:8.5)); film.style.height=filmH+'px'; }
+sizeFilm();
+const maxP=()=>Math.max(1,filmH-innerHeight);
+const goTo=i=>{const s=STOPS[i];scrollTo({top:((s.a+s.b)/2)*maxP(),behavior:reduced?'auto':'smooth'})};
+
+STOPS.forEach((s,i)=>{const b=document.createElement('button');b.setAttribute('aria-label',s.name);b.innerHTML=`<span>${s.name}</span>`;b.onclick=()=>goTo(i);dotsEl.appendChild(b)});
+const dots=[...dotsEl.children];
+document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();goTo(+a.dataset.go)}));
+
+const vis=(p,a,b,e=.035)=>p<a-e||p>b+e?0:p<a?(p-(a-e))/e:p>b?1-(p-b)/e:1;
+const loaded=new Set();
+function loadPhotos(el){ if(loaded.has(el)) return; loaded.add(el); el.querySelectorAll('img[data-src]').forEach(i=>i.src=i.dataset.src); }
+
+let target=0,cur=0,active=-1;
+let peek=false;
+const readScroll=()=>{if(!peek) target=clamp(scrollY/maxP(),0,1)};
+addEventListener('scroll',readScroll,{passive:true});
+
+function apply(p,t){
+  cam(p); camera.position.copy(_p); camera.lookAt(_l);
+
+  // "a pezzi": la copertura della zona si solleva e sparisce per mostrare i campi
+  const pr=vis(p,.30,.41,.05), dr=vis(p,.47,.58,.05);
+  padel.userData.mat.opacity=1-pr*.93; padel.userData.mat.depthWrite=pr<.5;
+  domeMat.opacity=1-dr*.93; domeMat.depthWrite=dr<.5;
+  dome.children[0].position.y=dr*1.2;
+
+  // tappa attiva
+  let best=-1,bv=0;
+  STOPS.forEach((s,i)=>{const v=vis(p,s.a,s.b);if(v>bv){bv=v;best=i}});
+  hero.style.opacity=vis(p,0,.07);
+  hero.style.transform=`translate3d(0,${(-p*260).toFixed(1)}px,0)`;
+  hero.querySelector('.cta').style.pointerEvents=p<.06?'auto':'none';
+  stopEls.forEach(el=>{
+    const s=STOPS[+el.dataset.i], v=vis(p,s.a,s.b);
+    el.style.opacity=v;
+    el.style.transform=`translate3d(0,${((1-v)*28).toFixed(1)}px,0)`;
+    el.classList.toggle('on',v>.6);
+    if(p>s.a-.12) loadPhotos(el);
+  });
+  const fv=vis(p,.93,1.01); finale.style.opacity=fv; finale.classList.toggle('on',fv>.6);
+  if(best!==active){active=best;dots.forEach((d,i)=>d.classList.toggle('on',i===best))}
+
+  cue.style.opacity=Math.max(0,1-p*14);
+  pbar.style.width=(p*100).toFixed(2)+'%';
+}
+
+let last=performance.now(), dirty=true;
+function tick(now){
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+  const k=reduced?1:1-Math.exp(-dt*5.5);
+  const prev=cur; cur+=(target-cur)*k; if(Math.abs(target-cur)<1e-5) cur=target;
+  // oltre il film i contenuti coprono la scena: smetto di disegnare
+  const past=!peek&&scrollY>filmH+innerHeight*.2;
+  ui.style.visibility=!peek&&scrollY>filmH?'hidden':'visible';
+  if(!past && (dirty||prev!==cur)){ apply(cur,now/1000); renderer.render(scene,camera); dirty=false; }
+  requestAnimationFrame(tick);
+}
+
+addEventListener('resize',()=>{
+  const w=innerWidth,h=innerHeight;
+  // su telefono la barra del browser cambia l'altezza di continuo: la ignoro
+  if(w===lastW&&Math.abs(h-lastH)<220) return;
+  lastW=w;lastH=h;
+  renderer.setSize(w,h,false); frame(); sizeFilm(); readScroll(); dirty=true;
+});
+
+readScroll(); cur=target; apply(cur,0); renderer.render(scene,camera);
+requestAnimationFrame(tick);
+document.getElementById('loader').classList.add('hide');
+// solo per le verifiche: mostra una tappa senza scorrere
+window.__peek=p=>{peek=true;scrollTo(0,0);target=cur=p;dirty=true};
+</script>
+</body>
+</html>

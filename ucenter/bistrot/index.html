@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b0d11">
+<title>Menu · UCenter Bistrot</title>
+<meta name="description" content="Il menu di UCenter Bistrot a Spinea: cicchetti fatti in casa, pizza in pala, burger di Fassona, insalatone, taglieri e dolci.">
+<link rel="icon" type="image/png" href="../prenota/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#0b0d11; --paper-2:#12151b; --ink:#f1f2f4; --ink-2:#8d96a1; --line:rgba(255,255,255,.1);
+  --wine:#c42a22; --wine-hi:#e0392f; --brass:#e0392f;
+  --serif:"Playfair Display", Georgia, serif; --sans:"Barlow", system-ui, sans-serif;
+  --safe-b:env(safe-area-inset-bottom);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:116px;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.5;
+}
+a{color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+.bar{position:sticky;top:0;z-index:20;background:rgba(11,13,17,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .top{display:flex;align-items:center;justify-content:space-between;gap:12px;height:56px}
+.back{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.9rem;text-decoration:none;min-height:44px;padding-right:8px}
+.back svg{width:18px;height:18px}
+.brand{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.25rem}
+.brand small{font-family:var(--sans);font-style:normal;font-weight:600;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-left:6px}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:0 20px 10px}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:0 0 auto;text-decoration:none;font-weight:600;font-size:.88rem;padding:9px 14px;border-radius:999px;color:var(--ink-2);transition:background .2s,color .2s;min-height:40px;display:flex;align-items:center}
+.tabs a.on{background:var(--ink);color:var(--paper)}
+.tabs a:focus-visible,.back:focus-visible,.cta a:focus-visible{outline:2px solid var(--wine);outline-offset:2px}
+
+header.hero{padding:44px 0 26px;text-align:center}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--brass)}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.6rem,9vw,4rem);line-height:1;margin:.3em 0 .25em}
+h1 em{color:var(--wine);font-style:italic}
+.hero p{color:var(--ink-2);max-width:460px;margin:0 auto}
+.orn{display:block;width:120px;height:14px;margin:26px auto 0;color:var(--brass)}
+
+section.cat{padding:34px 0 8px;border-top:1px solid var(--line)}
+section.cat:first-of-type{border-top:0}
+.cat h2{font-family:var(--serif);font-style:italic;font-weight:600;font-size:1.9rem;line-height:1.1}
+.cat .note{color:var(--ink-2);font-size:.9rem;margin-top:4px}
+.items{list-style:none;margin-top:14px}
+.it{padding:14px 0;border-bottom:1px dashed var(--line)}
+.it:last-child{border-bottom:0}
+.row{display:flex;align-items:baseline;gap:10px}
+.nm{font-weight:700;font-size:1.02rem;letter-spacing:.01em}
+.dots{flex:1;border-bottom:1px dotted rgba(255,255,255,.22);transform:translateY(-4px);min-width:16px}
+.pr{font-family:var(--serif);font-weight:600;font-size:1.08rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pr small{font-family:var(--sans);font-weight:600;font-size:.72rem;color:var(--ink-2);margin-right:3px}
+.ds{color:var(--ink-2);font-size:.93rem;margin-top:3px;max-width:560px}
+.fz{color:var(--wine-hi);font-weight:700;margin-left:1px}
+.tg{display:inline-block;font-size:.85rem;font-weight:500;color:var(--wine-hi);margin-top:4px;margin-right:12px}
+
+.legal{margin:48px 0 20px;padding-top:24px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink-2)}
+.legal p+p{margin-top:8px}
+.legal b{color:var(--ink)}
+.info{text-align:center;color:var(--ink-2);font-size:.88rem;padding:10px 0 40px}
+.info a{font-weight:600}
+
+.cta{position:sticky;bottom:0;z-index:20;padding:12px 20px calc(12px + var(--safe-b));background:linear-gradient(transparent,var(--paper) 32%)}
+.cta .in{max-width:720px;margin:0 auto;display:flex;gap:10px}
+.cta a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;transition:transform .15s,background .2s}
+.cta a:active{transform:scale(.98)}
+.cta .book{flex:1;background:var(--wine);color:#fff}
+.cta .book:hover{background:var(--wine-hi)}
+.cta .wa{width:52px;border:1px solid var(--line)}
+.cta svg{width:22px;height:22px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="top">
+      <a class="back" href="../#bistrot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>UCenter</a>
+      <span class="brand">Bistrot<small>Menu</small></span>
+    </div>
+    <nav class="tabs" id="tabs" aria-label="Categorie del menu"></nav>
+  </div>
+</div>
+
+<main class="wrap">
+  <header class="hero">
+    <span class="kicker">UCenter · Spinea</span>
+    <h1>Il nostro <em>menu</em></h1>
+    <p>Cucina genuina, atmosfera moderna, eleganza informale. Per l'aperitivo, il pranzo, la cena o il dopo partita.</p>
+        <svg class="orn" viewBox="0 0 120 14" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 7h48M72 7h48"/><path d="M60 1l6 6-6 6-6-6z"/></svg>
+  </header>
+  <div id="menu"></div>
+
+  <div class="legal">
+    <p><span class="fz">*</span> <b>Asterisco:</b> materie prime acquistate surgelate all'origine (art. 19 c. 9 D.Lgs. 231/17 e Reg. UE 1169/2011, All. VI p. 2).</p>
+    <p><b>Allergeni:</b> i prodotti somministrati possono contenere sostanze che provocano allergie o intolleranze (Reg. UE 1169/11). Chiedi al personale la documentazione sugli allergeni. I prodotti ittici serviti crudi sono conformi al Reg. (CE) 853/2004.</p>
+  </div>
+  <p class="info">Viale Sanremo 61, Spinea · dentro UCenter<br><a href="tel:+390410970126">041 0970126</a> · <a href="https://www.instagram.com/ucenter_bistrot/" target="_blank" rel="noopener">@ucenter_bistrot</a></p>
+</main>
+
+<div class="cta">
+  <div class="in">
+    <a class="book" href="../prenota/#/tavolo">Prenota un tavolo</a>
+    <a class="wa" href="https://wa.me/393515958924?text=Ciao%20Bistrot!%20" target="_blank" rel="noopener" aria-label="Scrivi al Bistrot su WhatsApp"><svg viewBox="0 0 24 24" fill="#1fae54" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+  </div>
+</div>
+
+<script>
+/* Menu UCenter Bistrot — trascritto dal PDF pubblicato sul loro Linktree (marzo 2026).
+   f:true = prodotto con asterisco (surgelato all'origine). p = prezzo, oppure [mini, regolare]. */
+const MENU=[
+  {id:'iniziare',t:'Per iniziare',n:'I cicchetti: da soli o da dividere.',items:[
+    {n:'Mozzarella in carrozza',p:2.5,tag:['Fatto in casa']},
+    {n:'Polpettina fritta',p:2.5,tag:['Fatto in casa']},
+    {n:'French fries classiche',p:3,f:true},
+    {n:'Olive ascolane',p:4,f:true},
+    {n:'Verdure pastellate',p:3.5,f:true},
+    {n:'Cheddar jalapeños',p:6,f:true},
+    {n:'Mix di fritti',p:7.5,f:true,tag:['Per 2']}]},
+  {id:'antipasti',t:'Gli antipasti',items:[
+    {n:'Burrata e acciughe',p:9,d:'Burratina su letto di pomodorini ciliegino, misticanza e acciughe del Mar Cantabrico.'},
+    {n:'Salmone e verdure',p:12,d:'Salmone affumicato, zucchine marinate, olive verdi, citronette, scorza di limone, semi di sesamo.'},
+    {n:'Battuta di scottona',p:13,d:'Battuta di scottona al coltello leggermente condita, con senape in grani.'}]},
+  {id:'primi',t:'I primi',items:[
+    {n:'Rigatoni alla carbonara',p:10},
+    {n:'Mezze maniche cacio e pepe',p:9},
+    {n:'Penne rigate all\'amatriciana',p:9},
+    {n:'Spaghettino sugo e stracciatella',p:11,d:'Sugo di pomodorini ciliegino, stracciatella e basilico fresco.'}]},
+  {id:'pizza',t:'La pizza in pala',n:'Base pizza in pala artigianale.',items:[
+    {n:'Margherita',p:8,d:'Salsa di pomodoro, mozzarella fior di latte, origano.'},
+    {n:'Tonnarella',p:11,d:'Salsa di pomodoro, mozzarella fior di latte, tonno, cipolla rossa.'},
+    {n:'Vegetariana',p:10,d:'Salsa di pomodoro, mozzarella fior di latte, peperoni, melanzane e zucchine grigliate.'},
+    {n:'Salamino e stracciatella',p:11,d:'Salsa di pomodoro, mozzarella fior di latte, salamino piccante, stracciatella.'},
+    {n:'Salmon and cream',p:12,d:'Base rustica, salmone affumicato, rucola, formaggio spalmabile fresco, scorza di limone.'}]},
+  {id:'secondi',t:'I secondi',items:[
+    {n:'La signora cotoletta',p:12,d:'Cotoletta di pollo XL con contorno di patatine fritte.',f:true},
+    {n:'Straccetti di pollo',p:12,d:'Straccetti di pollo, peperoni e cipolla caramellata.',f:true},
+    {n:'Frittura di pesce',p:16,f:true}]},
+  {id:'insalatone',t:'Le insalatone',items:[
+    {n:'Caesar salad',p:11,d:'Lattuga, crostini di pane, petto di pollo, scaglie di grana e salsa caesar.',f:true},
+    {n:'Salmone e avocado',p:14,d:'Misticanza, salmone affumicato, pomodorini, avocado, salsa yogurt, semi di sesamo.'},
+    {n:'Fresca',p:15,d:'Misticanza, salmone affumicato, stracciatella, mandorle a lamelle.'},
+    {n:'Mediterranea',p:10,d:'Lattuga, feta greca, pomodorini, cipolla rossa, olive taggiasche.'}]},
+  {id:'burger',t:'Burgers',n:'Tutti con patate fritte. Pane bun artigianale e hamburger di Fassona.',items:[
+    {n:'UCenter',p:12,d:'Melanzane e zucchine, edamer, maionese.',f:true,tag:['Della casa']},
+    {n:'Classico',p:11,d:'Pomodoro, insalata, edamer, salsa burger.',f:true},
+    {n:'Cheeseburger',p:13,d:'Cipolla rossa cotta, insalata, cheddar, maionese.',f:true},
+    {n:'Bacon burger',p:13,d:'Peperoni cotti, bacon, cheddar.',f:true},
+    {n:'Giacomo',p:13,d:'Pomodori secchi, rucola, scaglie di grana, maionese all\'aglio.',f:true}]},
+  {id:'sandwich',t:'Sandwich',n:'Tutti con patate fritte, su pane shokupan.',items:[
+    {n:'Americano',p:9,d:'Tonno, maionese, zucchine julienne, lattuga.',f:true},
+    {n:'Bacon and cheese',p:9,d:'Uovo, bacon, cheddar.',f:true},
+    {n:'Fresh avo',p:10,d:'Straccetti di pollo, pomodorini, crema di avocado, formaggio spalmabile.',f:true}]},
+  {id:'club',t:'I club sandwich',n:'Su pane tostato, in formato mini o regolare.',items:[
+    {n:'Il classico',p:[10,13],d:'Prosciutto cotto, uova, lattuga, pomodoro, formaggio e pancetta.'},
+    {n:'Il veneto',p:[10,13],d:'Sopressa, asiago, funghi, peperoni, maionese.'},
+    {n:'Il norvegese',p:[11,14],d:'Salmone affumicato, formaggio spalmabile alle erbe, cetriolo.'}]},
+  {id:'taglieri',t:'Taglieri',items:[
+    {n:'Tagliere piccolo',p:16,d:'Misto di salumi e formaggi.',tag:['Per 2']},
+    {n:'Tagliere grande',p:32,d:'Misto di salumi e formaggi.',tag:['Per 4']}]},
+  {id:'finire',t:'Per finire',items:[
+    {n:'Sbrisolona e passito',p:6,d:'Torta sbrisolona con Passito di Pantelleria DOC, Cantine Pellegrino.'},
+    {n:'Coppetta Nutella',p:5,d:'Gelato al fiordilatte, Nutella, panna montata, granella di nocciole, topping al cioccolato.'},
+    {n:'Coppetta fragola e limone',p:5,d:'Gelato al limone, fragole, panna montata.'}]}
+];
+
+const eur=n=>n.toLocaleString('it-IT',{minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2})+' €';
+const price=p=>Array.isArray(p)?`<small>mini</small>${eur(p[0])} · <small>regolare</small>${eur(p[1])}`:eur(p);
+document.getElementById('tabs').innerHTML=MENU.map(c=>`<a href="#${c.id}" data-id="${c.id}">${(t=>t[0].toUpperCase()+t.slice(1))(c.t.replace(/^(I|Il|Le|La|Gli) /,''))}</a>`).join('');
+document.getElementById('menu').innerHTML=MENU.map(c=>`
+  <section class="cat" id="${c.id}" aria-labelledby="h-${c.id}">
+    <h2 id="h-${c.id}">${c.t}</h2>${c.n?`<p class="note">${c.n}</p>`:''}
+    <ul class="items">${c.items.map(i=>`
+      <li class="it">
+        <div class="row"><span class="nm">${i.n}${i.f?'<span class="fz" title="Surgelato all\'origine" aria-label="surgelato all\'origine">*</span>':''}</span><span class="dots" aria-hidden="true"></span><span class="pr">${price(i.p)}</span></div>
+        ${i.d?`<p class="ds">${i.d}</p>`:''}${(i.tag||[]).map(t=>`<span class="tg">${t}</span>`).join('')}
+      </li>`).join('')}</ul>
+  </section>`).join('');
+
+// la categoria in vista si accende anche nella barra delle schede
+const tabs=[...document.querySelectorAll('#tabs a')];
+const setOn=id=>tabs.forEach(a=>{const on=a.dataset.id===id;a.classList.toggle('on',on);if(on)a.scrollIntoView({inline:'center',block:'nearest'})});
+let cur='';
+const io=new IntersectionObserver(es=>{
+  const vis=es.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];
+  if(vis&&vis.target.id!==cur){cur=vis.target.id;setOn(cur)}
+},{rootMargin:'-120px 0px -60% 0px'});
+document.querySelectorAll('section.cat').forEach(s=>io.observe(s));
+setOn(MENU[0].id);
+</script>
+</body>
+</html>
