@@ -114,15 +114,16 @@ window.DATI = {
   .ripiego { display: none; }
   .senza-3d .ripiego { display: block; position: absolute; right: var(--gut); bottom: 30%; max-width: 30ch; color: var(--testo2); }
 
-  /* ————— 2. il laboratorio ————— */
-  .lab { padding: clamp(96px, 16vh, 180px) var(--gut) clamp(80px, 12vh, 140px); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(32px, 6vw, 110px); align-items: center; }
-  .lab .vista { position: relative; height: clamp(380px, 70vh, 700px); }
+  /* ————— il laboratorio (in chiusura, prima della vaschetta) ————— */
+  .lab { max-width: 1080px; margin: 0 auto; padding: clamp(24px, 5vh, 64px) var(--gut) clamp(64px, 10vh, 120px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
+  .lab .vista { position: relative; height: clamp(260px, 44vh, 440px); }
   .lab h2, .nonsolo h2, .vaschette h2, .sedi h2 { font-family: var(--disp); font-weight: 580; font-optical-sizing: auto; font-size: clamp(2.6rem, 5vw, 5rem); line-height: .94; letter-spacing: -.012em; }
   .lab .testo > p { margin-top: 24px; max-width: 30em; font-size: 18px; color: var(--testo2); }
   .lab ul { list-style: none; margin-top: 34px; }
   .lab li { padding: 16px 0; border-top: 1px solid rgba(74, 44, 23, .14); font-size: 18px; }
   .lab li:last-child { border-bottom: 1px solid rgba(74, 44, 23, .14); }
-  .lab .firma { margin-top: 26px; font-size: 15px; color: var(--testo2); }
+  .lab h2 { font-size: clamp(2rem, 3.4vw, 3.2rem); text-wrap: balance; }
+  .lab .firma { margin-top: 18px; font-size: 15px; color: var(--testo2); }
 
   /* ————— la vetrina dei gusti (js/vetrina.js): sezione alta, palco fisso; svh: la barra del browser non la fa saltare ————— */
   #vetrina { position: relative; height: 580vh; height: 580svh; }
@@ -257,14 +258,6 @@ window.DATI = {
     </div>
   </section>
 
-  <section class="lab" id="laboratorio" aria-labelledby="lab-t">
-    <div class="vista" id="vistaLab" aria-hidden="true"></div>
-    <div class="testo">
-      <h2 id="lab-t">Fatto qui, ogni giorno.</h2>
-      <p class="firma" id="firma"></p>
-    </div>
-  </section>
-
   <!-- 3. la vetrina dei gusti in 3D (js/vetrina.js): la camera scorre lungo le vaschette, un gusto alla volta, poi tutta la vetrina.
        I gusti stanno in DATI.vetrina; le texture vengono dalle foto vere (src/vetrina-prepara.py → img/vetrina/) -->
   <section id="vetrina" aria-labelledby="v-titolo">
@@ -284,6 +277,15 @@ window.DATI = {
       <h2 id="nonsolo-t" class="solo-lettori">Non solo gelato</h2>
     </div>
     <ul id="listaNonSolo"></ul>
+  </section>
+
+  <!-- il laboratorio, piccolo e discreto in chiusura: il cono e il biscotto che girano (js/laboratorio.js) e la firma -->
+  <section class="lab" id="laboratorio" aria-labelledby="lab-t">
+    <div class="vista" id="vistaLab" aria-hidden="true"></div>
+    <div class="testo">
+      <h2 id="lab-t">Artigianale, tutti i giorni.</h2>
+      <p class="firma" id="firma"></p>
+    </div>
   </section>
 
   <section class="vaschette" id="vaschette" aria-labelledby="vasc-t">
