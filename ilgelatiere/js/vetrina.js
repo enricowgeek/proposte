@@ -16,7 +16,7 @@ export const GUSTI = [
   { id: 'ovetti', nome: 'Ovetti di cioccolato', riga: 'Variegato al cioccolato con gli ovetti, interi e a metà.', paletta: [.4, .06, 10, 8] },
   { id: 'caramello', nome: 'Caramello salato', riga: 'Variegato al caramello, con il sale.', paletta: [.6, .06, -10, 8] },
 ];
-// Gusti procedurali (spatolate + guarnizioni 3D): spenti in questa vetrina.
+// Gusti procedurali (spatolate + guarnizioni 3D): SPENTI in questa vetrina, 
 // Per usarli: passarli in monta(host, { gusti: [...] }) con i loro id; le texture si fanno con vetrina-prepara.py <id>.
 export const GUSTI_PROCEDURALI = [
   { id: 'fragola', nome: 'Fragola', riga: 'Fragole vere, dentro e sopra.', paletta: [.14, .12, -20, 36], guarn: [['fragola', 6, 21], ['fragolaIntera', 2, 22]] },

@@ -155,16 +155,29 @@ window.DATI = {
 
   /* ————— non solo gelato: le lavagne del negozio, con un disegno a tratto che si disegna entrando ————— */
   .passaggio { padding: clamp(96px, 16vh, 180px) var(--gut) clamp(8px, 2vh, 24px); text-align: center; font-family: var(--serif); font-style: italic; font-weight: 420; font-size: clamp(2rem, 4.4vw, 4.2rem); line-height: 1.08; letter-spacing: -.01em; text-wrap: balance; color: var(--testo); }
-  .nonsolo { padding: clamp(88px, 14vh, 160px) var(--gut); border-top: 1px solid rgba(74, 44, 23, .14); display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(36px, 6vw, 110px); }
-  .nonsolo .sotto { margin-top: 20px; max-width: 24em; font-size: 18px; color: var(--testo2); }
-  .nonsolo ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 clamp(24px, 4vw, 64px); }
-  .nonsolo li { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px; align-items: start; padding: 26px 0; border-top: 1px solid rgba(74, 44, 23, .14); }
-  .nonsolo svg { width: 56px; height: 56px; color: var(--ocra); fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  /* ————— non solo gelato: quattro oggetti 3D (js/nonsolo.js), sul telefono in griglia 2 × 2 ————— */
+  .nonsolo { padding: clamp(40px, 7vh, 80px) var(--gut) clamp(88px, 14vh, 160px); }
+  .nonsolo ul { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 56px clamp(20px, 2.8vw, 48px); }
+  .ns-vista { position: relative; aspect-ratio: 4 / 5; }
+  .ns-vista canvas { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease; -webkit-tap-highlight-color: transparent; }
+  .ns-vista.pronta canvas { opacity: 1; }
+  /* il disegno a tratto nella cella: segnaposto finché il 3D non è pronto, e ripiego se il 3D non parte */
+  .nonsolo svg { position: absolute; left: 50%; top: 50%; width: 30%; transform: translate(-50%, -50%); color: var(--ocra); fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: opacity .6s ease; }
+  .ns-vista.pronta svg { opacity: 0; }
   .nonsolo svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.4s var(--ease); }
   .nonsolo li:nth-child(2) path { transition-delay: .12s; } .nonsolo li:nth-child(3) path { transition-delay: .24s; } .nonsolo li:nth-child(4) path { transition-delay: .36s; }
   .nonsolo.visto svg path { stroke-dashoffset: 0; }
-  .nonsolo h3 { font-family: var(--disp); font-weight: 580; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.08; }
-  .nonsolo li p { margin-top: 6px; color: var(--testo2); font-size: 17px; }
+  .nonsolo h3 { margin-top: 14px; font-family: var(--disp); font-weight: 580; font-size: clamp(1.5rem, 2vw, 1.95rem); line-height: 1.08; }
+  .nonsolo li p { margin-top: 6px; max-width: 22em; color: var(--testo2); font-size: 17px; }
+  @media (max-width: 1100px) { .nonsolo ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px clamp(20px, 4vw, 48px); } }
+  @media (max-width: 820px) {
+    /* il telefono: griglia 2 × 2, come la lavagna del negozio */
+    .nonsolo ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 14px; }
+    .ns-vista { margin: 0 -6px; }
+    .nonsolo h3 { margin-top: 6px; font-size: 1.3rem; }
+    .nonsolo li p { margin-top: 4px; font-size: 15px; line-height: 1.45; }
+  }
+  @media (prefers-reduced-motion: reduce) { .nonsolo svg path, .ns-vista canvas { transition: none !important; } }
 
   /* ————— la vaschetta: misura, gusti, dove; il messaggio parte già scritto su WhatsApp ————— */
   .vaschette { padding: clamp(88px, 14vh, 160px) var(--gut); border-top: 1px solid rgba(74, 44, 23, .14); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 560px); gap: clamp(36px, 7vw, 120px); align-items: start; }
@@ -219,46 +232,6 @@ window.DATI = {
   .sedi .chiudi span { color: var(--testo2); }
   .piede { padding: 28px var(--gut) 34px; border-top: 1px solid rgba(74, 44, 23, .14); display: flex; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; font-size: 13px; color: var(--testo2); }
 
-
-  @media (max-width: 820px) {
-    .apertura, .frase, .finale { top: calc(var(--sb) + 22px); transform: none; max-width: none; right: var(--gut); }
-    .finale { transform: translateY(14px); } .finale.on { transform: none; }
-    .apertura { text-align: center; }
-    .apertura h1 img { width: min(44vw, 176px); margin: 0 auto; }
-    .apertura .guida { margin: 12px auto 0; max-width: 15em; font-size: clamp(21px, 6vw, 25px); }
-    .mappina { margin: 18px auto 0; width: 100%; height: 100px; }
-    .mappina .punto { font-size: 15px; gap: 8px; }
-    .mappina .a { top: 34px; }
-    .apertura .scorri { display: none; }
-    .frase, .finale h2 { font-size: clamp(2rem, 9.4vw, 3rem); }
-    .finale a { margin-top: 10px; font-size: 16px; }
-    .v-testa, .v-gusto, .v-fine { top: calc(var(--sb) + 22px); right: var(--gut); max-width: none; }
-    .v-testa h2, .v-fine h2 { font-size: clamp(2.2rem, 10vw, 3.1rem); }
-    .v-gusto h3 { font-size: clamp(2rem, 9.4vw, 2.9rem); }
-    .v-gusto p, .v-testa p, .v-fine p { margin-top: 8px; font-size: 15.5px; line-height: 1.5; }
-    .lab, .nonsolo, .vaschette { grid-template-columns: minmax(0, 1fr); }
-    .lab .vista { height: min(96vw, 460px); order: 2; }
-    .nonsolo ul { grid-template-columns: 1fr; }
-    .nonsolo li { grid-template-columns: 48px minmax(0, 1fr); gap: 16px; padding: 22px 0; }
-    .nonsolo svg { width: 48px; height: 48px; }
-    .vaschetta-disegno { width: min(220px, 56vw); margin: 24px auto 0; }
-    .modulo { margin: 0 calc(-1 * var(--gut) + 8px); border-radius: 16px; }
-    .scelte.due { column-gap: 14px; }
-    .scelte.due label { font-size: 15px; line-height: 1.25; gap: 10px; min-height: 48px; }
-    .pieno { width: 100%; }
-    .sedi .foto { margin-left: calc(-1 * var(--gut)); margin-right: calc(-1 * var(--gut)); }
-    .sedi .foto img { border-radius: 0; aspect-ratio: 1400 / 934; }
-    .sedi .foto figcaption { padding: 0 var(--gut); }
-    .sedi .due { grid-template-columns: 1fr; }
-  }
-  /* la vetrina col telefono in orizzontale e sugli schermi bassi: testi più piccoli, più posto alle vaschette */
-  @media (max-height: 520px) and (min-aspect-ratio: 4/3) {
-    .v-testa, .v-gusto, .v-fine { top: calc(var(--sb) + 14px); }
-    .v-testa h2, .v-fine h2, .v-gusto h3 { font-size: clamp(1.6rem, 4.2vw, 2.2rem); }
-    .v-gusto p, .v-testa p, .v-fine p { margin-top: 4px; font-size: 14px; line-height: 1.4; max-width: 34em; }
-    .v-fine a { min-height: 36px; margin-top: 4px; font-size: 15px; }
-  }
-  @media (prefers-reduced-motion: reduce) { .mappina .punto i::after { animation: none; opacity: 0; } #cono .tela canvas, #vetrina .tela canvas, .finale, .nonsolo svg path, .vaschetta-disegno * { transition: none !important; } }
 
 </style>
 <script type="importmap">{ "imports": { "three": "./lib/three.module.min.js" } }</script>
@@ -366,7 +339,7 @@ window.DATI = {
     crepe: '<path pathLength="1" d="M8 46 Q32 52 56 46 L35 12 Z"/><path pathLength="1" d="M35 12 L29 49"/><path pathLength="1" d="M15 45 Q20 40 26 44"/>',
     affogato: '<path pathLength="1" d="M15 31 H45 V39 C45 49 39 54 30 54 C21 54 15 49 15 39 Z"/><path pathLength="1" d="M45 34 C53 34 53 45 45 45"/><path pathLength="1" d="M20 31 C20 20 40 20 40 31"/><path pathLength="1" d="M10 58 H50"/>',
   };
-  $('#listaNonSolo').innerHTML = D.nonSolo.map(function (n) { return '<li><svg viewBox="0 0 64 64" aria-hidden="true">' + (DIS[n[2]] || '') + '</svg><div><h3>' + esc(n[0]) + '</h3><p>' + esc(n[1]) + '</p></div></li>'; }).join('');
+  $('#listaNonSolo').innerHTML = D.nonSolo.map(function (n) { return '<li><div class="ns-vista" data-oggetto="' + esc(n[2]) + '" aria-hidden="true"><svg viewBox="0 0 64 64">' + (DIS[n[2]] || '') + '</svg></div><h3>' + esc(n[0]) + '</h3><p>' + esc(n[1]) + '</p></li>'; }).join('');
   // la vetrina: un blocco di testo per gusto (sul palco, uno alla volta) e l'elenco per lo screen reader
   $('#vGusti').innerHTML = D.vetrina.map(function (g, i) { return '<div class="v-gusto" data-i="' + i + '"><h3>' + esc(g.nome) + '</h3><p>' + esc(g.riga) + '</p></div>'; }).join('');
   $('#vElenco').innerHTML = D.vetrina.map(function (g) { return '<li><b>' + esc(g.nome) + '</b> <span>' + esc(g.riga) + '</span></li>'; }).join('');
@@ -449,11 +422,22 @@ aggiorna();
   let fermo = 0; const quiete = () => { clearTimeout(fermo); fermo = setTimeout(() => (window.requestIdleCallback || setTimeout)(monta2), 2500); };
   addEventListener('scroll', quiete, { passive: true }); quiete();
 }
-// ——— non solo gelato: i disegni a tratto si disegnano quando la sezione entra ———
+// ——— non solo gelato: i quattro oggetti 3D si caricano (import dinamico) quando la sezione è a una schermata e mezza,
+//     o prima se la pagina resta ferma 4 s. Finché non sono pronti (o se il 3D non parte) restano i disegni a tratto ———
 {
-  const ns = $('#nonsolo');
+  const ns = $('#nonsolo'); let montata = false, fermo = 0;
   if (ridotto) ns.classList.add('visto');
   else new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { ns.classList.add('visto'); o.disconnect(); } }, { threshold: .25 }).observe(ns);
+  const carica = () => {
+    if (montata) return; montata = true; oss.disconnect(); removeEventListener('scroll', quiete); clearTimeout(fermo);
+    import('./js/nonsolo.js').then(m => m.monta(ns, { telefono, ridotto }))
+      .catch(e => { console.warn('non solo gelato 3D non disponibile:', e.message); ns.classList.add('senza-3d'); window.__erroreNonsolo = e.message; });
+  };
+  const oss = new IntersectionObserver(es => { if (es[0].isIntersecting) carica(); }, { rootMargin: '150% 0px' });
+  oss.observe(ns);
+  const quiete = () => { clearTimeout(fermo); fermo = setTimeout(() => (window.requestIdleCallback || setTimeout)(carica), 4000); };
+  addEventListener('scroll', quiete, { passive: true }); quiete();
+  window.__caricaNonsolo = carica;
 }
 // ——— la vaschetta: misura, fino a 3–4 gusti, dove; il pulsante apre WhatsApp col messaggio già scritto ———
 {
