@@ -110,7 +110,7 @@ window.DATI = {
   .finale.on { opacity: 1; visibility: visible; transform: translateY(-50%); transition: opacity .6s var(--ease), transform .6s var(--ease), visibility 0s; }
   .finale h2 { font-family: var(--disp); font-weight: 580; font-optical-sizing: auto; font-size: clamp(2.4rem, 4.3vw, 4.6rem); line-height: .96; letter-spacing: -.012em; text-wrap: balance; }
   .finale a { display: inline-flex; align-items: center; min-height: 44px; margin-top: 22px; font-size: 18px; font-weight: 600; text-decoration: none; border-bottom: 1.5px solid currentColor; }
-  .finale a:focus-visible, .scrollify-barra a:focus-visible, .sedi a:focus-visible { outline: 2px solid var(--testo); outline-offset: 4px; border-radius: 2px; }
+  .finale a:focus-visible, .sedi a:focus-visible { outline: 2px solid var(--testo); outline-offset: 4px; border-radius: 2px; }
   .ripiego { display: none; }
   .senza-3d .ripiego { display: block; position: absolute; right: var(--gut); bottom: 30%; max-width: 30ch; color: var(--testo2); }
 
@@ -250,7 +250,6 @@ window.DATI = {
     .sedi .foto img { border-radius: 0; aspect-ratio: 1400 / 934; }
     .sedi .foto figcaption { padding: 0 var(--gut); }
     .sedi .due { grid-template-columns: 1fr; }
-    .pacchetto { grid-template-columns: minmax(0, 1fr); align-items: start; }
   }
   /* la vetrina col telefono in orizzontale e sugli schermi bassi: testi più piccoli, più posto alle vaschette */
   @media (max-height: 520px) and (min-aspect-ratio: 4/3) {
