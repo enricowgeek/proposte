@@ -6,14 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>GiumaPark — Playground e sale compleanno a Mestre</title>
 <meta name="description" content="200 m² di playground al coperto per bambini 0-11 anni e 3 sale per i compleanni a Mestre. Feste da 200€, centri estivi e invernali, palloncini, allestimenti e gonfiabili a noleggio.">
-<link rel="canonical" href="https://giumapark-mestre.netlify.app/">
+<link rel="canonical" href="https://giumapark.it/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="GiumaPark">
 <meta property="og:title" content="GiumaPark — Playground e feste per bambini a Mestre">
 <meta property="og:description" content="200 m² di playground al coperto, 3 sale per i compleanni, centri estivi e invernali, palloncini e gonfiabili a noleggio. Via Don Federico Tosatto 5, Mestre.">
-<meta property="og:url" content="https://giumapark-mestre.netlify.app/">
-<meta property="og:image" content="https://giumapark-mestre.netlify.app/social.jpg">
+<meta property="og:url" content="https://giumapark.it/">
+<meta property="og:image" content="https://giumapark.it/social.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -330,6 +330,13 @@ h1,h2,h3{text-wrap:balance; margin:0; line-height:1.05}
   border:3px dotted #e0a13a; border-radius:16px; background:#fff8ec; font-size:.93rem; color:#6b4a12}
 .ripiego.on{display:flex}
 .ripiego .btn{align-self:flex-start; margin-top:4px}
+.ripiego .btn svg{fill:currentColor; stroke:none}
+.altre-vie{display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:6px; align-items:center}
+.altre-vie a,.altre-vie button{font-family:inherit; font-size:.9rem; font-weight:800; color:#8a5a12;
+  background:none; border:0; padding:0; cursor:pointer; text-decoration:underline; text-underline-offset:3px}
+.altre-vie a:hover,.altre-vie button:hover{color:#5f3c06}
+.ripiego .diretti{font-size:.87rem; margin-top:2px}
+.ripiego .diretti a{font-weight:800; color:#8a5a12}
 
 /* footer */
 footer{background:var(--verde-scuro); color:#cfeeb8; text-align:center;
@@ -391,9 +398,9 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
   "@type": "AmusementPark",
   "name": "GiumaPark",
   "description": "Playground al coperto per bambini da 0 a 11 anni, sale per le feste di compleanno, centri estivi e invernali, allestimenti di palloncini e noleggio gonfiabili.",
-  "url": "https://giumapark-mestre.netlify.app/",
-  "image": "https://giumapark-mestre.netlify.app/social.jpg",
-  "logo": "https://giumapark-mestre.netlify.app/logo-giumapark.webp",
+  "url": "https://giumapark.it/",
+  "image": "https://giumapark.it/social.jpg",
+  "logo": "https://giumapark.it/logo-giumapark.webp",
   "telephone": "+393515878573",
   "email": "giumapark@gmail.com",
   "priceRange": "€€",
@@ -767,7 +774,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
         <input type="hidden" name="_subject" value="Nuova richiesta dal sito GiumaPark">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://giumapark-mestre.netlify.app/grazie.html">
+        <input type="hidden" name="_next" value="https://giumapark.it/grazie.html">
         <div class="trappola" aria-hidden="true">
           <label for="_honey">Lascia vuoto questo campo</label>
           <input type="text" name="_honey" id="_honey" tabindex="-1" autocomplete="off">
@@ -813,9 +820,19 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
         </label>
         <button class="btn btn-rosso btn-lg" type="submit" style="width:100%">Invia la richiesta</button>
         <div class="ripiego" id="ripiego" role="status" aria-live="polite">
-          <b>L'invio non è andato a buon fine.</b>
-          <span>Puoi mandarci lo stesso messaggio su WhatsApp: è già pronto, devi solo premere invia.</span>
-          <a class="btn btn-verde" id="wa-precompilato" href="https://wa.me/393515878573" target="_blank" rel="noopener">Mandalo su WhatsApp</a>
+          <b>Scegli come mandarcelo</b>
+          <span>Il messaggio è già scritto con quello che hai compilato: devi solo premere invia.</span>
+          <a class="btn btn-verde" id="via-whatsapp" href="https://wa.me/393515878573" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><use href="#i-whatsapp"/></svg> Mandalo su WhatsApp
+          </a>
+          <div class="altre-vie">
+            <a id="via-gmail" href="#" target="_blank" rel="noopener">Gmail</a>
+            <a id="via-outlook" href="#" target="_blank" rel="noopener">Outlook</a>
+            <a id="via-posta" href="#">Programma di posta</a>
+            <button type="button" id="via-copia">Copia il messaggio</button>
+          </div>
+          <span class="diretti">Oppure chiamaci: <a href="tel:+393515878573">351 587 8573</a> ·
+            scrivi a <a href="mailto:giumapark@gmail.com">giumapark@gmail.com</a></span>
         </div>
         <p class="ok-msg" id="ok" role="status" aria-live="polite">
           <svg aria-hidden="true"><use href="#i-check"/></svg>
@@ -1220,14 +1237,38 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       b.disabled = false; b.style.opacity = '1'; b.textContent = 'Invia la richiesta';
     })
     .catch(function(){
-      /* servizio non raggiungibile: offriamo WhatsApp col messaggio già pronto */
+      /* nessun vicolo cieco: il messaggio è pronto, si sceglie solo come farlo arrivare */
+      var oggetto = 'Richiesta dal sito — ' + (dati.richiesta || 'informazioni');
       var testo = 'Ciao GiumaPark! Sono ' + dati.nome + '.'
         + '\nRichiesta: ' + (dati.richiesta || '—')
         + '\nTelefono: ' + (dati.telefono || '—')
         + (dati.email ? '\nEmail: ' + dati.email : '')
         + (dati.messaggio ? '\n\n' + dati.messaggio : '');
-      document.getElementById('wa-precompilato').href =
-        'https://wa.me/393515878573?text=' + encodeURIComponent(testo);
+      var t = encodeURIComponent(testo), o = encodeURIComponent(oggetto), a = 'giumapark@gmail.com';
+
+      document.getElementById('via-whatsapp').href = 'https://wa.me/393515878573?text=' + t;
+      document.getElementById('via-gmail').href =
+        'https://mail.google.com/mail/?view=cm&fs=1&to=' + a + '&su=' + o + '&body=' + t;
+      document.getElementById('via-outlook').href =
+        'https://outlook.live.com/mail/0/deeplink/compose?to=' + a + '&subject=' + o + '&body=' + t;
+      document.getElementById('via-posta').href = 'mailto:' + a + '?subject=' + o + '&body=' + t;
+
+      var bCopia = document.getElementById('via-copia');
+      bCopia.onclick = function(){
+        var finito = function(){ bCopia.textContent = 'Copiato: incollalo dove preferisci'; };
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(testo + '\n\n(scrivere a ' + a + ')').then(finito, ripiegoCopia);
+        } else { ripiegoCopia(); }
+        function ripiegoCopia(){
+          var d = document.createElement('textarea');
+          d.value = testo + '\n\n(scrivere a ' + a + ')';
+          d.style.position = 'fixed'; d.style.opacity = '0';
+          document.body.appendChild(d); d.select();
+          try { document.execCommand('copy'); finito(); } catch(e){ d.style.opacity='1'; }
+          setTimeout(function(){ if (d.parentNode) d.parentNode.removeChild(d); }, 300);
+        }
+      };
+
       document.getElementById('ripiego').classList.add('on');
       b.disabled = false; b.style.opacity = '1'; b.textContent = 'Riprova l\'invio';
     });
