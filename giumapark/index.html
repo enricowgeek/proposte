@@ -770,14 +770,14 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 
     <div class="doppia">
       <form class="pannello rv" id="form" novalidate
-        method="POST" action="https://formsubmit.co/giumapark@gmail.com">
-        <input type="hidden" name="_subject" value="Nuova richiesta dal sito GiumaPark">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_next" value="https://giumapark.it/grazie.html">
+        method="POST" action="https://api.web3forms.com/submit">
+        <input type="hidden" name="access_key" id="chiave-modulo" value="1cdaeaa6-6298-44dd-8421-b083740ef9da">
+        <input type="hidden" name="subject" value="Nuova richiesta dal sito GiumaPark">
+        <input type="hidden" name="from_name" value="Sito GiumaPark">
+        <input type="hidden" name="redirect" value="https://giumapark.it/grazie.html">
         <div class="trappola" aria-hidden="true">
-          <label for="_honey">Lascia vuoto questo campo</label>
-          <input type="text" name="_honey" id="_honey" tabindex="-1" autocomplete="off">
+          <label for="botcheck">Lascia vuoto questo campo</label>
+          <input type="checkbox" name="botcheck" id="botcheck" tabindex="-1" autocomplete="off">
         </div>
         <div class="campo">
           <label for="nome">Come ti chiami <span class="req" aria-hidden="true">*</span></label>
@@ -1225,13 +1225,18 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     b.disabled = true; b.style.opacity = '.6'; b.textContent = 'Invio…';
 
     var dati = {};
-    new FormData(form).forEach(function(v,k){ if (k.charAt(0) !== '_') dati[k] = v; });
-    fetch('https://formsubmit.co/ajax/giumapark@gmail.com', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json', 'Accept':'application/json'},
-      body: JSON.stringify(dati)
-    })
+    new FormData(form).forEach(function(v,k){ dati[k] = v; });
+    if (dati.email) dati.replyto = dati.email;
+    var chiave = document.getElementById('chiave-modulo').value;
+    (chiave
+      ? fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json', 'Accept':'application/json'},
+          body: JSON.stringify(dati)
+        })
+      : Promise.reject(new Error('modulo non ancora collegato')))
     .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(esito){ if (!esito || esito.success !== true) throw new Error('rifiutato'); return esito; })
     .then(function(){
       ok.classList.add('on'); form.reset();
       b.disabled = false; b.style.opacity = '1'; b.textContent = 'Invia la richiesta';
