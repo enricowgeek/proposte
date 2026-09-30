@@ -326,6 +326,10 @@ h1,h2,h3{text-wrap:balance; margin:0; line-height:1.05}
 .mappa-invito:hover .mappa-pin{background:var(--verde-scuro)}
 .trappola{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
 .facolt{font-weight:700; color:var(--grigio); font-size:.85em}
+.ripiego{display:none; flex-direction:column; gap:8px; margin-top:14px; padding:16px;
+  border:3px dotted #e0a13a; border-radius:16px; background:#fff8ec; font-size:.93rem; color:#6b4a12}
+.ripiego.on{display:flex}
+.ripiego .btn{align-self:flex-start; margin-top:4px}
 
 /* footer */
 footer{background:var(--verde-scuro); color:#cfeeb8; text-align:center;
@@ -759,7 +763,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 
     <div class="doppia">
       <form class="pannello rv" id="form" novalidate
-        action="https://formsubmit.co/giumapark@gmail.com" method="POST">
+        method="POST" action="https://formsubmit.co/giumapark@gmail.com">
         <input type="hidden" name="_subject" value="Nuova richiesta dal sito GiumaPark">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
@@ -808,6 +812,11 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           <span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento a essere ricontattato. <span class="req" aria-hidden="true">*</span></span>
         </label>
         <button class="btn btn-rosso btn-lg" type="submit" style="width:100%">Invia la richiesta</button>
+        <div class="ripiego" id="ripiego" role="status" aria-live="polite">
+          <b>L'invio non è andato a buon fine.</b>
+          <span>Puoi mandarci lo stesso messaggio su WhatsApp: è già pronto, devi solo premere invia.</span>
+          <a class="btn btn-verde" id="wa-precompilato" href="https://wa.me/393515878573" target="_blank" rel="noopener">Mandalo su WhatsApp</a>
+        </div>
         <p class="ok-msg" id="ok" role="status" aria-live="polite">
           <svg aria-hidden="true"><use href="#i-check"/></svg>
           <span>Richiesta inviata, ti ricontattiamo presto.</span>
@@ -1199,7 +1208,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     b.disabled = true; b.style.opacity = '.6'; b.textContent = 'Invio…';
 
     var dati = {};
-    new FormData(form).forEach(function(v,k){ dati[k] = v; });
+    new FormData(form).forEach(function(v,k){ if (k.charAt(0) !== '_') dati[k] = v; });
     fetch('https://formsubmit.co/ajax/giumapark@gmail.com', {
       method: 'POST',
       headers: {'Content-Type':'application/json', 'Accept':'application/json'},
@@ -1211,8 +1220,16 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
       b.disabled = false; b.style.opacity = '1'; b.textContent = 'Invia la richiesta';
     })
     .catch(function(){
-      /* se la chiamata non passa, si invia il modulo nel modo classico */
-      form.submit();
+      /* servizio non raggiungibile: offriamo WhatsApp col messaggio già pronto */
+      var testo = 'Ciao GiumaPark! Sono ' + dati.nome + '.'
+        + '\nRichiesta: ' + (dati.richiesta || '—')
+        + '\nTelefono: ' + (dati.telefono || '—')
+        + (dati.email ? '\nEmail: ' + dati.email : '')
+        + (dati.messaggio ? '\n\n' + dati.messaggio : '');
+      document.getElementById('wa-precompilato').href =
+        'https://wa.me/393515878573?text=' + encodeURIComponent(testo);
+      document.getElementById('ripiego').classList.add('on');
+      b.disabled = false; b.style.opacity = '1'; b.textContent = 'Riprova l\'invio';
     });
   });
 
