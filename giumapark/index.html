@@ -248,6 +248,13 @@ h1,h2,h3{margin:0; line-height:1.05}
   font-weight:800; font-size:.92rem; color:var(--verde-scuro)}
 
 /* form */
+.galleria{display:flex; gap:14px; margin-top:34px; padding:4px 2px 16px; overflow-x:auto;
+  scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none}
+.galleria::-webkit-scrollbar{display:none}
+.galleria img{flex:0 0 clamp(250px,76vw,380px); height:clamp(200px,57vw,285px); object-fit:cover;
+  border-radius:var(--r); border:3px solid var(--verde-scuro); box-shadow:0 5px 0 var(--verde-scuro);
+  background:var(--crema); scroll-snap-align:center; user-select:none; -webkit-user-drag:none}
+.scorri-nota{margin:0; font-weight:700; color:#fffdf7; text-shadow:0 2px 6px rgba(61,26,0,.45); font-size:.97rem}
 .doppia{display:grid; grid-template-columns:1.05fr .95fr; gap:24px; margin-top:36px; align-items:start}
 .pannello{position:relative; isolation:isolate; overflow:hidden;
   background:var(--crema); border:3px solid var(--verde-scuro); border-radius:var(--r);
@@ -413,7 +420,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     <p class="claim">Playground al coperto e feste per bambini</p>
     <p class="info-riga">
       <span><svg aria-hidden="true"><use href="#i-pin"/></svg> Via Don Federico Tosatto 5</span>
-      <span><svg aria-hidden="true"><use href="#i-orologio"/></svg> Aperto tutti i giorni 16:00 – 19:00</span>
+      <span><svg aria-hidden="true"><use href="#i-orologio"/></svg> Aperti 16:00 – 19:00, martedì chiuso</span>
     </p>
     <div class="hero-cta">
       <a class="btn btn-chiaro btn-lg" href="#richiesta">Contattaci</a>
@@ -467,34 +474,25 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           <ul>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg> 3 sale separate, due si possono unire</li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg> 15 bambini e 30 adulti per sala</li>
-            <li><svg aria-hidden="true"><use href="#i-check"/></svg> <b>200€</b> tutto compreso, pulizie incluse</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg> Da <b>200€</b> la sala, pulizie comprese</li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg> Anche la domenica mattina</li>
           </ul>
         </div>
       </article>
 
-      <article class="scheda rv d2" id="estate">
+      <article class="scheda rv d2">
         <div class="scatto" data-bg="foto/estivi.webp"></div>
         <div class="testata t-azzurro">
           <span class="ico"><svg aria-hidden="true"><use href="#i-sole"/></svg></span>
-          <h3>Centri estivi</h3>
+          <h3>Centri estivi e invernali</h3>
         </div>
         <div class="corpo">
           <ul>
-            <li><svg aria-hidden="true"><use href="#i-check"/></svg> 4–14 anni, dall'8 giugno al 9 settembre</li>
-            <li><svg aria-hidden="true"><use href="#i-check"/></svg> Sport, inglese, piscina, aiuto compiti</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg> Da 4 a 14 anni, quando la scuola è chiusa</li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg> Ingresso dalle 7:30, tre orari di uscita</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg> Pasto completo e merende</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg> Quote e attività qui sotto</li>
           </ul>
-          <table class="tariffe">
-            <caption>Quote settimanali</caption>
-            <tr><td>7:30 – 12:00 <span>senza mensa</span></td><td><b>70€</b></td></tr>
-            <tr><td>7:30 – 16:00</td><td><b>90€</b></td></tr>
-            <tr><td>7:30 – 17:30</td><td><b>100€</b></td></tr>
-          </table>
-          <p class="extra-tariffe">
-            Pasto completo <b>30€</b>/settimana · Iscrizione <b>25€</b> una tantum · Uscita in piscina <b>12€</b><br>
-            Minimo 3 giorni consecutivi · <b>−10%</b> secondo figlio · <b>−5%</b> dalla terza settimana
-          </p>
         </div>
       </article>
     </div>
@@ -502,38 +500,48 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     <h2 class="rv" style="margin-top:64px">La festa di compleanno</h2>
 
     <div class="store rv">
-      <div class="scatto" data-bg="foto/playground.webp"></div>
+      <div class="scatto" data-bg="foto/hero.webp"></div>
       <div class="store-testo">
         <div class="testata t-rosso" style="border:0; padding:0 0 14px">
           <span class="ico"><svg aria-hidden="true"><use href="#i-torta"/></svg></span>
-          <h3>200€ la sala, tutto compreso</h3>
+          <h3>Da 200€ la sala</h3>
         </div>
-        <p>Fino a <b>15 bambini e 30 adulti</b>. Seguiamo la festa dalla a alla z.</p>
+        <p>Fino a <b>15 bambini e 30 adulti</b>. A 200€ la sala comprende:</p>
         <ul>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Ingresso per 15 bambini</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Tavoli, sedie e tovagliato rosa o azzurro</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Striscione e invito personalizzato</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Frigorifero d'appoggio</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Pulizie finali comprese</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Pulizie finali comprese, escluso lo smaltimento dei rifiuti</li>
         </ul>
 
         <table class="tariffe">
           <caption>Orari della festa</caption>
-          <tr><td>Dal lunedì al venerdì</td><td><b>16:30 – 19:30</b></td></tr>
+          <tr><td>Lunedì, mercoledì, giovedì e venerdì</td><td><b>16:30 – 19:30</b></td></tr>
           <tr><td>Sabato e domenica</td><td><b>16:00 – 19:00</b></td></tr>
           <tr><td>Domenica mattina</td><td><b>10:00 – 13:00</b></td></tr>
         </table>
 
         <table class="tariffe">
           <caption>Se serve qualcosa in più</caption>
-          <tr><td>Oltre il 15° bambino <span>dal lunedì al venerdì</span></td><td><b>5€</b></td></tr>
+          <tr><td>Oltre il 15° bambino <span>nei giorni feriali</span></td><td><b>5€</b></td></tr>
           <tr><td>Oltre il 15° bambino <span>sabato e domenica</span></td><td><b>8€</b></td></tr>
           <tr><td>Ora di permanenza in più</td><td><b>75€</b></td></tr>
         </table>
 
+        <table class="tariffe">
+          <caption>Servizi in più</caption>
+          <tr><td>Animazione <span>1 ora e mezza: trucca bimbi, mascotte, assistenza allo scarta la carta, sculture di palloncini</span></td><td><b>150€</b></td></tr>
+          <tr><td>Pignatta a tema <span>con le caramelle, il tema lo scegli tu</span></td><td><b>da 50€</b></td></tr>
+          <tr><td>Allestimento a tema con palloncini</td><td><b>da preventivare</b></td></tr>
+          <tr><td>Catering</td><td><b>da preventivare</b></td></tr>
+          <tr><td>Torta</td><td><b>da preventivare</b></td></tr>
+        </table>
+
         <p class="extra-tariffe">
           Prenoti con una <b>caparra di 50€</b>, in sede o con bonifico · Puoi entrare <b>mezz'ora prima</b> per preparare e restare <b>mezz'ora dopo</b> per sistemare<br>
-          Su richiesta ci occupiamo anche di catering, torta e allestimenti a tema.
+          Per i bambini servono i <b>calzini antiscivolo</b>, per gli adulti i <b>copriscarpe</b>: sono obbligatori in tutto il parco.<br>
+          Quando ci sono più feste in contemporanea, l'età indicata nella prima prenotazione stabilisce la fascia d'età di tutte le altre sale: così l'organizzazione resta adeguata ai bambini.
         </p>
 
         <div class="store-azioni">
@@ -549,13 +557,13 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           <span class="ico"><svg aria-hidden="true"><use href="#i-palloncino"/></svg></span>
           <h3>Giuma Balloons Store</h3>
         </div>
-        <p>Il nostro negozio di palloncini è allo stesso indirizzo del parco.</p>
+        <p>Il nostro laboratorio di palloncini è allo stesso indirizzo del parco.</p>
         <ul>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Vendita al dettaglio: palloncini, addobbi, candeline</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Archi, colonne e numeri giganti</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Allestimenti a tema: giungla, supereroi, principesse</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Montiamo qui, a casa tua o in sala</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Anche battesimi, anniversari e gender reveal</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Palloncini a caduta per il momento clou</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Allestiamo qui, a casa tua o nel locale che scegli</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Compleanni, battesimi, anniversari, gender reveal e inaugurazioni</li>
         </ul>
         <div class="store-azioni">
           <a class="btn btn-chiaro" href="https://www.instagram.com/giumaballoonstore/" target="_blank" rel="noopener">
@@ -591,12 +599,14 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
         <p>Scivoli, castelli e giochi gonfiabili a noleggio per feste, sagre e compleanni in casa.</p>
         <ul>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Noleggio a giornata, anche nel weekend</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Gonfiabili in <b>PVC professionale</b></li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> <b>Assicurazione</b> e kit di montaggio compresi</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Per giardini, cortili, sale e spazi all'aperto</li>
-          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Modelli diversi per età e spazio disponibile</li>
           <li><svg aria-hidden="true"><use href="#i-check"/></svg> Trasporto e montaggio su richiesta</li>
         </ul>
         <table class="tariffe">
           <caption>Noleggio a giornata</caption>
+          <!-- QUANDO TAMARA MANDA LE MISURE: metterle nel sottotitolo di ogni riga, es. 4 x 3 m -->
           <tr><td>Gonfiabile piccolo <span>ne abbiamo due</span></td><td><b>150€</b></td></tr>
           <tr><td>Gonfiabile grande</td><td><b>250€</b></td></tr>
         </table>
@@ -608,6 +618,52 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           <a class="btn btn-rosso" href="#richiesta">Chiedi il preventivo</a>
         </div>
       </div>
+    </div>
+
+    <h2 class="rv" id="estate" style="margin-top:64px">Centri estivi e invernali</h2>
+
+    <div class="store rv">
+      <div class="scatto" data-bg="foto/estivi.webp"></div>
+      <div class="store-testo">
+        <div class="testata t-azzurro" style="border:0; padding:0 0 14px">
+          <span class="ico"><svg aria-hidden="true"><use href="#i-sole"/></svg></span>
+          <h3>Quando la scuola è chiusa</h3>
+        </div>
+        <p>D'estate e durante le vacanze scolastiche i bambini passano la giornata con noi.</p>
+        <ul>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Da 4 a 14 anni</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Ingresso dalle 7:30, tre orari di uscita</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Pasto completo e merende</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg> Minimo 3 giorni consecutivi</li>
+        </ul>
+
+        <table class="tariffe">
+          <caption>Quote settimanali</caption>
+          <tr><td>7:30 – 12:00 <span>senza pasto</span></td><td><b>70€</b></td></tr>
+          <tr><td>7:30 – 16:00</td><td><b>90€</b></td></tr>
+          <tr><td>7:30 – 17:30</td><td><b>100€</b></td></tr>
+          <tr><td>Pasto completo e merende</td><td><b>30€</b></td></tr>
+        </table>
+
+        <p class="extra-tariffe">
+          Iscrizione <b>25€</b> una tantum · <b>&#8722;10%</b> per il secondo figlio · <b>&#8722;5%</b> dalla terza settimana<br>
+          Le attività e i costi sono indicativi e cambiano da un'edizione all'altra: scrivici per il programma e le date aggiornate.
+        </p>
+
+        <div class="store-azioni">
+          <a class="btn btn-rosso" href="#richiesta">Chiedi il programma</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="rv" style="margin-top:64px">Uno sguardo dentro</h2>
+    <p class="scorri-nota rv">Scorri le foto &#8594; &nbsp;·&nbsp; su <a href="https://www.instagram.com/giumapark/" target="_blank" rel="noopener" style="color:#fffdf7">@giumapark</a> ne trovi molte altre</p>
+    <div class="galleria rv">
+      <img src="foto/playground.webp" width="760" height="570" loading="lazy" decoding="async" alt="Il playground con scivoli e strutture da arrampicata" draggable="false">
+      <img src="foto/hero.webp" width="1200" height="800" loading="lazy" decoding="async" alt="La sala giochi del GiumaPark" draggable="false">
+      <img src="foto/compleanni.webp" width="760" height="570" loading="lazy" decoding="async" alt="Una delle sale per le feste di compleanno" draggable="false">
+      <img src="foto/estivi.webp" width="760" height="570" loading="lazy" decoding="async" alt="I bambini del centro estivo" draggable="false">
+      <img src="foto/parco.webp" width="760" height="570" loading="lazy" decoding="async" alt="L'ingresso del parco" draggable="false">
     </div>
   </div>
 </section>
@@ -635,7 +691,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
             <select id="tipo" required>
               <option value="">Scegli…</option>
               <option>Festa di compleanno</option>
-              <option>Centro estivo</option>
+              <option>Centro estivo o invernale</option>
               <option>Evento privato</option>
               <option>Noleggio gonfiabili</option>
           <option>Allestimento palloncini</option>
@@ -674,7 +730,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
             <li><span class="ic" style="background:var(--verde)"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
               <span><b>Prima di venire</b><span class="t">Calzini antiscivolo per i bambini,<br>copriscarpe per gli adulti</span></span></li>
             <li><span class="ic" style="background:var(--arancio)"><svg aria-hidden="true"><use href="#i-orologio"/></svg></span>
-              <span><b>Orari</b><span class="t">Tutti i giorni 16:00–19:00<br>D'estate: centri estivi e feste prenotate</span></span></li>
+              <span><b>Orari</b><span class="t">Dal mercoledì al lunedì 16:00–19:00<br>Martedì chiuso</span></span></li>
           </ul>
         </div>
         <div class="mappa">
@@ -689,7 +745,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
 
 <footer>
   <img src="logo-giumapark.webp" width="86" height="86" alt="GiumaPark" style="width:82px;height:82px;border-radius:50%;margin:0 auto;border:3px solid rgba(255,255,255,.35)">
-  <p style="margin:10px 0 0; font-weight:700">Via Don Federico Tosatto, 5 — Mestre (VE)<br>Aperto tutti i giorni 16:00–19:00</p>
+  <p style="margin:10px 0 0; font-weight:700">Via Don Federico Tosatto, 5 — Mestre (VE)<br>Aperti 16:00–19:00 — martedì chiuso</p>
   <div class="social">
     <a href="https://www.instagram.com/giumapark/" target="_blank" rel="noopener" aria-label="Instagram GiumaPark"><svg aria-hidden="true"><use href="#i-ig"/></svg></a>
     <a href="https://www.facebook.com/GiumaPark" target="_blank" rel="noopener" aria-label="Facebook GiumaPark"><svg aria-hidden="true"><use href="#i-fb"/></svg></a>
