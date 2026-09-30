@@ -316,14 +316,13 @@ h1,h2,h3{text-wrap:balance; margin:0; line-height:1.05}
 .recapiti span.t{color:#3d5a38; font-weight:700; font-size:.95rem}
 .mappa{margin-top:16px; border:3px solid var(--verde-scuro); border-radius:var(--r); overflow:hidden; box-shadow:0 8px 0 var(--verde-scuro)}
 .mappa iframe{display:block; width:100%; height:200px; border:0}
-.mappa-invito{display:flex; flex-direction:column; align-items:center; gap:6px; width:100%; min-height:200px;
-  justify-content:center; padding:20px; border:0; cursor:pointer; background:var(--crema);
-  font-family:inherit; color:var(--verde-scuro); text-align:center}
-.mappa-invito b{font-size:1.08rem; font-weight:800}
-.mappa-invito small{font-weight:700; color:var(--grigio); max-width:34ch; line-height:1.45}
-.mappa-pin{display:grid; place-items:center; width:46px; height:46px; border-radius:50%; background:var(--verde)}
-.mappa-pin svg{width:24px; height:24px; stroke:#fff; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
-.mappa-invito:hover .mappa-pin{background:var(--verde-scuro)}
+.mappa{position:relative}
+.mappa img{display:block; width:100%; height:clamp(200px,46vw,320px); object-fit:cover; object-position:center; background:var(--crema)}
+.mappa-indicazioni{position:absolute; right:12px; bottom:12px; display:inline-flex; align-items:center; gap:.45em;
+  background:var(--verde); color:#fff; text-decoration:none; font-weight:800; font-size:.95rem;
+  padding:.6em 1.1em; border-radius:999px; box-shadow:0 4px 0 var(--verde-scuro)}
+.mappa-indicazioni:hover{background:var(--verde-scuro); box-shadow:0 4px 0 #0c3d1b}
+.mappa-indicazioni svg{width:18px; height:18px; stroke:#fff; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round}
 .trappola{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
 .facolt{font-weight:700; color:var(--grigio); font-size:.85em}
 .ripiego{display:none; flex-direction:column; gap:8px; margin-top:14px; padding:16px;
@@ -858,12 +857,13 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
               <span><b>Orari</b><span class="t">Dal mercoledì al lunedì 16:00–19:00<br>Martedì chiuso</span></span></li>
           </ul>
         </div>
-        <div class="mappa" id="mappa">
-          <button class="mappa-invito" type="button" id="apri-mappa">
-            <span class="mappa-pin"><svg aria-hidden="true"><use href="#i-pin"/></svg></span>
-            <b>Guarda la mappa</b>
-            <small>La mappa è di Google: aprendola il tuo indirizzo IP arriva ai suoi server.</small>
-          </button>
+        <div class="mappa">
+          <img src="mappa-giumapark.webp" width="960" height="420" loading="lazy" decoding="async"
+               alt="Mappa della zona: il parco si trova in Via Don Federico Tosatto 5, a Mestre, vicino al centro commerciale Porte di Mestre">
+          <a class="mappa-indicazioni" href="https://www.google.com/maps/search/?api=1&amp;query=Via+Don+Federico+Tosatto+5,+30174+Mestre+VE"
+             target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-pin"/></svg> Come arrivare
+          </a>
         </div>
       </div>
 
@@ -1298,19 +1298,6 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
     } else {
       caricaGalleria();
     }
-  }
-
-  /* la mappa di Google si carica solo se la persona la chiede */
-  var bottoneMappa = document.getElementById('apri-mappa');
-  if (bottoneMappa){
-    bottoneMappa.addEventListener('click', function(){
-      var i = document.createElement('iframe');
-      i.title = 'Mappa: Via Don Federico Tosatto 5, Mestre';
-      i.loading = 'lazy'; i.referrerPolicy = 'no-referrer';
-      i.src = 'https://maps.google.com/maps?q=Via%20Don%20Federico%20Tosatto%205%20Mestre%20Venezia&z=15&output=embed';
-      var box = document.getElementById('mappa');
-      box.innerHTML = ''; box.appendChild(i);
-    });
   }
 
   /* ---------- palloncini della vetrina: si prendono e si spostano (solo col mouse) ---------- */
