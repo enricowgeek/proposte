@@ -212,7 +212,7 @@ h1,h2,h3{text-wrap:balance; margin:0; line-height:1.05}
 .sfoglia img{flex:0 0 clamp(250px,32%,380px); min-width:clamp(250px,32%,380px); height:clamp(190px,21vw,260px);
   object-fit:cover; border-radius:var(--r); border:3px solid var(--verde-scuro); background:#fff;
   scroll-snap-align:start; user-select:none; -webkit-user-drag:none}
-.sfoglia.una img{flex:0 0 min(100%,520px); min-width:min(100%,520px)}
+.sfoglia.due img{flex:0 0 calc(50% - 7px); min-width:calc(50% - 7px)}
 .grappolo{position:absolute; right:-3%; bottom:-4%; width:68%; aspect-ratio:2/1; z-index:0}
 .pall-wrap{position:absolute; display:block; animation:galleggia ease-in-out infinite}
 @media (hover:hover){ .pall-wrap{will-change:transform} }
@@ -382,7 +382,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
   .store.con-grappolo .store-testo{max-width:none}
   .sfoglia{margin-top:22px}
   .sfoglia img{flex:0 0 82%; min-width:82%; height:clamp(190px,50vw,240px)}
-  .sfoglia.una img{flex:0 0 100%; min-width:100%}
+  .sfoglia.due img{flex:0 0 82%; min-width:82%}
   .grappolo{position:relative; right:auto; bottom:auto; width:100%; margin-top:18px}
 }
 @media (max-width:820px){
@@ -677,9 +677,6 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           <a class="btn btn-rosso" href="#richiesta">Prenota la sala</a>
         </div>
       </div>
-      <div class="sfoglia una" tabindex="0" role="group" aria-label="Foto del parco, scorri per vederle">
-        <img data-src="foto/hero.webp" width="880" height="495" decoding="async" alt="La sala giochi del GiumaPark pronta per una festa" draggable="false">
-      </div>
     </div>
 
     <h2 class="rv" style="margin-top:64px">Palloncini e allestimenti</h2>
@@ -749,9 +746,6 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           <a class="btn btn-rosso" href="#richiesta">Chiedi il preventivo</a>
         </div>
       </div>
-      <div class="sfoglia una" tabindex="0" role="group" aria-label="Foto dei gonfiabili, scorri per vederle">
-        <img data-src="foto/gonfiabile-sala.webp" width="880" height="495" decoding="async" alt="Uno scivolo gonfiabile montato in sala" draggable="false">
-      </div>
     </div>
 
     <h2 class="rv" id="animazione" style="margin-top:64px">Animazione esterna</h2>
@@ -808,7 +802,7 @@ footer small{display:block; font-size:.86rem; opacity:.8; margin-top:8px}
           </a>
         </div>
       </div>
-      <div class="sfoglia" tabindex="0" role="group" aria-label="Foto degli eventi, scorri per vederle">
+      <div class="sfoglia due" tabindex="0" role="group" aria-label="Foto degli eventi, scorri per vederle">
         <img data-src="foto/eventi-fluo.webp" width="880" height="495" decoding="async" alt="Festa a tema con luci fluorescenti e mascotte" draggable="false">
         <img data-src="foto/eventi-mascotte.webp" width="880" height="495" decoding="async" alt="Una mascotte accanto alla torta e ai palloncini" draggable="false">
       </div>
