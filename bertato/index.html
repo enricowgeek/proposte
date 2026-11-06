@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bertato Dental Family · Studio dentistico a Olmo di Martellago</title>
+<meta name="description" content="Studio dentistico per tutta la famiglia a Olmo di Martellago (VE): prevenzione, cure e controlli dal bambino al nonno.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="data:,">
+<link rel="preload" href="font/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="font/font.css">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+/* Tutte le misure vengono dalle grafiche di Seba (moodboard/grafiche-seba), riportate a un computer largo 1440:
+   --u vale un pixel della grafica. Dentro le schede con le foto si usa cqw, così titolo e testo crescono e calano
+   con la scheda: stessa scheda sulla home (1400) e sulle pagine (1229), come nelle grafiche. */
+:root{
+  --cielo:#CAEFFF;
+  --cielo-2:#B9EAFB;
+  --striscia:#D9F5FF;
+  --nero:#000;
+  --bianco:#FFF;
+  --filetto:#2B2B2B;
+  --foto:#BFD9E6;
+  --curva:cubic-bezier(.76,0,.24,1);
+  --uscita:cubic-bezier(.16,1,.3,1);
+  --durata:1.3s;
+  --attesa:.15s;
+  --u:calc(100vw/1440);
+  --m:1.35;                                /* margine delle schede della home, in vw */
+  --M:calc(var(--m)*1vw);
+  --s:calc(1 - 2*var(--m)/100);            /* quanto si stringe l'apertura per diventare scheda */
+  --G:calc(var(--u)*17);                   /* spazio tra le schede della home */
+  --S:max(24px,calc(var(--u)*27));         /* altezza della striscia in fondo */
+  --sh:calc(100dvh - var(--S) - var(--G)); /* parte visibile di una scheda della home: dal bordo alto fin sopra la striscia */
+  --raggio:calc(var(--u)*30);
+  --angolo:calc(var(--u)*22);              /* angoli delle schede verticali e della foto della pagina servizio */
+  --larga:85.35vw;                         /* schede e testi delle pagine interne */
+  --ar:1.766;                              /* proporzione delle schede interne: la misura JS, uguale a quelle della home */
+  --barra:0px;                             /* sotto i 1180 Menu e Contatti stanno su una barra bianca */
+  --sans:'Archivo',system-ui,sans-serif;
+  --larghe:108%;                           /* larghezza delle scritte maiuscole */
+  --titoli:111%;                           /* e dei titoli sulle foto */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;overscroll-behavior:none;background:var(--bianco)}
+body{font-family:var(--sans);font-size:16px;line-height:1.2;color:var(--nero);-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+a,button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:1px solid currentColor;outline-offset:4px}
+[hidden]{display:none!important}
+.piccolo{font-size:clamp(11px,calc(var(--u)*13.4),18px);font-stretch:var(--larghe);text-transform:uppercase;line-height:1.2}
+
+/* testata: solo Menu e Contatti; bianchi sulle foto della home, neri sul bianco delle pagine */
+.testata{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:calc(var(--u)*11) calc(var(--u)*28);color:var(--bianco);pointer-events:none;transition:color .35s ease;view-transition-name:testata}
+.testata>*{display:inline-flex;align-items:center;min-height:44px;pointer-events:auto}
+.menu-tasto{padding:0;border:0;background:none;color:inherit;font-family:var(--sans);cursor:pointer}
+body.in-pagina .testata,body.menu-aperto .testata{color:var(--nero)}
+
+/* striscia che scorre, ferma in fondo su tutte le pagine */
+.striscia{position:fixed;inset:auto 0 0;z-index:20;display:flex;align-items:center;height:var(--S);overflow:hidden;background:var(--striscia);color:var(--nero);view-transition-name:striscia}
+.striscia.piccolo{font-size:clamp(11px,calc(var(--u)*15),20px)}
+.nastro{display:flex;width:max-content;animation:nastro 90s linear infinite}
+.nastro span{white-space:nowrap}
+.nastro span::after{content:"•";margin:0 .9em}
+@keyframes nastro{to{transform:translate3d(-50%,0,0)}}
+.striscia:hover .nastro{animation-play-state:paused}
+
+/* la scheda con la foto: titolo e tre righe in fondo, al centro */
+.fc{position:relative;display:block;width:var(--larga);margin-inline:auto;aspect-ratio:var(--ar);overflow:hidden;border-radius:var(--raggio);container-type:inline-size;background:var(--foto);color:var(--bianco)}
+.fc picture,.fc img,.velo{position:absolute;inset:0}
+.fc img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%;transition:transform 1.4s var(--uscita)}
+a.fc:hover img{transform:scale(1.03)}
+.velo{background:linear-gradient(180deg,rgba(0,0,0,.12) 0,rgba(0,0,0,.12) 68%,rgba(0,0,0,.32) 100%)}
+.fc-testi{position:absolute;inset:auto 0 0;display:block;padding:0 3.2cqw 2.4cqw;text-align:center}
+.fc-nome,.gigante{display:block;font-weight:360;font-stretch:var(--titoli);font-size:6.48cqw;line-height:1;letter-spacing:-.005em;text-transform:uppercase;white-space:nowrap}
+.fc-frase{display:block;margin-top:.32cqw;font-weight:400;font-stretch:103%;font-size:max(9px,1.04cqw);line-height:1.05;text-transform:uppercase}
+.gigante{display:flex;justify-content:space-between}
+.gigante .maschera{flex:none}
+
+/* entrate: il titolo sale dalla sua maschera, il resto sale e si accende */
+.maschera{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .04em .14em;margin-bottom:-.14em}
+.js .maschera>span{display:inline-block;transform:translate3d(0,112%,0);transition:transform 0s linear var(--durata)}
+.js .entra{opacity:0;transform:translate3d(0,24px,0);transition:opacity 0s linear var(--durata),transform 0s linear var(--durata)}
+.js body.pronto .is-attiva .maschera>span{transform:none;transition:transform 1.3s var(--uscita) calc(var(--attesa) + var(--r,0)*45ms)}
+.js body.pronto .is-attiva.entra,.js body.pronto .is-attiva .entra{opacity:1;transform:none;transition:opacity 1s ease calc(var(--attesa) + var(--r,0)*110ms),transform 1.3s var(--uscita) calc(var(--attesa) + var(--r,0)*110ms)}
+
+/* le viste: la home è una pila di schede, un gesto un passo; le altre pagine scorrono normalmente */
+.vista{position:fixed;inset:0;background:var(--bianco);outline:none}
+.interna{overflow:hidden auto;overscroll-behavior:contain;padding:var(--barra) 0 var(--S);scroll-padding:calc(var(--barra) + 56px) 0 calc(var(--S) + 24px);scrollbar-width:none}
+.interna::-webkit-scrollbar{display:none}
+
+/* home, come Studio Brusco: la scheda nuova sale da sotto e copre quella vecchia, che sale di un quarto e si scurisce;
+   dentro la scheda che arriva foto e scritte vanno più piano della cornice */
+.pila{position:absolute;inset:0}
+/* ogni scheda arriva fino al bordo alto (bianco solo ai lati e sotto): è più alta dello schermo di un raggio, così gli angoli di sopra si vedono mentre sale e da ferma restano fuori */
+.pila .fc{position:absolute;z-index:var(--i);left:var(--M);top:calc(-1*var(--raggio));width:calc(100vw - 2*var(--M));height:calc(var(--sh) + var(--raggio));margin:0;aspect-ratio:auto;transform:translate3d(0,calc(100% + var(--S) + var(--G)),0);transition:transform var(--durata) var(--curva)}
+.pila .fc.is-attiva{transform:none}
+.pila .fc.is-sopra{transform:translate3d(0,-25%,0)}
+.dentro{position:absolute;inset:0;transform:translate3d(0,-50%,0);transition:transform var(--durata) var(--curva)}
+.is-attiva>.dentro,.is-sopra>.dentro{transform:none}
+.pila .fc::after{content:"";position:absolute;inset:0;z-index:5;background:#06141B;opacity:0;pointer-events:none;transition:opacity var(--durata) var(--curva)}
+.pila .fc.is-sopra::after{opacity:.6}
+/* apertura: a tutto schermo (la striscia ci sta sopra); al primo gesto si stringe nella sua scheda: dritta in alto contro il bordo, arrotondata in basso */
+.pila .apertura{--extra:calc(100dvh*(var(--s) - 1) + var(--S) + var(--G));left:0;top:0;width:100vw;height:100dvh;border-radius:0;transform:none;transform-origin:50% 0;clip-path:inset(0 0 0 0 round 0);transition:transform var(--durata) var(--curva),clip-path var(--durata) var(--curva)}
+.pila .apertura.a-scheda{transform:translate3d(0,calc(-1*max(0px,var(--extra))),0) scale(var(--s));clip-path:inset(0 0 0 0 round 0 0 calc(var(--raggio)/var(--s)) calc(var(--raggio)/var(--s)))}
+.pila .apertura.a-scheda.is-sopra{transform:translate3d(0,calc(-1*max(0px,var(--extra)) - 25dvh),0) scale(var(--s))}
+.apertura .fc-testi{padding:0 2cqw 2.75cqw}
+.apertura .fc-frase{margin-top:.25cqw;padding:0 1cqw}
+.salta,.salta *{transition:none!important}
+
+/* pagine interne */
+.testa{margin-top:calc(var(--u)*-35);transform-origin:50% 0;transition:transform .7s var(--uscita)}
+/* la scheda in cima si clicca per richiudere la pagina: passandoci sopra accenna a stringersi */
+a.testa:hover{transform:scale(.985)}
+a.testa:hover img{transform:none}
+.blocco{width:var(--larga);margin:calc(var(--u)*34) auto 0;text-align:center}
+.etichetta{font-weight:400;font-stretch:var(--larghe);font-size:max(11px,calc(var(--u)*18));line-height:1.2;text-transform:uppercase}
+.grande{max-width:calc(var(--u)*1100);margin:calc(var(--u)*25) auto 0;font-weight:400;font-stretch:107%;font-size:calc(var(--u)*38);line-height:calc(var(--u)*42.3)}
+.bottone{display:inline-flex;align-items:center;justify-content:center;width:calc(var(--u)*338);height:calc(var(--u)*108);margin-top:calc(var(--u)*46);border-radius:999px;background:var(--cielo-2);color:var(--nero);font-stretch:var(--larghe);font-size:calc(var(--u)*31);text-transform:uppercase;transition:background-color .3s ease,color .3s ease}
+.bottone:hover{background:var(--nero);color:var(--bianco)}
+.colonna{display:flex;flex-direction:column;gap:calc(var(--u)*30);margin-top:calc(var(--u)*84)}
+.colonna+.blocco{margin-top:calc(var(--u)*106)}
+.giostra-area+.colonna{margin-top:calc(var(--u)*58)}
+.giostra-area+.colonna .fc+.fc{margin-top:calc(var(--u)*-4)}
+.giostra-area+.colonna+.blocco{margin-top:calc(var(--u)*34)}
+/* email, telefoni e indirizzo tra due filetti */
+.recapiti-riga{display:grid;grid-template-columns:1fr auto 1fr;align-content:center;align-items:start;width:var(--larga);min-height:calc(var(--u)*179);margin:calc(var(--u)*59) auto 0;border-block:2px solid var(--filetto);font-stretch:var(--larghe);font-style:normal;font-size:max(11px,calc(var(--u)*18.9));line-height:1.45;text-transform:uppercase}
+.recapiti-riga>:nth-child(2){text-align:center}
+.recapiti-riga>:nth-child(3){text-align:right}
+.recapiti-riga a:hover{text-decoration:underline;text-underline-offset:3px}
+.recapiti-riga+.recapiti-riga{margin-top:0;border-top:0}
+/* in fondo la scheda della pagina dopo: titolo più grande, tagliata dalla striscia */
+.prossima{margin-top:calc(var(--u)*88);aspect-ratio:auto;height:calc(var(--u)*556);border-radius:var(--raggio) var(--raggio) 0 0}
+.prossima .fc-testi{inset:0;display:flex;align-items:center;justify-content:center;padding:11cqw 0 0}
+.prossima .fc-nome{font-size:9.95cqw}
+.legale{width:var(--larga);margin:calc(var(--u)*34) auto 0;font-size:12px;line-height:1.6;color:rgba(0,0,0,.65)}
+
+/* team: le persone a tutta larghezza, quella al centro dice chi è */
+.giostra-area{margin-top:calc(var(--u)*41)}
+.giostra{position:relative;display:flex;gap:calc(var(--u)*34);padding-inline:calc(50vw - var(--u)*244);overflow:auto hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+.giostra::-webkit-scrollbar{display:none}
+.persona{flex:none;width:calc(var(--u)*488);aspect-ratio:1075/1463;overflow:hidden;border-radius:calc(var(--u)*26);background:var(--foto);scroll-snap-align:center;cursor:pointer}
+.persona.al-centro{cursor:default}
+.persona img{display:block;width:100%;height:100%;object-fit:cover}
+.guida{display:grid;grid-template-columns:1fr calc(var(--u)*488) 1fr;align-items:center;padding:0 calc(var(--u)*15);margin-top:calc(var(--u)*2)}
+.chi{display:flex;justify-content:space-between;gap:16px;font-stretch:var(--larghe);font-size:max(10px,calc(var(--u)*16.6));text-transform:uppercase;transition:opacity .2s ease}
+.chi.cambia{opacity:0}
+.freccia{display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:none;color:inherit;cursor:pointer}
+.freccia svg{display:block;width:calc(var(--u)*69);height:auto;min-width:36px;transition:transform .4s var(--uscita)}
+.freccia[data-verso="1"]{justify-self:end}
+.freccia[data-verso="-1"]:hover svg{transform:translateX(-5px)}
+.freccia[data-verso="1"]:hover svg{transform:translateX(5px)}
+
+/* modulo di contatto: bianco come la pagina, campi su un filetto come i recapiti */
+button.bottone{border:0;font-family:var(--sans);cursor:pointer}
+.modulo{width:calc(var(--u)*880);max-width:100%;margin:calc(var(--u)*44) auto 0;text-align:left}
+.campo{display:block;margin-top:calc(var(--u)*30)}
+.campo span{display:block;font-stretch:var(--larghe);font-size:max(11px,calc(var(--u)*18));line-height:1.2;text-transform:uppercase}
+.campo input,.campo textarea{display:block;width:100%;padding:calc(var(--u)*10) 0 calc(var(--u)*12);border:0;border-bottom:2px solid var(--filetto);border-radius:0;background:none;color:var(--nero);font-family:var(--sans);font-size:max(16px,calc(var(--u)*26));line-height:1.3;resize:vertical;outline:0;transition:box-shadow .2s ease}
+.campo input:focus,.campo textarea:focus{box-shadow:0 1px 0 var(--nero)}
+.campo [aria-invalid="true"]{border-bottom-color:#B42318;box-shadow:0 1px 0 #B42318}
+.modulo-esito{min-height:1.4em;margin-top:calc(var(--u)*16);font-size:max(13px,calc(var(--u)*18));line-height:1.4}
+.modulo-esito.errore{color:#B42318}
+.modulo .bottone{display:flex;margin:calc(var(--u)*22) auto 0}
+
+/* pagina del singolo servizio (grafica "pagina servizio"): foto senza scritte, titolo e testi in nero sul bianco, poi gli altri servizi */
+.servizio .testa{width:calc(var(--u)*1083);height:calc(var(--u)*581);margin-top:0;aspect-ratio:auto;border-radius:0 0 var(--angolo) var(--angolo)}
+.servizio .testa img{object-position:50% var(--y,50%)}
+.serv-capo{width:var(--larga);margin:calc(var(--u)*39) auto 0;text-align:center}
+.serv-nome{font-weight:360;font-stretch:var(--titoli);font-size:calc(var(--u)*79.6);line-height:1;letter-spacing:-.005em;text-transform:uppercase}
+.serv-righe{margin-top:calc(var(--u)*17);font-stretch:var(--larghe);font-size:max(11px,calc(var(--u)*18.75));line-height:1.296;text-transform:uppercase}
+.serv-testi{width:var(--larga);margin:calc(var(--u)*43) auto 0;padding:calc(var(--u)*62) 0 calc(var(--u)*60);border-block:2px solid var(--filetto);text-align:center}
+.serv-testi h2{font-weight:400;font-stretch:var(--larghe);font-size:calc(var(--u)*37.6);line-height:1;text-transform:uppercase}
+.serv-testi h2:not(:first-child){margin-top:calc(var(--u)*54)}
+.serv-testi p{max-width:calc(var(--u)*880);margin:calc(var(--u)*25) auto 0;font-stretch:107%;font-size:calc(var(--u)*38);line-height:calc(var(--u)*42.3)}
+/* schede verticali, due per riga */
+.griglia{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:calc(var(--u)*37) calc(var(--u)*63);width:calc(var(--u)*1091);margin:calc(var(--u)*72) auto 0}
+.griglia .fc{width:auto;margin:0;aspect-ratio:514/700;border-radius:var(--angolo)}
+.griglia .velo{background:linear-gradient(180deg,transparent 62%,rgba(0,0,0,.3) 100%)}
+.griglia .fc-testi{padding:0 8.5cqw 6cqw}
+.griglia .fc-nome{margin-inline:-8.5cqw;font-size:8.15cqw}
+.griglia .fc-frase{margin-top:1.4cqw;font-size:max(8px,2.24cqw);line-height:1.13}
+.griglia+.blocco{margin-top:calc(var(--u)*95)}
+.servizio .etichetta{font-size:max(11px,calc(var(--u)*18.7))}
+
+/* menu: quattro carte disegnate, una accanto all'altra. Il bianco si scioglie sulla pagina, che sale appena; le carte salgono insieme e si posano piano */
+.menu{--mu:min(calc(100vw/1440),calc(100dvh/740));position:fixed;inset:0;z-index:15;display:flex;flex-direction:column;justify-content:center;padding:max(52px,calc(var(--u)*58)) var(--M) calc(var(--S) + var(--G));color:var(--nero)}
+.menu::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--bianco);animation:menu-appare .75s cubic-bezier(.4,0,.6,1) both}
+.menu .carte{animation:menu-sale 1.5s cubic-bezier(.22,1,.36,1) .22s both,menu-appare .9s ease .22s both}
+/* chiudendo l'ordine è al contrario: prima escono le carte, poi il bianco lascia tornare la pagina; Menu e Contatti cambiano colore quando la foto è tornata */
+.menu-esce .menu{pointer-events:none}
+.menu-esce .menu::before{animation:menu-svanisce .75s cubic-bezier(.4,0,.6,1) .22s both}
+.menu-esce .menu .carte{animation:menu-scende .45s cubic-bezier(.4,0,1,1) both}
+.menu-esce .testata{transition:color .35s ease .45s}
+.vista{transition:transform 1.4s cubic-bezier(.22,1,.36,1)}
+body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
+@keyframes menu-appare{from{opacity:0}}
+@keyframes menu-svanisce{to{opacity:0}}
+@keyframes menu-sale{from{transform:translate3d(0,26vh,0)}}
+@keyframes menu-scende{to{opacity:0;transform:translate3d(0,12vh,0)}}
+.carte{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:calc(var(--u)*11);height:min(100%,calc(var(--mu)*640))}
+.carte li{display:flex;min-width:0;min-height:0}
+.carta{flex:1;display:flex;flex-direction:column;min-width:0;min-height:0;padding:calc(var(--mu)*27) calc(var(--mu)*15) calc(var(--mu)*18);border-radius:calc(var(--mu)*12);background:var(--cielo-2);transition:transform .6s var(--uscita)}
+.carte li:nth-child(even) .carta{background:var(--cielo)}
+.carta:hover,.carta:focus-visible{transform:scale(1.012)}
+.carta-testa{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-stretch:102%;font-size:calc(var(--mu)*49);line-height:1;text-transform:uppercase}
+.carta-testa b{font-weight:400}
+.carta-testa i{font-style:normal}
+.carta-sotto{margin-top:calc(var(--mu)*30);padding-bottom:calc(var(--mu)*9);border-bottom:1px solid var(--nero);font-size:calc(var(--mu)*18.2);line-height:1.2;letter-spacing:-.025em}
+.carta-foto{align-self:center;width:calc(var(--mu)*188);aspect-ratio:1.2;margin-top:calc(var(--mu)*38);overflow:hidden;border-radius:calc(var(--mu)*7);background:var(--foto)}
+.carta-foto img{display:block;width:100%;height:100%;object-fit:cover}
+.carta-testo{margin-top:calc(var(--mu)*36);font-size:calc(var(--mu)*27);line-height:.98;letter-spacing:-.03em}
+.carta-link{margin-top:auto;padding-bottom:calc(var(--mu)*6);border-bottom:1px solid var(--nero);font-size:calc(var(--mu)*13);letter-spacing:-.02em}
+
+/* passaggi con la scheda che si allarga o si stringe (View Transitions): dove il browser non li sa fare, il cambio è secco */
+::view-transition-group(*){animation-duration:1s;animation-timing-function:var(--curva)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.55s}
+::view-transition-group(morfo){overflow:hidden;border-radius:var(--raggio)}
+::view-transition-old(striscia){display:none}
+::view-transition-new(striscia){animation:none}
+/* da una pagina all'altra, come Studio Brusco: quella nuova sale da sotto e copre la vecchia; col tasto indietro il contrario */
+.sale::view-transition-old(root){animation:copre var(--durata) var(--curva) both}
+.sale::view-transition-new(root){animation:sale var(--durata) var(--curva) both}
+.scende::view-transition-old(root){z-index:2;animation:scende var(--durata) var(--curva) both}
+.scende::view-transition-new(root){animation:torna var(--durata) var(--curva) both}
+@keyframes copre{to{transform:translate3d(0,-25%,0);filter:brightness(.6)}}
+@keyframes sale{from{transform:translate3d(0,50%,0);clip-path:inset(50% 0 0 0)}}
+@keyframes scende{to{transform:translate3d(0,50%,0);clip-path:inset(50% 0 0 0)}}
+@keyframes torna{from{transform:translate3d(0,-25%,0);filter:brightness(.6)}}
+
+/* dentro le pagine le schede crescono un po' mentre entrano dal basso */
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    .colonna .fc,.griglia .fc,.prossima{animation:cresce linear both;animation-timeline:view();animation-range:entry 0% entry 65%}
+    @keyframes cresce{from{transform:scale(.92)}}
+  }
+}
+
+/* senza spazio ai lati Menu e Contatti si appoggiano su una barra bianca, la scheda parte sotto */
+@media (max-width:1180px){
+  :root{--barra:calc(44px + var(--u)*16)}
+  body.in-pagina .testata{background:var(--bianco)}
+  .testa{margin-top:0}
+  .servizio .testa{border-radius:var(--angolo)}
+}
+@media (max-width:760px){
+  :root{--u:calc(100vw/620);--m:2.2;--G:8px;--raggio:18px;--larga:calc(100vw - 16px);--S:26px}
+  .testata{padding:4px 16px}
+  :root{--barra:52px}
+  .fc{aspect-ratio:4/5}
+  .pila .fc{aspect-ratio:auto}
+  /* i titoli stanno nella scheda; le tre righe restano solo sull'apertura */
+  .fc-nome{font-size:14cqw}
+  .fc-nome.lungo{font-size:12cqw}
+  .fc-nome.lunghissimo{font-size:8.6cqw}
+  .fc-testi{padding:0 16px 6cqw}
+  .fc .fc-frase{display:none}
+  .gigante{flex-direction:column;align-items:center;font-size:18.6cqw;line-height:.98;margin:0}
+  .apertura .fc-testi{padding:0 16px calc(var(--S) + 16px)}
+  .apertura .fc-frase{display:block;margin-top:12px;padding:0;font-stretch:100%;font-size:10.5px;line-height:1.25}
+  .velo{background:linear-gradient(180deg,rgba(0,0,0,.14) 0,rgba(0,0,0,.14) 48%,rgba(0,0,0,.42) 100%)}
+  .prossima{height:62vw;margin-top:44px}
+  .prossima .fc-testi{padding:14cqw 0 0}
+  .prossima .fc-nome{font-size:14cqw}
+  .blocco{width:auto;margin-top:24px;padding:0 16px}
+  .etichetta{font-size:10.5px}
+  .grande{margin-top:14px;font-size:22px;line-height:1.16}
+  .bottone{width:210px;height:60px;margin-top:26px;font-size:16px}
+  .colonna{gap:8px;margin-top:36px}
+  .colonna+.blocco,.giostra-area+.colonna+.blocco{margin-top:48px}
+  .giostra-area+.colonna{margin-top:34px}
+  .giostra-area+.colonna .fc+.fc{margin-top:0}
+  .giostra-area{margin-top:24px}
+  .giostra{gap:10px;padding-inline:calc(50vw - 33vw)}
+  .persona{width:66vw;border-radius:16px}
+  .guida{grid-template-columns:1fr 66vw 1fr;padding:0;margin-top:6px}
+  .guida .freccia{justify-content:center}
+  .freccia svg{min-width:30px;width:30px}
+  .freccia[data-verso="1"]{justify-self:stretch}
+  .recapiti-riga{grid-template-columns:1fr;gap:14px;width:auto;margin:36px 16px 0;padding:24px 0;text-align:center;font-size:12px}
+  .recapiti-riga>:nth-child(n){text-align:center}
+  .recapiti-riga+.recapiti-riga{margin:0 16px}
+  .legale{width:auto;margin:24px 16px 0;font-size:11px}
+  .modulo{width:auto;margin-top:18px}
+  .campo{margin-top:18px}
+  .campo span{font-size:11px}
+  .campo input,.campo textarea{padding:6px 0 8px}
+  .modulo-esito{margin-top:10px}
+  .modulo .bottone{margin-top:12px}
+  /* pagina servizio: foto, titolo, testi uno sotto l'altro; le schede restano due per riga, con il solo titolo */
+  .servizio .testa{width:var(--larga);height:auto;aspect-ratio:4/5;border-radius:var(--raggio)}
+  .serv-capo{width:auto;margin-top:22px;padding:0 16px}
+  .serv-nome{font-size:8.6vw}
+  .serv-righe{margin-top:10px;font-size:11px}
+  .serv-righe br{display:none}
+  .serv-testi{width:auto;margin:24px 16px 0;padding:26px 0 30px}
+  .serv-testi h2{font-size:18px}
+  .serv-testi h2:not(:first-child){margin-top:28px}
+  .serv-testi p{max-width:none;margin-top:12px;font-size:22px;line-height:1.16}
+  .griglia{width:auto;gap:8px;margin-top:28px;padding-inline:8px}
+  .griglia .fc{aspect-ratio:514/700;border-radius:var(--raggio)}
+  .griglia .fc-testi{padding:0 8px 7cqw}
+  .griglia .fc-nome{margin-inline:-8px;font-size:8.6cqw}
+  .griglia+.blocco{margin-top:48px}
+  /* menu: le carte si scorrono di lato, come le app aperte sull'iPhone */
+  .menu{--mu:min(calc(78vw/346),calc((100dvh - 52px - 26px - 16px)/660));padding:52px 0 calc(var(--S) + 8px)}
+  .carte{display:flex;gap:8px;height:auto;padding-inline:11vw;overflow:auto hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+  .carte::-webkit-scrollbar{display:none}
+  .carte li{flex:none;width:78vw;scroll-snap-align:center}
+  .carta{height:calc(var(--mu)*650)}
+  .carta:hover{transform:none}
+  .carta-sotto,.carta-link{border-width:1px}
+}
+@media (prefers-reduced-motion:reduce){
+  :root{--durata:.01s}
+  .nastro{animation:none}
+  .js .maschera>span,.js .entra{transform:none;opacity:1;transition:none}
+  .giostra{scroll-behavior:auto}
+  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
+  .menu::before,.menu .carte,.menu-esce .menu::before,.menu-esce .menu .carte{animation:none}
+  .vista{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="testata">
+  <button class="menu-tasto piccolo" type="button" aria-expanded="false" aria-controls="menu"><span>Menu</span></button>
+  <a class="a-contatti piccolo" href="#contatti">Contatti</a>
+</header>
+
+<nav class="menu" id="menu" aria-label="Menu" hidden>
+  <ol class="carte">
+    <li><a class="carta" href="#home">
+      <span class="carta-testa"><b>Home</b><i>1</i></span>
+      <span class="carta-sotto">Un sorriso inizia dalle persone</span>
+      <span class="carta-foto"><img data-src="foto/menu-home.jpg" alt=""></span>
+      <span class="carta-testo">Ogni visita parte da te.<br>Ti diamo tempo, cura e ascolto per farti sentire a tuo agio, dal primo incontro.</span>
+      <span class="carta-link">Scopri di più</span>
+    </a></li>
+    <li><a class="carta" href="#team">
+      <span class="carta-testa"><b>Team</b><i>2</i></span>
+      <span class="carta-sotto">La nostra famiglia, al tuo fianco</span>
+      <span class="carta-foto"><img data-src="foto/menu-team.jpg" alt=""></span>
+      <span class="carta-testo">Un gruppo che unisce cura, sapere e ascolto. Siamo al tuo fianco in ogni visita, con modi semplici e chiari.</span>
+      <span class="carta-link">Scopri di più</span>
+    </a></li>
+    <li><a class="carta" href="#servizi">
+      <span class="carta-testa"><b>Servizi</b><i>3</i></span>
+      <span class="carta-sotto">Ogni sorriso è unico</span>
+      <span class="carta-foto"><img data-src="foto/menu-mani.jpg" alt=""></span>
+      <span class="carta-testo">Dalla prima visita alle cure più mirate, creiamo un piano su misura per te, con la giusta cura in ogni fase.</span>
+      <span class="carta-link">Scopri di più</span>
+    </a></li>
+    <li><a class="carta" href="#contatti">
+      <span class="carta-testa"><b>Contatti</b><i>4</i></span>
+      <span class="carta-sotto">Il primo passo? Conoscerci.</span>
+      <span class="carta-foto"><img data-src="foto/menu-mani.jpg" alt=""></span>
+      <span class="carta-testo">Hai una domanda o vuoi fissare una visita? Scrivici o chiamaci, siamo qui per darti tutte le info che cerchi.</span>
+      <span class="carta-link">Scopri di più</span>
+    </a></li>
+  </ol>
+</nav>
+
+<!-- HOME -->
+<main class="vista" id="home" tabindex="-1">
+    <div class="pila">
+      <section class="fc apertura is-attiva" style="--i:0" aria-label="Benvenuti">
+        <div class="dentro">
+        <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/clinico-telefono.jpg"><img src="foto/clinico.jpg" alt="Odontoiatra al lavoro con la sua assistente" fetchpriority="high"></picture>
+        <span class="velo"></span>
+        <div class="fc-testi">
+          <h1 class="gigante" aria-label="Bertato Dental Family"><span class="maschera" aria-hidden="true"><span style="--r:0">Bertato</span></span><span class="maschera" aria-hidden="true"><span style="--r:2">Dental</span></span><span class="maschera" aria-hidden="true"><span style="--r:4">Family</span></span></h1>
+          <p class="fc-frase entra" style="--r:3">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+        </div>
+        </div>
+      </section>
+      <a class="fc" href="#team" style="--i:1" aria-label="Team">
+        <div class="dentro">
+        <picture><source media="(max-aspect-ratio:1/1)" data-srcset="foto/team-telefono.jpg"><img data-src="foto/team.jpg" alt=""></picture>
+        <span class="velo"></span>
+        <span class="fc-testi">
+          <span class="fc-nome"><span class="maschera"><span>Team</span></span></span>
+          <span class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</span>
+        </span>
+        </div>
+      </a>
+      <a class="fc" href="#servizi" style="--i:2" aria-label="Servizi">
+        <div class="dentro">
+        <picture><source media="(max-aspect-ratio:1/1)" data-srcset="foto/cad-telefono.jpg"><img data-src="foto/cad.jpg" alt=""></picture>
+        <span class="velo"></span>
+        <span class="fc-testi">
+          <span class="fc-nome"><span class="maschera"><span>Servizi</span></span></span>
+          <span class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</span>
+        </span>
+        </div>
+      </a>
+      <a class="fc" href="#contatti" style="--i:3" aria-label="Contatti">
+        <div class="dentro">
+        <picture><source media="(max-aspect-ratio:1/1)" data-srcset="foto/reception-telefono.jpg"><img data-src="foto/reception.jpg" alt=""></picture>
+        <span class="velo"></span>
+        <span class="fc-testi">
+          <span class="fc-nome"><span class="maschera"><span>Contatti</span></span></span>
+          <span class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</span>
+        </span>
+        </div>
+      </a>
+    </div>
+</main>
+
+<!-- TEAM -->
+<main class="vista interna" id="team" tabindex="-1" hidden>
+  <a class="fc testa" href="#home" aria-label="Team: chiudi e torna alla home">
+    <picture><source media="(max-aspect-ratio:1/1)" data-srcset="foto/team-telefono.jpg"><img data-src="foto/team.jpg" alt="Due assistenti al lavoro nello studio"></picture>
+    <span class="velo"></span>
+    <div class="fc-testi">
+      <h1 class="fc-nome">Team</h1>
+      <p class="fc-frase">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+    </div>
+  </a>
+  <section class="blocco">
+    <p class="etichetta">Un team di persone qualificato e sempre aggiornato</p>
+    <p class="grande">Il nostro Studio basa la propria pratica sull’Evidence Based Medicine, ovvero proponiamo percorsi diagnostici e terapeutici scientificamente validati e riconosciuti quali linee guida dalle maggiori associazioni mediche e pubblicazioni scientifiche internazionali.</p>
+  </section>
+  <section class="giostra-area" aria-label="Le persone dello studio">
+    <div class="giostra">
+      <figure class="persona" data-nome="Nome Cognome" data-ruolo="Ruolo"><img src="team/persona-1.jpg" alt="" loading="lazy" width="920" height="1252"></figure>
+      <figure class="persona" data-nome="Nome Cognome" data-ruolo="Ruolo"><img src="team/persona-2.jpg" alt="" loading="lazy" width="920" height="1252"></figure>
+      <figure class="persona" data-nome="Nome Cognome" data-ruolo="Ruolo"><img src="team/persona-3.jpg" alt="" loading="lazy" width="920" height="1252"></figure>
+      <figure class="persona" data-nome="Nome Cognome" data-ruolo="Ruolo"><img src="team/persona-4.jpg" alt="" loading="lazy" width="920" height="1252"></figure>
+      <figure class="persona" data-nome="Nome Cognome" data-ruolo="Ruolo"><img src="team/persona-5.jpg" alt="" loading="lazy" width="920" height="1252"></figure>
+    </div>
+    <div class="guida">
+      <button class="freccia" type="button" data-verso="-1" aria-label="Persona precedente"><svg viewBox="0 0 70 16" fill="none" aria-hidden="true"><path d="M70 8H4" stroke="currentColor" stroke-width="3.6"/><path d="M0 8l14-8v16z" fill="currentColor"/></svg></button>
+      <p class="chi" aria-live="polite"><span>Nome Cognome</span><span>Ruolo</span></p>
+      <button class="freccia" type="button" data-verso="1" aria-label="Persona successiva"><svg viewBox="0 0 70 16" fill="none" aria-hidden="true"><path d="M0 8h66" stroke="currentColor" stroke-width="3.6"/><path d="M70 8l-14-8v16z" fill="currentColor"/></svg></button>
+    </div>
+  </section>
+  <div class="colonna">
+    <div class="fc" data-rivela>
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/cad-telefono.jpg"><img src="foto/cad.jpg" alt="Scansione 3D dei denti su un tablet" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome lungo"><span class="maschera"><span>Tecnologia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </div>
+    <div class="fc" data-rivela>
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/cassetto-telefono.jpg"><img src="foto/cassetto.jpg" alt="Strumenti sterilizzati nelle buste, in un cassetto" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Sicurezza</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </div>
+  </div>
+  <section class="blocco">
+    <p class="etichetta">Un team di persone qualificato e sempre aggiornato</p>
+    <p class="grande">Un centro odontoiatrico dedito a soddisfare le richieste e le aspettative del paziente mediante elevati standard qualitativi. Lo studio Bertato è in grado di offrire al paziente una vasta gamma di prestazioni in campo odontoiatrico grazie alla competenza acquisita negli anni e ad un collaudato lavoro di équipe.</p>
+    <a class="bottone" href="#contatti">Contattaci</a>
+  </section>
+  <address class="recapiti-riga">
+    <p><a href="mailto:info@bertatodentalfamily.it">info@bertatodentalfamily.it</a></p>
+    <p><a href="tel:+39041908028">Telefono: 041 90 80 28</a><br><a href="tel:+393519295908">Cellulare: 351 92 95 908</a></p>
+    <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Vicolo%20Ugo%20Bassi%2027%2C%2030030%20Olmo%20di%20Martellago" target="_blank" rel="noopener">Vicolo Ugo Bassi, 27<br>30030 Olmo di Martellago, VE</a></p>
+  </address>
+  <a class="fc prossima" href="#servizi" aria-label="Servizi">
+    <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/cad-telefono.jpg"><img src="foto/cad.jpg" alt="" loading="lazy"></picture>
+    <span class="velo"></span>
+    <span class="fc-testi"><span class="fc-nome">Servizi</span></span>
+  </a>
+</main>
+
+<!-- SERVIZI -->
+<main class="vista interna" id="servizi" tabindex="-1" hidden>
+  <a class="fc testa" href="#home" aria-label="Servizi: chiudi e torna alla home">
+    <picture><source media="(max-aspect-ratio:1/1)" data-srcset="foto/cad-telefono.jpg"><img data-src="foto/cad.jpg" alt="Scansione 3D dei denti su un tablet"></picture>
+    <span class="velo"></span>
+    <div class="fc-testi">
+      <h1 class="fc-nome">Servizi</h1>
+      <p class="fc-frase">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+    </div>
+  </a>
+  <section class="blocco">
+    <p class="etichetta">Un team di persone qualificato e sempre aggiornato</p>
+    <p class="grande">Il nostro Studio basa la propria pratica sull’Evidence Based Medicine, ovvero proponiamo percorsi diagnostici e terapeutici scientificamente validati e riconosciuti quali linee guida dalle maggiori associazioni mediche e pubblicazioni scientifiche internazionali.</p>
+  </section>
+  <div class="colonna">
+    <a class="fc" href="#chirurgia" data-rivela aria-label="Chirurgia">
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/chirurgia-telefono.jpg"><img src="foto/chirurgia.jpg" alt="Due chirurghi concentrati durante un intervento" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Chirurgia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </a>
+    <a class="fc" href="#protesi" data-rivela aria-label="Protesi">
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/protesi-telefono.jpg"><img src="foto/protesi.jpg" alt="Modelli dentali su un vassoio" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Protesi</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </a>
+    <a class="fc" href="#parodontologia" data-rivela aria-label="Parodontologia">
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/radiografie-telefono.jpg"><img src="foto/radiografie.jpg" alt="Radiografie dentali su un pannello luminoso" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome lunghissimo"><span class="maschera"><span>Parodontologia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </a>
+    <!-- foto di ripiego, finché non arrivano quelle vere di Ortodonzia e Implantologia -->
+    <a class="fc" href="#ortodonzia" data-rivela aria-label="Ortodonzia">
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/esame-telefono.jpg"><img src="foto/esame.jpg" alt="Una visita dentale" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome lungo"><span class="maschera"><span>Ortodonzia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </a>
+    <a class="fc" href="#implantologia" data-rivela aria-label="Implantologia">
+      <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/cassetto-telefono.jpg"><img src="foto/cassetto.jpg" alt="Strumenti sterili in un cassetto" loading="lazy"></picture>
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome lunghissimo"><span class="maschera"><span>Implantologia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+      </div>
+    </a>
+  </div>
+  <section class="blocco">
+    <p class="etichetta">Un team di persone qualificato e sempre aggiornato</p>
+    <p class="grande">Un centro odontoiatrico dedito a soddisfare le richieste e le aspettative del paziente mediante elevati standard qualitativi. Lo studio Bertato è in grado di offrire al paziente una vasta gamma di prestazioni in campo odontoiatrico grazie alla competenza acquisita negli anni e ad un collaudato lavoro di équipe.</p>
+    <a class="bottone" href="#contatti">Contattaci</a>
+  </section>
+  <address class="recapiti-riga">
+    <p><a href="mailto:info@bertatodentalfamily.it">info@bertatodentalfamily.it</a></p>
+    <p><a href="tel:+39041908028">Telefono: 041 90 80 28</a><br><a href="tel:+393519295908">Cellulare: 351 92 95 908</a></p>
+    <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Vicolo%20Ugo%20Bassi%2027%2C%2030030%20Olmo%20di%20Martellago" target="_blank" rel="noopener">Vicolo Ugo Bassi, 27<br>30030 Olmo di Martellago, VE</a></p>
+  </address>
+  <a class="fc prossima" href="#contatti" aria-label="Contatti">
+    <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/reception-telefono.jpg"><img src="foto/reception.jpg" alt="" loading="lazy"></picture>
+    <span class="velo"></span>
+    <span class="fc-testi"><span class="fc-nome">Contatti</span></span>
+  </a>
+</main>
+
+<!-- PAGINA DEL SINGOLO SERVIZIO: una sola, riempita dai dati SERVIZI in fondo al file. Nella griglia si nasconde il servizio in cui si è -->
+<main class="vista interna servizio" id="servizio" tabindex="-1" hidden>
+  <a class="fc testa" href="#servizi" aria-label="Chiudi e torna a Servizi"><picture><source media="(max-aspect-ratio:1/1)"><img alt=""></picture></a>
+  <section class="serv-capo">
+    <h1 class="serv-nome"></h1>
+    <p class="serv-righe"></p>
+  </section>
+  <section class="serv-testi"></section>
+  <div class="griglia">
+    <a class="fc" href="#chirurgia" data-rivela aria-label="Chirurgia">
+      <img src="foto/scheda-chirurgia.jpg" alt="" loading="lazy">
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Chirurgia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico.</p>
+      </div>
+    </a>
+    <a class="fc" href="#protesi" data-rivela aria-label="Protesi">
+      <img src="foto/scheda-protesi.jpg" alt="" loading="lazy">
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Protesi</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico.</p>
+      </div>
+    </a>
+    <a class="fc" href="#parodontologia" data-rivela aria-label="Parodontologia">
+      <img src="foto/scheda-parodontologia.jpg" alt="" loading="lazy">
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Parodontologia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico.</p>
+      </div>
+    </a>
+    <a class="fc" href="#ortodonzia" data-rivela aria-label="Ortodonzia">
+      <img src="foto/scheda-ortodonzia.jpg" alt="" loading="lazy">
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Ortodonzia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico.</p>
+      </div>
+    </a>
+    <a class="fc" href="#implantologia" data-rivela aria-label="Implantologia">
+      <img src="foto/scheda-implantologia.jpg" alt="" loading="lazy">
+      <span class="velo"></span>
+      <div class="fc-testi">
+        <h2 class="fc-nome"><span class="maschera"><span>Implantologia</span></span></h2>
+        <p class="fc-frase entra" style="--r:2">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico.</p>
+      </div>
+    </a>
+  </div>
+  <section class="blocco">
+    <p class="etichetta">Un team di persone qualificato e sempre aggiornato</p>
+    <p class="grande">Un centro odontoiatrico dedito a soddisfare le richieste e le aspettative del paziente mediante elevati standard qualitativi. Lo studio Bertato è in grado di offrire al paziente una vasta gamma di prestazioni in campo odontoiatrico grazie alla competenza acquisita negli anni e ad un collaudato lavoro di équipe.</p>
+    <a class="bottone" href="#contatti">Contattaci</a>
+  </section>
+  <address class="recapiti-riga">
+    <p><a href="mailto:info@bertatodentalfamily.it">info@bertatodentalfamily.it</a></p>
+    <p><a href="tel:+39041908028">Telefono: 041 90 80 28</a><br><a href="tel:+393519295908">Cellulare: 351 92 95 908</a></p>
+    <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Vicolo%20Ugo%20Bassi%2027%2C%2030030%20Olmo%20di%20Martellago" target="_blank" rel="noopener">Vicolo Ugo Bassi, 27<br>30030 Olmo di Martellago, VE</a></p>
+  </address>
+  <a class="fc prossima" href="#contatti" aria-label="Contatti">
+    <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/reception-telefono.jpg"><img src="foto/reception.jpg" alt="" loading="lazy"></picture>
+    <span class="velo"></span>
+    <span class="fc-testi"><span class="fc-nome">Contatti</span></span>
+  </a>
+</main>
+
+<!-- CONTATTI: nelle grafiche c'è solo la scheda; la pagina è fatta con gli stessi pezzi delle altre due -->
+<main class="vista interna" id="contatti" tabindex="-1" hidden>
+  <a class="fc testa" href="#home" aria-label="Contatti: chiudi e torna alla home">
+    <picture><source media="(max-aspect-ratio:1/1)" data-srcset="foto/reception-telefono.jpg"><img data-src="foto/reception.jpg" alt="La segreteria dello studio al telefono"></picture>
+    <span class="velo"></span>
+    <div class="fc-testi">
+      <h1 class="fc-nome">Contatti</h1>
+      <p class="fc-frase">Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente — dal bambino all’adulto, fino all’anziano — possa sentirsi parte di una “famiglia del sorriso”.</p>
+    </div>
+  </a>
+  <section class="blocco">
+    <p class="etichetta">Il primo passo? Conoscerci.</p>
+    <p class="grande">Hai una domanda o vuoi fissare una visita? Scrivici o chiamaci, siamo qui per darti tutte le info che cerchi.</p>
+    <!-- per ora non spedisce niente: va scelto dove far arrivare i messaggi (vedi DESIGN.md) -->
+    <form class="modulo" id="modulo" novalidate>
+      <p hidden><label>Non compilare <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <label class="campo"><span>Nome</span><input name="nome" type="text" autocomplete="name" maxlength="60" required></label>
+      <label class="campo"><span>Email o cellulare</span><input name="contatto" type="text" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="100" required></label>
+      <label class="campo"><span>Messaggio</span><textarea name="messaggio" rows="3" maxlength="2000"></textarea></label>
+      <p class="modulo-esito" role="status"></p>
+      <button class="bottone" type="submit">Invia</button>
+    </form>
+  </section>
+  <address class="recapiti-riga">
+    <p><a href="mailto:info@bertatodentalfamily.it">info@bertatodentalfamily.it</a></p>
+    <p><a href="tel:+39041908028">Telefono: 041 90 80 28</a><br><a href="tel:+393519295908">Cellulare: 351 92 95 908</a></p>
+    <p><a href="https://www.google.com/maps/search/?api=1&amp;query=Vicolo%20Ugo%20Bassi%2027%2C%2030030%20Olmo%20di%20Martellago" target="_blank" rel="noopener">Vicolo Ugo Bassi, 27<br>30030 Olmo di Martellago, VE</a></p>
+  </address>
+  <div class="recapiti-riga">
+    <p>Orari</p>
+    <p>Lun, mar, gio: 14:00 – 20:00<br>Mer, ven: 8:00 – 17:00</p>
+    <p></p>
+  </div>
+  <footer class="legale">
+    <p>Bozza grafica: foto e testi sono provvisori.</p>
+    <p>Bertato Dental Family · Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE) · P.IVA —</p>
+    <p>Direttore sanitario: Dott. — · Iscritto all’Albo degli Odontoiatri di Venezia n. —</p>
+    <p>Privacy · Cookie</p>
+  </footer>
+  <a class="fc prossima" href="#home" aria-label="Home">
+    <picture><source media="(max-aspect-ratio:1/1)" srcset="foto/clinico-telefono.jpg"><img src="foto/clinico.jpg" alt="" loading="lazy"></picture>
+    <span class="velo"></span>
+    <span class="fc-testi"><span class="fc-nome">Home</span></span>
+  </a>
+</main>
+
+<div class="striscia piccolo" aria-label="Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)"><div class="nastro" aria-hidden="true"><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span></div></div>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const corpo = document.body;
+  const riduci = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const DURATA = riduci ? 30 : 1300;
+  const pausa = ms => new Promise(r => setTimeout(r, ms));
+
+  // foto: quelle fuori dalla prima schermata si scaricano solo quando servono
+  const accendi = img => {
+    if (!img) return;
+    const pic = img.closest('picture');
+    if (pic) $$('source[data-srcset]', pic).forEach(s => { s.srcset = s.dataset.srcset; s.removeAttribute('data-srcset'); });
+    if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
+  };
+  const pronta = img => {
+    accendi(img);
+    return img ? Promise.race([img.decode().catch(() => {}), pausa(700)]) : Promise.resolve();
+  };
+
+  // viste
+  const ORDINE = ['home', 'team', 'servizi', 'contatti'];
+  const TITOLI = {
+    home: 'Bertato Dental Family · Studio dentistico a Olmo di Martellago',
+    team: 'Team · Bertato Dental Family',
+    servizi: 'Servizi · Bertato Dental Family',
+    contatti: 'Contatti · Bertato Dental Family',
+  };
+  // i servizi: una sola pagina, riempita con questi dati. foto = quella in alto, y = quale parte si vede.
+  // Chirurgia ha i testi della grafica; gli altri un segnaposto, finché non arrivano quelli veri
+  const SEGNAPOSTO_RIGHE = ['Il nome Bertato Dental Family è stato scelto per', 'rappresentare in modo chiaro e immediato la filosofia e i', 'valori fondanti del nostro studio dentistico.'];
+  const SEGNAPOSTO_TESTI = [['Di cosa si tratta?', 'Il nome Bertato Dental Family è stato scelto per rappresentare in modo chiaro e immediato la filosofia e i valori fondanti del nostro studio dentistico. L’obiettivo principale è quello di creare un ambiente accogliente, sereno e professionale, in cui ogni paziente possa sentirsi parte di una “famiglia del sorriso”.']];
+  const SERVIZI = {
+    chirurgia: {
+      nome: 'Chirurgia', foto: 'chirurgia', y: '62%', alt: 'Due chirurghi concentrati durante un intervento',
+      righe: ['Asportazione di cisti e lesioni del cavo orale, estrazione dei denti del giudizio,', 'chirurgia ricostruttiva ossea, trattamento dei pazienti', 'sottoposti a terapia con bifosfonati'],
+      testi: [
+        ['Di cosa si tratta?', 'La chirurgia orale è una branca specialistica che si occupa di procedure estrattive, della rimozione di cisti e neoformazioni del cavo orale, di procedure ricostruttive a carico dei seni e delle ossa mascellari e dell’inserimento di impianti per la sostituzione di denti perduti.'],
+        ['Anestesia', 'Per le procedure più complesse o per i pazienti più ansiosi, lo studio si avvale della collaborazione di un anestesista che esegue la sedazione presso i nostri ambulatori. Quando necessario, gli interventi vengono eseguiti in anestesia generale presso una clinica con la quale collaboriamo.'],
+      ],
+    },
+    protesi: { nome: 'Protesi', foto: 'protesi', y: '55%', alt: 'Modelli dentali su un vassoio', righe: SEGNAPOSTO_RIGHE, testi: SEGNAPOSTO_TESTI },
+    parodontologia: { nome: 'Parodontologia', foto: 'radiografie', y: '35%', alt: 'Radiografie dentali su un pannello luminoso', righe: SEGNAPOSTO_RIGHE, testi: SEGNAPOSTO_TESTI },
+    ortodonzia: { nome: 'Ortodonzia', foto: 'esame', y: '50%', alt: 'Una visita dentale', righe: SEGNAPOSTO_RIGHE, testi: SEGNAPOSTO_TESTI },
+    implantologia: { nome: 'Implantologia', foto: 'cassetto', y: '45%', alt: 'Strumenti sterili in un cassetto', righe: SEGNAPOSTO_RIGHE, testi: SEGNAPOSTO_TESTI },
+  };
+  const eServizio = n => Object.hasOwn(SERVIZI, n);
+  const vistaDi = n => eServizio(n) ? 'servizio' : n;
+  const viste = Object.fromEntries([...ORDINE, 'servizio'].map(n => [n, document.getElementById(n)]));
+  // un servizio sta dentro Servizi: stessa carta nel menu, e nell'ordine delle pagine viene subito dopo
+  const posto = v => ORDINE.indexOf(v === 'servizio' ? 'servizi' : v);
+  const altezza = v => v === 'servizio' ? 2.5 : ORDINE.indexOf(v);
+  const daIndirizzo = () => { const h = location.hash.slice(1); return ORDINE.includes(h) || eServizio(h) ? h : 'home'; };
+  let vista = 'home', servizio = null, menuAperto = false, morfando = false;
+  const qui = () => vista === 'servizio' ? servizio : vista;
+  const riempi = id => {
+    const d = SERVIZI[id], v = viste.servizio;
+    servizio = id;
+    const img = $('.testa img', v);
+    $('.testa source', v).srcset = `foto/${d.foto}-telefono.jpg`;
+    img.src = `foto/${d.foto}.jpg`;
+    img.alt = d.alt;
+    img.style.setProperty('--y', d.y);
+    $('.serv-nome', v).textContent = d.nome;
+    $('.serv-righe', v).replaceChildren(...d.righe.flatMap((r, i) => i ? [document.createElement('br'), ' ' + r] : [r]));
+    $('.serv-testi', v).replaceChildren(...d.testi.flatMap(([titolo, testo]) => {
+      const h = document.createElement('h2'), p = document.createElement('p');
+      h.textContent = titolo;
+      p.textContent = testo;
+      return [h, p];
+    }));
+    $$('.griglia .fc', v).forEach(c => { c.hidden = c.getAttribute('href') === '#' + id; });
+  };
+
+  // giostra del team
+  const giostra = $('.giostra');
+  const persone = $$('.persona', giostra);
+  const chi = $('.chi');
+  let attiva = 1, timerChi;
+  const scrivi = i => {
+    clearTimeout(timerChi);
+    chi.classList.add('cambia');
+    timerChi = setTimeout(() => {
+      chi.firstElementChild.textContent = persone[i].dataset.nome;
+      chi.lastElementChild.textContent = persone[i].dataset.ruolo;
+      chi.classList.remove('cambia');
+    }, 200);
+  };
+  const sottolinea = () => persone.forEach((p, k) => p.classList.toggle('al-centro', k === attiva));
+  const centra = (i, liscio) => {
+    const p = persone[i];
+    giostra.scrollTo({ left: p.offsetLeft - (giostra.clientWidth - p.offsetWidth) / 2, behavior: liscio && !riduci ? 'smooth' : 'auto' });
+  };
+  giostra.addEventListener('scroll', () => {
+    const c = giostra.scrollLeft + giostra.clientWidth / 2;
+    let i = 0, d = Infinity;
+    persone.forEach((p, k) => { const x = Math.abs(p.offsetLeft + p.offsetWidth / 2 - c); if (x < d) { d = x; i = k; } });
+    if (i !== attiva) { attiva = i; sottolinea(); scrivi(i); }
+  }, { passive: true });
+  const N = persone.length;
+  $$('.freccia').forEach(b => b.addEventListener('click', () => centra((attiva + +b.dataset.verso + N) % N, true)));
+  persone.forEach((p, i) => p.addEventListener('click', () => { if (i !== attiva) centra(i, true); }));
+  sottolinea();
+
+  const metti = nome => {
+    const v = vistaDi(nome);
+    Object.keys(viste).forEach(n => { viste[n].hidden = n !== v; });
+    vista = v;
+    corpo.classList.toggle('in-pagina', v !== 'home');
+    document.title = eServizio(nome) ? SERVIZI[nome].nome + ' · Bertato Dental Family' : TITOLI[nome];
+    if (v === 'home') return;
+    if (v === 'servizio') riempi(nome);
+    viste[v].scrollTop = 0;
+    accendi($('.testa img', viste[v]));
+    if (v === 'team') centra(attiva, false);
+  };
+
+  // home: pila di schede, un gesto un passo
+  const pila = $('.pila');
+  const schedeHome = $$('.fc', pila);
+  const apertura = schedeHome[0];
+  let cur = 0, scheda = false, bloccato = false, timerBlocco;
+  const aggiornaHome = () => {
+    schedeHome.forEach((c, k) => {
+      c.classList.toggle('is-attiva', k === cur);
+      c.classList.toggle('is-sopra', k < cur);
+      c.inert = k !== cur;
+    });
+  };
+  const vicine = () => { accendi($('img', schedeHome[cur])); if (schedeHome[cur + 1]) accendi($('img', schedeHome[cur + 1])); };
+  const blocca = () => {
+    bloccato = true;
+    clearTimeout(timerBlocco);
+    timerBlocco = setTimeout(() => { bloccato = false; }, DURATA);
+  };
+  const mettiScheda = s => { scheda = s; apertura.classList.toggle('a-scheda', s); };
+  const vai = n => {
+    if (bloccato || n < 0 || n >= schedeHome.length || n === cur) return;
+    blocca();
+    if (cur === 0) mettiScheda(true); // lasciando l'apertura resta scheda mentre quella nuova la copre
+    cur = n;
+    pila.style.setProperty('--attesa', riduci ? '0s' : '.6s');
+    aggiornaHome();
+    vicine();
+  };
+  const stringi = s => { if (bloccato) return; blocca(); mettiScheda(s); };
+  // sull'apertura prima la scheda, poi la pagina dopo; dall'ultima scheda un altro gesto in giù apre la sua pagina, così il sito non sembra finito lì
+  const passo = d => {
+    if (cur === 0 && scheda !== (d > 0)) return stringi(d > 0);
+    if (d > 0 && cur === schedeHome.length - 1) { if (!bloccato) { ferma(); vaiA('contatti', schedeHome[cur]); } return; }
+    vai(cur + d);
+  };
+  // "Home": l'apertura com'era, a tutto schermo
+  const daCapo = () => {
+    pila.classList.add('salta');
+    cur = 0;
+    mettiScheda(false);
+    aggiornaHome();
+    pila.offsetWidth;
+    pila.classList.remove('salta');
+  };
+  aggiornaHome();
+  // tornando da una sezione: la home è già sulla sua scheda
+  const suScheda = k => {
+    pila.classList.add('salta');
+    cur = k;
+    mettiScheda(true);
+    aggiornaHome();
+    pila.offsetWidth;
+    pila.classList.remove('salta');
+    vicine();
+  };
+
+  // le schede delle pagine hanno quasi la forma di quelle della home, così il passaggio dall'una all'altra è pulito:
+  // stessa larghezza e l'altezza della parte visibile, tolto un altro spazio come quello sotto (sono le proporzioni delle grafiche)
+  const misura = () => {
+    const c = schedeHome[1];
+    if (!c.offsetHeight) return;
+    const fondo = c.offsetTop + c.offsetHeight;
+    const spazio = innerHeight - $('.striscia').offsetHeight - fondo;
+    corpo.style.setProperty('--ar', Math.max(1.45, Math.min(2, c.offsetWidth / (fondo - spazio))).toFixed(3));
+  };
+  addEventListener('resize', misura);
+
+  // passaggi: una scheda si allarga (o si stringe) nella scheda della pagina nuova, il resto sfuma
+  const morfa = (cambia, prima, dopo, modo) => {
+    const nomi = (l, si) => l.forEach(([el, n]) => { el.style.viewTransitionName = si ? n : ''; });
+    if (!document.startViewTransition || riduci) { const r = cambia(); return Promise.resolve(r); }
+    morfando = true;
+    if (modo) document.documentElement.classList.add(modo); // 'sale' o 'scende': la pagina nuova arriva da sotto, come Brusco
+    nomi(prima, true);
+    const vt = document.startViewTransition(async () => {
+      nomi(prima, false);
+      await cambia();
+      nomi(dopo, true);
+    });
+    vt.ready.catch(() => {});
+    const fine = () => {
+      clearTimeout(scadenza);
+      nomi(dopo, false);
+      if (modo) document.documentElement.classList.remove(modo);
+      morfando = false;
+    };
+    const scadenza = setTimeout(fine, 3000); // per sicurezza: un passaggio mai finito non deve bloccare il sito
+    return vt.finished.catch(() => {}).then(fine);
+  };
+
+  // menu
+  const tastoMenu = $('.menu-tasto');
+  const menu = document.getElementById('menu');
+  const carte = $$('.carta', menu);
+  // lento: il menu resta visibile mentre svanisce, poi si nasconde
+  let timerMenu;
+  const segnaMenu = (apri, lento = false) => {
+    clearTimeout(timerMenu);
+    menuAperto = apri;
+    corpo.classList.toggle('menu-esce', lento);
+    if (lento) timerMenu = setTimeout(() => { menu.hidden = true; corpo.classList.remove('menu-esce'); }, riduci ? 0 : 980);
+    else menu.hidden = !apri;
+    corpo.classList.toggle('menu-aperto', apri);
+    tastoMenu.setAttribute('aria-expanded', apri);
+    tastoMenu.firstElementChild.textContent = apri ? 'Chiudi' : 'Menu';
+    Object.values(viste).forEach(v => { v.inert = apri; });
+  };
+  const apriMenu = () => {
+    if (menuAperto || morfando) return;
+    const k = posto(vista);
+    carte.forEach((c, i) => c.setAttribute('aria-current', i === k ? 'page' : 'false'));
+    $$('img', menu).forEach(accendi);
+    segnaMenu(true);
+    // sul telefono le carte scorrono di lato: si parte da quella della pagina in cui si è
+    const lista = $('.carte', menu), voce = carte[k].parentElement;
+    lista.scrollLeft = voce.offsetLeft - lista.offsetLeft - (lista.clientWidth - voce.offsetWidth) / 2;
+    carte[k].focus({ preventScroll: true });
+  };
+  const chiudiMenu = () => {
+    if (!menuAperto || morfando) return;
+    segnaMenu(false, true);
+  };
+
+  // andare a una pagina. Da una scheda della home: la scheda si allarga nella sua pagina.
+  // Da tutto il resto (carta del menu, scheda di un servizio, scheda in fondo alla pagina, Contatti, Contattaci, tasto indietro): la pagina nuova arriva da sotto, come Brusco
+  const vaiA = (nome, da, segna = true) => {
+    if (morfando) return;
+    const meta = vistaDi(nome);
+    if (nome === qui() && !menuAperto) {
+      if (nome === 'home') daCapo();
+      else viste[meta].scrollTo({ top: 0, behavior: riduci ? 'auto' : 'smooth' });
+      return;
+    }
+    const arrivo = nome === 'home' ? apertura : $('.testa', viste[meta]);
+    const dalMenu = menuAperto;
+    const prossima = da && (da.classList.contains('prossima') || eServizio(nome));
+    const allarga = da && !prossima;
+    const prima = allarga ? [[da, 'morfo']] : [];
+    const dopo = allarga ? [[arrivo, 'morfo']] : [];
+    const modo = allarga ? '' : dalMenu || prossima || altezza(meta) > altezza(vista) ? 'sale' : 'scende';
+    if (segna) history.pushState(null, '', nome === 'home' ? location.pathname + location.search : '#' + nome);
+    morfa(async () => {
+      if (dalMenu) segnaMenu(false);
+      if (nome === 'home' && segna) daCapo(); // col tasto indietro si torna alla scheda da cui si era partiti
+      metti(nome);
+      viste[meta].focus({ preventScroll: true });
+      await pronta($('img', arrivo));
+    }, prima, dopo, modo);
+  };
+
+  // la scheda in cima a una pagina la richiude, risalendo di un livello: un servizio si stringe nella sua scheda di Servizi, una sezione nella sua scheda della home
+  const richiudi = () => {
+    if (morfando || menuAperto) return;
+    const da = $('.testa', viste[vista]);
+    const lista = viste.servizi;
+    const scheda = vista === 'servizio' ? $(`a.fc[href="#${servizio}"]`, lista) : schedeHome[posto(vista)];
+    const k = posto(vista);
+    const risale = vista === 'servizio';
+    history.pushState(null, '', risale ? '#servizi' : location.pathname + location.search);
+    morfa(async () => {
+      if (risale) {
+        metti('servizi');
+        lista.scrollTop = scheda.offsetTop - (lista.clientHeight - scheda.offsetHeight) / 2;
+        scheda.classList.add('is-attiva');
+        lista.focus({ preventScroll: true });
+      } else {
+        suScheda(k);
+        metti('home');
+        viste.home.focus({ preventScroll: true });
+      }
+      await pronta($('img', scheda));
+    }, [[da, 'morfo']], [[scheda, 'morfo']]);
+  };
+
+  tastoMenu.addEventListener('click', () => menuAperto ? chiudiMenu() : apriMenu());
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    e.preventDefault();
+    if (a.classList.contains('testa')) return richiudi();
+    const nome = a.getAttribute('href').slice(1);
+    if (ORDINE.includes(nome) || eServizio(nome)) vaiA(nome, a.classList.contains('fc') ? a : null);
+  });
+  addEventListener('popstate', e => {
+    const nome = daIndirizzo();
+    if (e.hasUAVisualTransition) { if (menuAperto) segnaMenu(false); metti(nome); return; }
+    if (nome !== qui() || menuAperto) vaiA(nome, null, false);
+  });
+
+  // rotella e trackpad, solo sulla home: un gesto = un passo. L'inerzia del trackpad (colpi che calano piano piano) non conta;
+  // un colpo che torna a crescere è un gesto nuovo, anche senza pause e senza muovere il puntatore
+  let colpi = [], ultimoGesto = 0, accumulo = 0, ingoia = false, valeInCima = false, inCimaDa = 0, minimo = 0;
+  // dopo un'azione fatta col gesto il resto dell'inerzia non conta: l'inerzia cala soltanto, se il colpo raddoppia è un gesto nuovo
+  function ferma() { ingoia = true; minimo = Infinity; }
+  const media = n => { const c = colpi.slice(-n); return c.reduce((a, b) => a + b, 0) / c.length; };
+  addEventListener('wheel', e => {
+    if (menuAperto) return;
+    const ora = performance.now();
+    const d = e.deltaY;
+    const nuovo = ora - ultimoGesto > 200;
+    if (nuovo) { colpi = []; accumulo = 0; if (!morfando) ingoia = false; } // durante un passaggio i colpi arrivano a strappi: non è un gesto nuovo
+    ultimoGesto = ora;
+    colpi.push(Math.abs(d));
+    if (colpi.length > 150) colpi.shift();
+    const riparte = colpi.length > 10 && (media(10) > media(70) || (Math.abs(d) >= 20 && media(10) >= media(70)));
+    const conta = colpi.length <= 10 || riparte;
+    if (ingoia) minimo = Math.min(minimo, Math.abs(d));
+    const rialza = Math.abs(d) >= 8 && Math.abs(d) > 2 * minimo;
+    if (vista !== 'home') {
+      // arrivati col gesto in una pagina che scorre: il resto dell'inerzia non la muove, un gesto nuovo sì
+      if (ingoia && !morfando && rialza) ingoia = false;
+      if (morfando || ingoia) { e.preventDefault(); return; }
+      // in cima alla pagina un gesto in su la richiude. Vale un gesto partito quando era già in cima, o uno nuovo poco dopo esserci arrivata; l'inerzia che ce l'ha portata no
+      if (viste[vista].scrollTop > 0) { inCimaDa = 0; valeInCima = false; accumulo = 0; return; }
+      if (!inCimaDa) { inCimaDa = ora; minimo = Math.abs(d); }
+      minimo = Math.min(minimo, Math.abs(d));
+      if (nuovo || (ora - inCimaDa > 250 && rialza)) valeInCima = true;
+      if (!valeInCima || d >= 0 || Math.abs(e.deltaX) > Math.abs(d)) return;
+      accumulo += d;
+      if (accumulo > -60) return;
+      accumulo = 0;
+      valeInCima = false;
+      ferma();
+      e.preventDefault();
+      richiudi();
+      return;
+    }
+    e.preventDefault();
+    // richiudendo una pagina col gesto, il resto dell'inerzia non deve spostare anche la scheda
+    if (ingoia) { if (morfando || !rialza) { accumulo = 0; return; } ingoia = false; }
+    if (bloccato || morfando) accumulo = 0;
+    if (!conta || bloccato || morfando) return;
+    accumulo += d;
+    if (Math.abs(accumulo) < 28) return;
+    const verso = Math.sign(accumulo);
+    accumulo = 0;
+    passo(verso);
+  }, { passive: false });
+
+  let y0 = null, x0 = 0, toccoInCima = false;
+  addEventListener('touchstart', e => {
+    y0 = e.touches.length === 1 ? e.touches[0].clientY : null;
+    x0 = e.touches[0].clientX;
+    toccoInCima = vista !== 'home' && viste[vista].scrollTop <= 0;
+  }, { passive: true });
+  addEventListener('touchmove', e => { if (vista === 'home' && !menuAperto && e.cancelable) e.preventDefault(); }, { passive: false });
+  addEventListener('touchend', e => {
+    if (y0 === null || menuAperto) return;
+    const dy = y0 - e.changedTouches[0].clientY;
+    const dx = x0 - e.changedTouches[0].clientX;
+    y0 = null;
+    if (vista === 'home') { if (Math.abs(dy) > 40) passo(Math.sign(dy)); return; }
+    // in cima a una pagina, tirando giù col dito, la pagina si richiude
+    if (toccoInCima && viste[vista].scrollTop <= 0 && dy < -70 && Math.abs(dx) < Math.abs(dy)) richiudi();
+  });
+
+  addEventListener('keydown', e => {
+    if (menuAperto) {
+      const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+      if (e.key === 'Escape') { chiudiMenu(); tastoMenu.focus(); }
+      else if (d) {
+        e.preventDefault();
+        const i = (carte.indexOf(document.activeElement) + d + carte.length) % carte.length;
+        carte[i].focus();
+        carte[i].parentElement.scrollIntoView({ inline: 'center', block: 'nearest', behavior: riduci ? 'auto' : 'smooth' });
+      }
+      return;
+    }
+    if (vista === 'team' && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) centra((attiva + (e.key === 'ArrowRight' ? 1 : -1) + N) % N, true);
+    if (vista !== 'home') return;
+    if (e.key === ' ' && e.target.closest('a,button')) return;
+    if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); passo(1); }
+    else if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); passo(-1); }
+    else if (e.key === 'Home') daCapo();
+    else if (e.key === 'End') vai(schedeHome.length - 1);
+  });
+
+  // nelle pagine i titoli delle schede salgono quando la scheda entra
+  const guarda = new IntersectionObserver(voci => voci.forEach(v => {
+    if (v.isIntersecting) { v.target.classList.add('is-attiva'); guarda.unobserve(v.target); }
+  }), { threshold: .15 });
+  $$('[data-rivela]').forEach(el => guarda.observe(el));
+
+  // modulo di contatto: gli stessi controlli di Scrollify. Per ora non spedisce niente, e chi lo prova lo legge
+  const APERTA = performance.now();
+  const emailOk = t => t.length <= 100 && !/\.\./.test(t) && /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/.test(t);
+  const telOk = t => {
+    if (!/^[+\d\s().\/-]{6,24}$/.test(t)) return false;
+    let c = t.replace(/\D/g, '');
+    if (t.startsWith('+') || c.startsWith('00')) { c = c.replace(/^00/, ''); if (c.startsWith('39')) c = c.slice(2); else return c.length >= 8 && c.length <= 15; }
+    if (!/^(3\d{8,9}|0\d{5,10})$/.test(c)) return false;
+    return !/^(\d)\1+$/.test(c.slice(1)) && !'01234567890123456789'.includes(c) && !'98765432109876543210'.includes(c);
+  };
+  const conLink = t => /https?:|www\.|[<>]/i.test(t);
+  const modulo = document.getElementById('modulo');
+  const esito = $('.modulo-esito', modulo);
+  const dì = (testo, errore = false) => { esito.textContent = testo; esito.classList.toggle('errore', errore); };
+  const sbagliato = (campo, testo) => { campo.setAttribute('aria-invalid', 'true'); dì(testo, true); campo.focus(); };
+  modulo.addEventListener('input', e => { e.target.removeAttribute('aria-invalid'); dì(''); });
+  modulo.addEventListener('submit', e => {
+    e.preventDefault();
+    $$('[aria-invalid]', modulo).forEach(c => c.removeAttribute('aria-invalid'));
+    const { nome, contatto } = modulo.elements;
+    const n = nome.value.trim(), c = contatto.value.trim();
+    if (n.length < 2) return sbagliato(nome, 'Scrivi il tuo nome.');
+    if (conLink(n) || /\d/.test(n)) return sbagliato(nome, 'Controlla il tuo nome.');
+    if (!c) return sbagliato(contatto, 'Scrivi un’email o un cellulare per poterti rispondere.');
+    if (c.includes('@') ? !emailOk(c) : !telOk(c)) return sbagliato(contatto, c.includes('@') ? 'Controlla l’email: sembra sbagliata.' : 'Controlla il numero: sembra sbagliato.');
+    // un robot (trappola compilata, o invio entro 3 secondi) vede lo stesso messaggio: qui andrà la spedizione, solo per chi non è un robot
+    const robot = modulo.elements['bot-field'].value !== '' || performance.now() - APERTA < 3000;
+    modulo.reset();
+    dì(robot ? 'Grazie.' : 'Grazie. Questa è un’anteprima del sito: il messaggio non è stato inviato.');
+  });
+
+  metti(daIndirizzo());
+  misura();
+  Promise.race([document.fonts.ready, pausa(1500)]).then(() => {
+    misura();
+    corpo.offsetWidth; // fa partire le entrate anche in una scheda in secondo piano
+    corpo.classList.add('pronto');
+  });
+  addEventListener('load', () => setTimeout(vicine, 1200));
+  // le foto piccole del menu si scaricano quando ci si avvicina al tasto, non prima
+  ['pointerenter', 'pointerdown', 'focus'].forEach(t => tastoMenu.addEventListener(t, () => $$('img', menu).forEach(accendi), { once: true }));
+})();
+</script>
+</body>
+</html>
