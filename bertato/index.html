@@ -33,7 +33,6 @@
   --s:calc(1 - 2*var(--m)/100);            /* quanto si stringe l'apertura per diventare scheda */
   --G:calc(var(--u)*17);                   /* spazio tra le schede della home */
   --S:max(24px,calc(var(--u)*27));         /* altezza della striscia in fondo */
-  --sh:calc(100dvh - var(--S) - var(--G)); /* parte visibile di una scheda della home: dal bordo alto fin sopra la striscia */
   --raggio:calc(var(--u)*30);
   --angolo:calc(var(--u)*22);              /* angoli delle schede verticali e della foto della pagina servizio */
   --larga:85.35vw;                         /* schede e testi delle pagine interne */
@@ -94,21 +93,25 @@ a.fc:hover img{transform:scale(1.03)}
 /* home: la scheda nuova sale da sotto e copre quella vecchia, che sale di un quarto e si scurisce;
    dentro la scheda che arriva foto e scritte vanno più piano della cornice */
 .pila{position:absolute;inset:0}
-/* ogni scheda arriva fino al bordo alto (bianco solo ai lati e sotto): è più alta dello schermo di un raggio, così gli angoli di sopra si vedono mentre sale e da ferma restano fuori */
-.pila .fc{position:absolute;z-index:var(--i);left:var(--M);top:calc(-1*var(--raggio));width:calc(100vw - 2*var(--M));height:calc(var(--sh) + var(--raggio));margin:0;aspect-ratio:auto;transform:translate3d(0,calc(100% + var(--S) + var(--G)),0);transition:transform var(--durata) var(--curva)}
+/* ogni scheda è grande quanto lo schermo (la striscia ci sta sopra); solo l'apertura parte a tutto schermo.
+   Andando avanti la nuova sale già "appoggiata" (si stringe di poco, dritta in alto contro il bordo, arrotondata in basso, col bianco ai lati e sotto)
+   e quella che lascia si stringe uguale mentre viene coperta. Tornando indietro torna così, appoggiata */
+.pila .fc{--extra:calc(100dvh*(var(--s) - 1) + var(--S) + var(--G));position:absolute;z-index:var(--i);left:0;top:0;width:100vw;height:100dvh;margin:0;aspect-ratio:auto;border-radius:0;transform-origin:50% 0;transform:translate3d(0,100%,0);clip-path:inset(0 0 0 0 round 0);transition:transform var(--durata) var(--curva),clip-path var(--durata) var(--curva)}
 .pila .fc.is-attiva{transform:none}
 .pila .fc.is-sopra{transform:translate3d(0,-25%,0)}
+.pila .fc.a-scheda{transform:translate3d(0,100dvh,0) scale(var(--s));clip-path:inset(0 0 0 0 round 0 0 calc(var(--raggio)/var(--s)) calc(var(--raggio)/var(--s)))}
+.pila .fc.a-scheda.is-attiva{transform:translate3d(0,calc(-1*max(0px,var(--extra))),0) scale(var(--s))}
+.pila .fc.a-scheda.is-sopra{transform:translate3d(0,calc(-1*max(0px,var(--extra)) - 25dvh),0) scale(var(--s))}
+.pila .fc .fc-testi{padding-bottom:2.75cqw}
 .dentro{position:absolute;inset:0;transform:translate3d(0,-50%,0);transition:transform var(--durata) var(--curva)}
 .is-attiva>.dentro,.is-sopra>.dentro{transform:none}
 .pila .fc::after{content:"";position:absolute;inset:0;z-index:5;background:#06141B;opacity:0;pointer-events:none;transition:opacity var(--durata) var(--curva)}
 .pila .fc.is-sopra::after{opacity:.6}
-/* apertura: a tutto schermo (la striscia ci sta sopra); al primo gesto si stringe nella sua scheda: dritta in alto contro il bordo, arrotondata in basso */
-.pila .apertura{--extra:calc(100dvh*(var(--s) - 1) + var(--S) + var(--G));left:0;top:0;width:100vw;height:100dvh;border-radius:0;transform:none;transform-origin:50% 0;clip-path:inset(0 0 0 0 round 0);transition:transform var(--durata) var(--curva),clip-path var(--durata) var(--curva)}
-.pila .apertura.a-scheda{transform:translate3d(0,calc(-1*max(0px,var(--extra))),0) scale(var(--s));clip-path:inset(0 0 0 0 round 0 0 calc(var(--raggio)/var(--s)) calc(var(--raggio)/var(--s)))}
-.pila .apertura.a-scheda.is-sopra{transform:translate3d(0,calc(-1*max(0px,var(--extra)) - 25dvh),0) scale(var(--s))}
 .apertura .fc-testi{padding:0 2cqw 2.75cqw}
 .apertura .fc-frase{margin-top:.25cqw;padding:0 1cqw}
 .salta,.salta *{transition:none!important}
+/* sagoma invisibile di una scheda appoggiata: ne prende le proporzioni per le schede delle pagine */
+.sagoma{position:fixed;left:0;top:0;width:calc(100vw - 2*var(--M));height:calc(100dvh - var(--S) - 2*var(--G));visibility:hidden;pointer-events:none}
 
 /* pagine interne */
 .testa{margin-top:calc(var(--u)*-35);transform-origin:50% 0;transition:transform .7s var(--uscita)}
@@ -258,7 +261,7 @@ body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
   .fc-testi{padding:0 16px 6cqw}
   .fc .fc-frase{display:none}
   .gigante{flex-direction:column;align-items:center;font-size:18.6cqw;line-height:.98;margin:0}
-  .apertura .fc-testi{padding:0 16px calc(var(--S) + 16px)}
+  .pila .fc .fc-testi,.apertura .fc-testi{padding:0 16px calc(var(--S) + 16px)}
   .apertura .fc-frase{display:block;margin-top:12px;padding:0;font-stretch:100%;font-size:10.5px;line-height:1.25}
   .velo{background:linear-gradient(180deg,rgba(0,0,0,.14) 0,rgba(0,0,0,.14) 48%,rgba(0,0,0,.42) 100%)}
   .prossima{height:62vw;margin-top:44px}
@@ -357,7 +360,7 @@ body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
     <li><a class="carta" href="#contatti">
       <span class="carta-testa"><b>Contatti</b><i>4</i></span>
       <span class="carta-sotto">Il primo passo? Conoscerci.</span>
-      <span class="carta-foto"><img data-src="foto/menu-mani.jpg" alt=""></span>
+      <span class="carta-foto"><img data-src="foto/menu-contatti.jpg" alt=""></span>
       <span class="carta-testo">Hai una domanda o vuoi fissare una visita? Scrivici o chiamaci, siamo qui per darti tutte le info che cerchi.</span>
       <span class="carta-link">Scopri di più</span>
     </a></li>
@@ -662,6 +665,8 @@ body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
 
 <div class="striscia piccolo" aria-label="Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)"><div class="nastro" aria-hidden="true"><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span><span>Vi aspettiamo in Vicolo Ugo Bassi 27, 30030 Olmo di Martellago (VE)</span></div></div>
 
+<div class="sagoma" aria-hidden="true"></div>
+
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -801,7 +806,7 @@ body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
   const pila = $('.pila');
   const schedeHome = $$('.fc', pila);
   const apertura = schedeHome[0];
-  let cur = 0, scheda = false, bloccato = false, timerBlocco;
+  let cur = 0, bloccato = false, timerBlocco;
   const aggiornaHome = () => {
     schedeHome.forEach((c, k) => {
       c.classList.toggle('is-attiva', k === cur);
@@ -815,20 +820,31 @@ body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
     clearTimeout(timerBlocco);
     timerBlocco = setTimeout(() => { bloccato = false; }, DURATA);
   };
-  const mettiScheda = s => { scheda = s; apertura.classList.toggle('a-scheda', s); };
+  // scheda appoggiata o a tutto schermo; "subito" = senza passaggio, quando non si vede
+  const appoggia = (c, si, subito = false) => {
+    if (subito) c.classList.add('salta');
+    c.classList.toggle('a-scheda', si);
+    if (subito) { c.offsetWidth; c.classList.remove('salta'); }
+  };
+  const appoggiata = c => c.classList.contains('a-scheda');
+  // avanti, in un gesto solo: la pagina che lasci si stringe mentre la nuova sale già appoggiata, col bianco ai lati e sotto.
+  // Tornando indietro quella che torna è ancora appoggiata
   const vai = n => {
     if (bloccato || n < 0 || n >= schedeHome.length || n === cur) return;
     blocca();
-    if (cur === 0) mettiScheda(true); // lasciando l'apertura resta scheda mentre quella nuova la copre
+    const avanti = n > cur;
+    appoggia(schedeHome[n], true, avanti);
+    if (avanti) appoggia(schedeHome[cur], true);
     cur = n;
     pila.style.setProperty('--attesa', riduci ? '0s' : '.6s');
     aggiornaHome();
     vicine();
   };
-  const stringi = s => { if (bloccato) return; blocca(); mettiScheda(s); };
-  // sull'apertura prima la scheda, poi la pagina dopo; dall'ultima scheda un altro gesto in giù apre la sua pagina, così il sito non sembra finito lì
+  const stringi = s => { if (bloccato) return; blocca(); appoggia(apertura, s); };
+  // avanti si passa subito alla pagina dopo. Sull'apertura appoggiata un gesto in su la riporta a tutto schermo.
+  // Dall'ultima scheda un altro gesto in giù apre la sua pagina, così il sito non sembra finito lì
   const passo = d => {
-    if (cur === 0 && scheda !== (d > 0)) return stringi(d > 0);
+    if (cur === 0 && d < 0 && appoggiata(apertura)) return stringi(false);
     if (d > 0 && cur === schedeHome.length - 1) { if (!bloccato) { ferma(); vaiA('contatti', schedeHome[cur]); } return; }
     vai(cur + d);
   };
@@ -836,31 +852,27 @@ body.menu-aperto .vista{transform:translate3d(0,-3vh,0)}
   const daCapo = () => {
     pila.classList.add('salta');
     cur = 0;
-    mettiScheda(false);
+    schedeHome.forEach(c => c.classList.remove('a-scheda'));
     aggiornaHome();
     pila.offsetWidth;
     pila.classList.remove('salta');
   };
   aggiornaHome();
-  // tornando da una sezione: la home è già sulla sua scheda
+  // tornando da una sezione: la home è già sulla sua scheda, appoggiata come tutte quelle prima
   const suScheda = k => {
     pila.classList.add('salta');
     cur = k;
-    mettiScheda(true);
+    schedeHome.forEach(c => c.classList.add('a-scheda'));
     aggiornaHome();
     pila.offsetWidth;
     pila.classList.remove('salta');
     vicine();
   };
 
-  // le schede delle pagine hanno quasi la forma di quelle della home, così il passaggio dall'una all'altra è pulito:
-  // stessa larghezza e l'altezza della parte visibile, tolto un altro spazio come quello sotto (sono le proporzioni delle grafiche)
+  // le schede delle pagine hanno la forma di quelle della home appoggiate (le proporzioni delle grafiche), così il passaggio dall'una all'altra è pulito
+  const sagoma = $('.sagoma');
   const misura = () => {
-    const c = schedeHome[1];
-    if (!c.offsetHeight) return;
-    const fondo = c.offsetTop + c.offsetHeight;
-    const spazio = innerHeight - $('.striscia').offsetHeight - fondo;
-    corpo.style.setProperty('--ar', Math.max(1.45, Math.min(2, c.offsetWidth / (fondo - spazio))).toFixed(3));
+    if (sagoma.offsetHeight) corpo.style.setProperty('--ar', Math.max(1.45, Math.min(2, sagoma.offsetWidth / sagoma.offsetHeight)).toFixed(3));
   };
   addEventListener('resize', misura);
 
